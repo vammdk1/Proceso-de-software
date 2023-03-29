@@ -1,0 +1,7 @@
+es\deusto\spq\server\jdo\User.class
+es\deusto\spq\server\jdo\Message.class
+es\deusto\spq\server\Resource.class
+es\deusto\spq\client\ExampleClient.class
+es\deusto\spq\pojo\DirectMessage.class
+es\deusto\spq\pojo\MessageData.class
+es\deusto\spq\pojo\UserData.class
