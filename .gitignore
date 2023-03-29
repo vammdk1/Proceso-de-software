@@ -2,3 +2,4 @@ target/
 datanucleus.log
 project
 settings/
+*.log
