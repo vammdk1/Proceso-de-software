@@ -19,7 +19,10 @@ To launch the server run the command
 
     mvn jetty:run
 
+El proyecto requiere de dos ventanas, una para todos los comandos , y otra para el cliente
+Para victor: C:\GitHub\Proceso-de-software\example-jersey-jdo-mysql
+
+
 Now, the client sample code can be executed in a new command window with
 
     mvn exec:java -Pclient
-
