@@ -105,7 +105,9 @@ public VentanaChat() {
 			public void mouseEntered(MouseEvent e) {}
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.exit(0);
+				dispose();
+				VentanaMenu vMenu = new VentanaMenu();
+				vMenu.setVisible(true);
 				
 			}
 		});

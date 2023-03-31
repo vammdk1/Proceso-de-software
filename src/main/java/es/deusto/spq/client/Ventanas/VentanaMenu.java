@@ -60,12 +60,14 @@ public VentanaMenu() {
         });
         button2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                //System.out.println("Button 2 clicked");
+                dispose();
+                VentanaChat VChat = new VentanaChat();
+                VChat.setVisible(true);
             }
         });
         button3.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                dispose();
+            	System.exit(0);
             }
         });
         leftPanel.add(button1);

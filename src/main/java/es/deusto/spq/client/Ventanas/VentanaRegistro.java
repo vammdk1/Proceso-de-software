@@ -127,8 +127,8 @@ public VentanaRegistro() {
 				if(Arrays.equals(passwordField.getPassword(),repPasswordField.getPassword())) {
 					System.out.println("Contraseña Aceptada");
 					dispose();
-					//VentanaMenu VMenu = new VentanaMenu();
-					//VMenu.setVisible(true);
+					VentanaMenu VMenu = new VentanaMenu();
+					VMenu.setVisible(true);
 				}
 				
 			}

@@ -108,8 +108,8 @@ public VentanaLogin() {
 				if(Arrays.equals(passwordField.getPassword(),repPasswordField.getPassword())) { //comprobar que existe usuario
 					System.out.println("Contraseña Aceptada");
 					dispose();
-					//VentanaMenu VMenu = new VentanaMenu();
-					//VMenu.setVisible(true);
+					VentanaMenu VMenu = new VentanaMenu();
+					VMenu.setVisible(true);
 				}
 				
 			}
