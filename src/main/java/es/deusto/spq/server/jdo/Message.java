@@ -1,12 +1,10 @@
 package es.deusto.spq.server.jdo;
 
-import javax.jdo.annotations.PersistenceCapable;
 import java.util.Date;
 
-@PersistenceCapable
 public class Message {
-	User user=null;
-	String text=null;
+	User user = null;
+	String text = null;
 	long timestamp;
 	
 
