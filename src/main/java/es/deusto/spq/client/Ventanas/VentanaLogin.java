@@ -5,15 +5,15 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Arrays;
 
-public class VentanaRegistro extends JFrame{
+public class VentanaLogin extends JFrame{
 
 private JTextField usernameField;
     private JPasswordField passwordField;
     private JPasswordField repPasswordField;
-    private JButton loginButton;
+    private JButton next;
     private JButton createAccount;
 
-public VentanaRegistro() {
+public VentanaLogin() {
         setTitle("Sign In");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -48,57 +48,39 @@ public VentanaRegistro() {
         title.setForeground(Color.WHITE);
         title.setFont(y);
         title.setLocation(525, 50);
-        
-        JLabel lCreate = new JLabel("Create Account");
-        lCreate.setBounds(200, 200, 700, 75);
-        lCreate.setForeground(Color.WHITE);
-        lCreate.setFont(z);
-        lCreate.setLocation(550, 130);
        
         JLabel usernameLabel = new JLabel("Username");
         usernameLabel.setBounds(200, 200, 300, 75);
         usernameLabel.setForeground(Color.WHITE);
         usernameLabel.setFont(x);
-        usernameLabel.setLocation(550, 200);
+        usernameLabel.setLocation(550, 250);
         usernameField = new JTextField();
         usernameField.setBounds(55, 105, 400, 40);
-        usernameField.setLocation(550, 275);
+        usernameField.setLocation(550, 325);
        
         JLabel passwordLabel = new JLabel("Password");
         passwordLabel.setBounds(55, 145, 300, 75);
         passwordLabel.setForeground(Color.WHITE);
         passwordLabel.setFont(x);
-        passwordLabel.setLocation(550, 300);
+        passwordLabel.setLocation(550, 350);
         passwordField = new JPasswordField();
         passwordField.setBounds(55, 165, 400, 40);
-        passwordField.setLocation(550, 375);
+        passwordField.setLocation(550, 425);
         
-        JLabel repPasswordLabel = new JLabel("Repeat Password");
-        repPasswordLabel.setBounds(55, 145, 300, 75);
-        repPasswordLabel.setForeground(Color.WHITE);
-        repPasswordLabel.setFont(x);
-        repPasswordLabel.setLocation(550, 425);
-        repPasswordField = new JPasswordField();
-        repPasswordField.setBounds(55, 165, 400, 40);
-        repPasswordField.setLocation(550, 500);
+        next = new JButton("Next");
+        next.setBounds(55, 215, 75, 50);
+        next.setLocation(900, 600);
        
-        loginButton = new JButton("Create Account");
-        loginButton.setBounds(55, 215, 200, 50);
-        loginButton.setLocation(750, 600);
-       
-        createAccount = new JButton("Back");
-        createAccount.setBounds(55, 215, 75, 50);
+        createAccount = new JButton("Create account");
+        createAccount.setBounds(55, 215, 200, 50);
         createAccount.setLocation(550, 600);
                
         panel.add(passwordLabel);
         panel.add(usernameLabel);
         panel.add(title);
-        panel.add(lCreate);
         panel.add(usernameField);
         panel.add(passwordField);
-        panel.add(repPasswordLabel);
-        panel.add(repPasswordField);
-        panel.add(loginButton);
+        panel.add(next);
         panel.add(createAccount);
         panel.add(panel2);
        
@@ -106,7 +88,7 @@ public VentanaRegistro() {
         setLayout(null);
         setVisible(true);
         
-        loginButton.addActionListener(new ActionListener() {
+        next.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -124,16 +106,12 @@ public VentanaRegistro() {
 			
 			@Override
 			public void mouseReleased(MouseEvent e) {}
-			
 			@Override
 			public void mousePressed(MouseEvent e) {}
-			
 			@Override
 			public void mouseExited(MouseEvent e) {}
-			
 			@Override
 			public void mouseEntered(MouseEvent e) {}
-			
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				System.exit(0);
@@ -143,6 +121,6 @@ public VentanaRegistro() {
     }
 
     public static void main(String[] args) {
-        new VentanaRegistro();
+        new VentanaLogin();
     }
 }
