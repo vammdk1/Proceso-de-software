@@ -7,5 +7,7 @@ public class SendMessage extends SesionData {
 	public SendMessage() {
 		super();
 	}
+	
+	
 
 }
