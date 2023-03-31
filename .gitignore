@@ -3,3 +3,6 @@ datanucleus.log
 project
 settings/
 *.log
+.classpath
+.project
+.settings/
