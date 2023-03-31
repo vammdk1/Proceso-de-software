@@ -11,7 +11,7 @@ private JTextField usernameField;
     private JPasswordField passwordField;
     private JPasswordField repPasswordField;
     private JButton loginButton;
-    private JButton createAccount;
+    private JButton back;
 
 public VentanaRegistro() {
         setTitle("Sign In");
@@ -24,7 +24,7 @@ public VentanaRegistro() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                Image image = new ImageIcon("src/main/java/es/deusto/spq/client/Imagenes/Wallpaper.jpg").getImage();
+                Image image = new ImageIcon("src/main/java/es/deusto/spq/client/Imagenes/Wallpaper.jpeg").getImage();
                 g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
             }
         };
@@ -87,9 +87,9 @@ public VentanaRegistro() {
         loginButton.setBounds(55, 215, 200, 50);
         loginButton.setLocation(750, 600);
        
-        createAccount = new JButton("Back");
-        createAccount.setBounds(55, 215, 75, 50);
-        createAccount.setLocation(550, 600);
+        back = new JButton("Back");
+        back.setBounds(55, 215, 75, 50);
+        back.setLocation(550, 600);
                
         panel.add(passwordLabel);
         panel.add(usernameLabel);
@@ -100,12 +100,22 @@ public VentanaRegistro() {
         panel.add(repPasswordLabel);
         panel.add(repPasswordField);
         panel.add(loginButton);
-        panel.add(createAccount);
+        panel.add(back);
         panel.add(panel2);
        
         setContentPane(panel);
         setLayout(null);
         setVisible(true);
+       
+        back.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				VentanaLogin VLogin= new VentanaLogin();
+				VLogin.setVisible(true);				
+			}
+		});
         
         loginButton.addActionListener(new ActionListener() {
 			
@@ -116,6 +126,9 @@ public VentanaRegistro() {
 				}
 				if(Arrays.equals(passwordField.getPassword(),repPasswordField.getPassword())) {
 					System.out.println("Contraseña Aceptada");
+					dispose();
+					//VentanaMenu VMenu = new VentanaMenu();
+					//VMenu.setVisible(true);
 				}
 				
 			}

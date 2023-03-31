@@ -19,7 +19,6 @@ public VentanaLogin() {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setUndecorated(true);
         
-
         JPanel panel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -89,6 +88,16 @@ public VentanaLogin() {
         setLayout(null);
         setVisible(true);
         
+        createAccount.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				VentanaRegistro VRegistro = new VentanaRegistro();
+				VRegistro.setVisible(true);
+			}
+		});
+        
         next.addActionListener(new ActionListener() {
 			
 			@Override
@@ -96,8 +105,11 @@ public VentanaLogin() {
 				if(passwordField.getPassword().length==0) {
 					return;
 				}
-				if(Arrays.equals(passwordField.getPassword(),repPasswordField.getPassword())) {
+				if(Arrays.equals(passwordField.getPassword(),repPasswordField.getPassword())) { //comprobar que existe usuario
 					System.out.println("Contraseña Aceptada");
+					dispose();
+					//VentanaMenu VMenu = new VentanaMenu();
+					//VMenu.setVisible(true);
 				}
 				
 			}
