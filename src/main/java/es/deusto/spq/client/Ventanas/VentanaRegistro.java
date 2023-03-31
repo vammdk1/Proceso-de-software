@@ -24,7 +24,7 @@ public VentanaRegistro() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                Image image = new ImageIcon("src/main/java/es/deusto/spq/client/Imagenes/wallpaper.jpg").getImage();
+                Image image = new ImageIcon("src/main/java/es/deusto/spq/client/Imagenes/Wallpaper.jpg").getImage();
                 g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
             }
         };
@@ -45,28 +45,29 @@ public VentanaRegistro() {
        
         JLabel title = new JLabel("Pictochatnt");
         title.setBounds(200, 200, 500, 75);
-        title.setForeground(Color.WHITE);
+        title.setForeground(Color.black);
         title.setFont(y);
         title.setLocation(525, 50);
         
         JLabel lCreate = new JLabel("Create Account");
         lCreate.setBounds(200, 200, 700, 75);
-        lCreate.setForeground(Color.WHITE);
+        lCreate.setForeground(Color.black);
         lCreate.setFont(z);
         lCreate.setLocation(550, 130);
        
         JLabel usernameLabel = new JLabel("Username");
         usernameLabel.setBounds(200, 200, 300, 75);
-        usernameLabel.setForeground(Color.WHITE);
+        usernameLabel.setForeground(Color.black);
         usernameLabel.setFont(x);
         usernameLabel.setLocation(550, 200);
         usernameField = new JTextField();
+        usernameField.setFont(x);
         usernameField.setBounds(55, 105, 400, 40);
         usernameField.setLocation(550, 275);
        
         JLabel passwordLabel = new JLabel("Password");
         passwordLabel.setBounds(55, 145, 300, 75);
-        passwordLabel.setForeground(Color.WHITE);
+        passwordLabel.setForeground(Color.black);
         passwordLabel.setFont(x);
         passwordLabel.setLocation(550, 300);
         passwordField = new JPasswordField();
@@ -75,7 +76,7 @@ public VentanaRegistro() {
         
         JLabel repPasswordLabel = new JLabel("Repeat Password");
         repPasswordLabel.setBounds(55, 145, 300, 75);
-        repPasswordLabel.setForeground(Color.WHITE);
+        repPasswordLabel.setForeground(Color.black);
         repPasswordLabel.setFont(x);
         repPasswordLabel.setLocation(550, 425);
         repPasswordField = new JPasswordField();

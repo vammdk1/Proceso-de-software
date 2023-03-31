@@ -24,7 +24,7 @@ public VentanaLogin() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                Image image = new ImageIcon("src/main/java/es/deusto/spq/client/Imagenes/wallpaper.jpg").getImage();
+                Image image = new ImageIcon("src/main/java/es/deusto/spq/client/Imagenes/Wallpaper.jpeg").getImage();
                 g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
             }
         };
@@ -40,27 +40,28 @@ public VentanaLogin() {
         panel2.setOpaque(false);
         panel2.setBounds(20,20,50,50);
         Font y = new Font("Serif", Font.BOLD, 100);
-        Font z = new Font("Serif", Font.BOLD, 60);
-        Font x = new Font("Serif", Font.PLAIN, 35);      
+        Font x = new Font("Serif", Font.PLAIN, 35);
        
         JLabel title = new JLabel("Pictochatnt");
         title.setBounds(200, 200, 500, 75);
-        title.setForeground(Color.WHITE);
+        title.setForeground(Color.black);
         title.setFont(y);
         title.setLocation(525, 50);
        
         JLabel usernameLabel = new JLabel("Username");
         usernameLabel.setBounds(200, 200, 300, 75);
-        usernameLabel.setForeground(Color.WHITE);
+        usernameLabel.setForeground(Color.black);
         usernameLabel.setFont(x);
         usernameLabel.setLocation(550, 250);
         usernameField = new JTextField();
+        usernameField.setFont(x);
+        
         usernameField.setBounds(55, 105, 400, 40);
         usernameField.setLocation(550, 325);
        
         JLabel passwordLabel = new JLabel("Password");
         passwordLabel.setBounds(55, 145, 300, 75);
-        passwordLabel.setForeground(Color.WHITE);
+        passwordLabel.setForeground(Color.black);
         passwordLabel.setFont(x);
         passwordLabel.setLocation(550, 350);
         passwordField = new JPasswordField();
