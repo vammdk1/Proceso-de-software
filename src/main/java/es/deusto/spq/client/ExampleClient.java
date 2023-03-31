@@ -9,13 +9,11 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import es.deusto.spq.pojo.DirectMessage;
-import es.deusto.spq.pojo.MessageData;
 import es.deusto.spq.pojo.UserData;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
+/**
 public class ExampleClient {
 
 	protected static final Logger logger = LogManager.getLogger();
@@ -84,4 +82,4 @@ public class ExampleClient {
 		exampleClient.registerUser(USER, PASSWORD);
 		exampleClient.sayMessage(USER, PASSWORD, "This is a test!...");
 	}
-}
+}**/
