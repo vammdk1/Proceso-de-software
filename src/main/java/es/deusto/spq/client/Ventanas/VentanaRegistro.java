@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Arrays;
+import java.util.regex.Pattern;
 
 public class VentanaRegistro extends JFrame{
 
@@ -121,14 +122,25 @@ public VentanaRegistro() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(passwordField.getPassword().length==0) {
+				if(passwordField.getPassword().length==0||usernameField.getText().length()==0) {
+					JOptionPane.showMessageDialog(null, "Rellena todos los apartados", "Error", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
+				if(passwordField.getPassword().length<8) {
+					JOptionPane.showMessageDialog(null, "La contraseña es muy corta. Minimo debe contener 8 caracteres.", "Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				if (!Pattern.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).+$", new String(passwordField.getPassword()))) {
+					JOptionPane.showMessageDialog(null, "La contraseña debe contener al menos una letra mayúscula, una letra minúscula y un número.", "Error", JOptionPane.ERROR_MESSAGE);
+                	return;
+                }
 				if(Arrays.equals(passwordField.getPassword(),repPasswordField.getPassword())) {
 					System.out.println("Contraseña Aceptada");
 					dispose();
 					VentanaMenu VMenu = new VentanaMenu();
 					VMenu.setVisible(true);
+				}else {
+					JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden.", "Error", JOptionPane.ERROR_MESSAGE);
 				}
 				
 			}
