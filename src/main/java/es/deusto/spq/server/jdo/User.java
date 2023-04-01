@@ -2,16 +2,24 @@ package es.deusto.spq.server.jdo;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
+import javax.jdo.Extent;
+import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
+import javax.jdo.Transaction;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.PrimaryKey;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import es.deusto.spq.server.database.PMF;
+
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
+import java.util.ArrayList;
+import java.util.List;
 
 @PersistenceCapable
 public class User {
@@ -61,5 +69,101 @@ public class User {
 	public boolean isPasswordCorrect(String password) {
 		byte[] test = this.genPassHash(password);
 		return test.equals(this.password);
+	}
+	
+	public void save() {
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+
+		try {
+			tx.begin();
+			pm.makePersistent(this);
+			tx.commit();
+		} catch (Exception ex) {
+			System.out.println(" $ Error storing an object: " + ex.getMessage());
+		} finally {
+			if (tx != null && tx.isActive()) {
+				tx.rollback();
+			}
+
+			pm.close();
+		}
+	}
+
+	public void delete() {
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+
+		try {
+			tx.begin();			
+			pm.deletePersistent(this);			
+			tx.commit();
+		} catch (Exception ex) {
+			System.out.println(" $ Error deleting an object: " + ex.getMessage());
+		} finally {
+			if (tx != null && tx.isActive()) {
+				tx.rollback();
+			}
+
+			pm.close();
+		}
+	}
+
+	public static List<User> getAll() {
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		pm.setDetachAllOnCommit(true);
+		Transaction tx = pm.currentTransaction();
+
+		List<User> users = new ArrayList<>();
+		
+		try {
+			tx.begin();
+			
+			Extent<User> extent = pm.getExtent(User.class, true);
+
+			for (User user : extent) {
+				users.add(user);
+			}
+
+			tx.commit();
+		} catch (Exception ex) {
+			System.out.println("  $ Error retrieving all the Categories: " + ex.getMessage());
+		} finally {
+			if (tx != null && tx.isActive()) {
+				tx.rollback();
+			}
+
+			pm.close();
+		}
+
+		return users;		
+	}
+
+	public static User find(String login) {
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		pm.setDetachAllOnCommit(true);
+		Transaction tx = pm.currentTransaction();
+		
+		User result = null; 
+
+		try {
+			tx.begin();
+						
+			Query<?> query = pm.newQuery("SELECT FROM " + User.class.getName() + " WHERE login == '" + login + "'");
+			query.setUnique(true);
+			result = (User) query.execute();
+			
+			tx.commit();
+		} catch (Exception ex) {
+			System.out.println("  $ Error querying a Category: " + ex.getMessage());
+		} finally {
+			if (tx != null && tx.isActive()) {
+				tx.rollback();
+			}
+
+			pm.close();
+		}
+
+		return result;
 	}
 }

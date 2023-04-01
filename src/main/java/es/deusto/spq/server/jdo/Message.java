@@ -2,11 +2,12 @@ package es.deusto.spq.server.jdo;
 
 import java.util.Date;
 
+import javax.jdo.JDOHelper;
+
 public class Message {
 	User user = null;
 	String text = null;
 	long timestamp;
-	
 
     public Message(String text) {
         this.text = text;
