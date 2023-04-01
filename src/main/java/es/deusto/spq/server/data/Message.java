@@ -1,8 +1,8 @@
-package es.deusto.spq.server.jdo;
+package es.deusto.spq.server.data;
 
 import java.util.Date;
 
-import javax.jdo.JDOHelper;
+import es.deusto.spq.server.jdo.User;
 
 public class Message {
 	User user = null;

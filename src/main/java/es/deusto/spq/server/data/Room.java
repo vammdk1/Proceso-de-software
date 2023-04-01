@@ -1,14 +1,16 @@
-package es.deusto.spq.server.jdo;
+package es.deusto.spq.server.data;
 
 import java.util.ArrayList;
 
-public class Sala {
+import es.deusto.spq.server.jdo.User;
+
+public class Room {
 	ArrayList<Message> messages = new ArrayList<>();
 	ArrayList<User> users = new ArrayList<>();
 	String name = null;
 	User user = null;
 	
-	public Sala(User user, String name) {
+	public Room(User user, String name) {
 		this.name = name;
 		this.user = user;
 	}
