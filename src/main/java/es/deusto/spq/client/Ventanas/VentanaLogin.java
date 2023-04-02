@@ -1,17 +1,43 @@
 package es.deusto.spq.client.Ventanas;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.Invocation;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.util.Arrays;
+import com.mysql.cj.conf.HostInfo;
 
 public class VentanaLogin extends JFrame{
 
 private JTextField usernameField;
-    private JPasswordField passwordField;
-    private JPasswordField repPasswordField;
-    private JButton next;
-    private JButton createAccount;
+private JPasswordField passwordField;
+private JPasswordField repPasswordField;
+private JButton next;
+private JButton createAccount;
+private static Client client;
+private static WebTarget webTarget;
+private static String host;
+private static String port;
+
+
 
 public VentanaLogin() {
         setTitle("Sign In");
@@ -102,15 +128,24 @@ public VentanaLogin() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(passwordField.getPassword().length==0) {
-					return;
-				}
-				if(Arrays.equals(passwordField.getPassword(),repPasswordField.getPassword())) { //comprobar que existe usuario
-					System.out.println("Contraseña Aceptada");
-					dispose();
-					VentanaMenu VMenu = new VentanaMenu();
-					VMenu.setVisible(true);
-				}
+				//TODO
+                ExampleClient(host, port);
+                sayHello();
+
+                System.out.println("Contraseña Aceptada");
+				dispose();
+				VentanaMenu VMenu = new VentanaMenu();
+				VMenu.setVisible(true);
+				
+//				if(passwordField.getPassword().length==0) {
+//					return;
+//				}
+//				if(Arrays.equals(passwordField.getPassword(),repPasswordField.getPassword())) { //comprobar que existe usuario
+//					System.out.println("Contraseña Aceptada");
+//					dispose();
+//					VentanaMenu VMenu = new VentanaMenu();
+//					VMenu.setVisible(true);
+//				}
 				
 			}
 		});
@@ -133,7 +168,33 @@ public VentanaLogin() {
 		});
     }
 
+    
+     //-------------------------BORRAR después de pruebas-------------------------------------------------
+ public static void sayHello() {
+    //System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    WebTarget sayHelloWebTarget = webTarget.path("hello");
+    Invocation.Builder invocationBuilder = sayHelloWebTarget.request(MediaType.APPLICATION_JSON);
+
+    Response response = invocationBuilder.post(null);
+    if (response.getStatus() != Status.OK.getStatusCode()) {
+        System.out.println("Error connecting with the server. Code: "+response.getStatus());
+    } else {
+        String responseMessage = response.readEntity(String.class);
+        System.out.println("Error connecting with the server. Code: "+response.getStatus());
+    }
+}  
+  
+	public static void ExampleClient(String hostname, String port) {
+		client = ClientBuilder.newClient();
+		webTarget = client.target(String.format("http://%s:%s/rest/resource", hostname, port));
+	}
+ //-------------------------BORRAR después de pruebas-------------------------------------------------
+
     public static void main(String[] args) {
+        host=args[0];
+        port=args[1];
+        //ExampleClient(args[0],args[1]);
+        //sayHello();
         new VentanaLogin();
     }
 }

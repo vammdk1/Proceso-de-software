@@ -1,8 +1,11 @@
 package es.deusto.spq.server;
 
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,6 +13,7 @@ import org.apache.logging.log4j.Logger;
 @Path("/resource")
 @Produces(MediaType.APPLICATION_JSON)
 public class Resource {
+	
 
 	protected static final Logger logger = LogManager.getLogger();
 
@@ -18,6 +22,7 @@ public class Resource {
 	// private Transaction tx=null;
 
 	public Resource() {
+		System.out.println("hola");
 		// PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("datanucleus.properties");
 		// this.pm = pmf.getPersistenceManager();
 		// this.tx = pm.currentTransaction();
@@ -99,10 +104,10 @@ public class Resource {
 	// 	}
 	// }
 
-	// @GET
-	// @Path("/hello")
-	// @Produces(MediaType.TEXT_PLAIN)
-	// public Response sayHello() {
-	// 	return Response.ok("Hello world!").build();
-	// }
+	 @POST
+	 @Path("/hello")
+	 public Response sayHello() {
+		System.out.println("prueba");
+		 return Response.ok("Hello world!").build();
+	 }
 }

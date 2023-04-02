@@ -9,7 +9,7 @@ Run the following command to build everything and enhance the DB classes:
 
 Make sure that the database was correctly configured. Use the contents of the file *create-message.sql* to create the database and grant privileges. For example,
 
-      mysql –uroot -p < sql/create-pds.sql
+      mysql –u root -p < sql/create-pds.sql
 
 Run the following command to create database schema for this sample.
 
@@ -20,8 +20,6 @@ To launch the server run the command
     mvn jetty:run
 
 El proyecto requiere de dos ventanas, una para todos los comandos , y otra para el cliente
-Para victor: C:\GitHub\Proceso-de-software\example-jersey-jdo-mysql
-
 
 Now, the client sample code can be executed in a new command window with
 
