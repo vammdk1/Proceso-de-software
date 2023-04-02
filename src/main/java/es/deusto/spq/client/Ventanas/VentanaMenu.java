@@ -117,10 +117,8 @@ public VentanaMenu() {
             	if(lista.getSelectedValue()!=null) {
             		JOptionPane.showMessageDialog(null, "Conectando a "+lista.getSelectedValue(),">:(",JOptionPane.INFORMATION_MESSAGE);
                 	dispose();
-                    /**
                     VentanaChat VChat = new VentanaChat();
                     VChat.setVisible(true);
-                    **/
             	}
             }
         });
