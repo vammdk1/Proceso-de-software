@@ -16,7 +16,7 @@ private JTextField usernameField;
 private JPanel mainPanel, leftPanel, datos;
 private JList<String> lista;
 private JScrollPane scrollPane;
-private JButton button1, button2, button3, button4;
+private JButton bCrear, bConectar, bSalir, bRefrescar;
 private JLabel titleLabel;
 
 public VentanaMenu() {
@@ -25,6 +25,7 @@ public VentanaMenu() {
         this.setTitle("Menu principal");
         //this.setSize(600, 400);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setUndecorated(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
 
@@ -66,13 +67,15 @@ public VentanaMenu() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Cuando se cierre esta ventana mandar los datos de la sala al servidor 
-				if(Ns.getText()!="" || Ns.getText()!=" ") {
+				if(Ns.getText().length()>0) {
 					//TODO Conectar automáticamente
-					JOptionPane.showMessageDialog(null, "Sala creada, Enviando datos al servidor", ":)", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Sala creada, Enviando datos al servidor", ":)", JOptionPane.INFORMATION_MESSAGE);
 					//tp.addElement(Ns.getText());
-					Ns.setText("");
 					datos.setVisible(false);
-					dispose();
+					DefaultListModel<String> model = (DefaultListModel<String>) lista.getModel();
+					model.addElement(Ns.getText());
+					Ns.setText("");
+					//dispose();
 				}else {
 					JOptionPane.showMessageDialog(null, "La sala tiene que tener nombre para ser creada",">:(",JOptionPane.ERROR_MESSAGE);
 				}
@@ -98,21 +101,21 @@ public VentanaMenu() {
         mainPanel.add(datos, BorderLayout.SOUTH);
         
 
-        button1 = new JButton("Crear");
-        button2 = new JButton("Conectar");
-        button3 = new JButton("Salir");
-        button4 = new JButton("Referscar Salas");
-        button1.addActionListener(new ActionListener() {
+        bCrear = new JButton("Crear");
+        bConectar = new JButton("Conectar");
+        bSalir = new JButton("Salir");
+        bRefrescar = new JButton("Refrescar Salas");
+        bCrear.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 //System.out.println("Button 1 clicked");
             	datos.setVisible(true);
             	
             }
         });
-        button2.addActionListener(new ActionListener() {
+        bConectar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	if(lista.getSelectedValue()!=null) {
-            		JOptionPane.showMessageDialog(null, "Conectamdo a "+lista.getSelectedValue(),">:(",JOptionPane.ERROR_MESSAGE);
+            		JOptionPane.showMessageDialog(null, "Conectando a "+lista.getSelectedValue(),">:(",JOptionPane.INFORMATION_MESSAGE);
                 	dispose();
                     /**
                     VentanaChat VChat = new VentanaChat();
@@ -121,15 +124,15 @@ public VentanaMenu() {
             	}
             }
         });
-        button3.addActionListener(new ActionListener() {
+        bSalir.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	System.exit(0);
             }
         });
-        leftPanel.add(button1);
-        leftPanel.add(button2);
-        leftPanel.add(button3);
-        leftPanel.add(button4);
+        leftPanel.add(bCrear);
+        leftPanel.add(bConectar);
+        leftPanel.add(bSalir);
+        leftPanel.add(bRefrescar);
         
 
         this.add(mainPanel, BorderLayout.CENTER);

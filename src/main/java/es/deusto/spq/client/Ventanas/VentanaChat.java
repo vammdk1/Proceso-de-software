@@ -115,24 +115,26 @@ public VentanaChat() {
         pDibujo.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                x1 = e.getX();
-                y1 = e.getY();
+                x1 = e.getXOnScreen();
+                y1 = e.getYOnScreen();
             }
         });
         
         pDibujo.addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                int x2 = e.getX();
-                int y2 = e.getY();
+                int x2 = e.getXOnScreen();
+                int y2 = e.getYOnScreen();
 
-                Graphics g = getGraphics();
-                g.drawLine(x1, y1, x2, y2);
+                if (pDibujo.contains(e.getPoint())) {
+                    Graphics g = getGraphics();
+                    g.drawLine(x1, y1, x2, y2);
 
-                x1 = x2;
-                y1 = y2;
+                    x1 = x2;
+                    y1 = y2;
+                }
             }
-        });
+        });;
         
         palante.addActionListener(new ActionListener() {
 			
