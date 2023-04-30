@@ -11,6 +11,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -25,6 +26,8 @@ import javax.ws.rs.core.Response.Status;
 
 import com.mysql.cj.conf.HostInfo;
 
+import es.deusto.spq.client.PictochatntClient;
+
 public class VentanaLogin extends JFrame{
 
 private JTextField usernameField;
@@ -32,12 +35,6 @@ private JPasswordField passwordField;
 private JPasswordField repPasswordField;
 private JButton next;
 private JButton createAccount;
-private static Client client;
-private static WebTarget webTarget;
-private static String host;
-private static String port;
-
-
 
 public VentanaLogin() {
         setTitle("Sign In");
@@ -128,10 +125,14 @@ public VentanaLogin() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//TODO
-                ExampleClient(host, port);
-                sayHello();
-
+				String user = usernameField.getText();
+				String password = passwordField.getText();
+				
+				if (!PictochatntClient.login(user, password)) {
+					JOptionPane.showMessageDialog(null, "No se ha posido logear", "Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				
                 System.out.println("Contraseña Aceptada");
 				dispose();
 				VentanaMenu VMenu = new VentanaMenu();
@@ -169,32 +170,9 @@ public VentanaLogin() {
     }
 
     
-     //-------------------------BORRAR después de pruebas-------------------------------------------------
- public static void sayHello() {
-    //System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAA");
-    WebTarget sayHelloWebTarget = webTarget.path("hello");
-    Invocation.Builder invocationBuilder = sayHelloWebTarget.request(MediaType.APPLICATION_JSON);
-
-    Response response = invocationBuilder.post(null);
-    if (response.getStatus() != Status.OK.getStatusCode()) {
-        System.out.println("Error connecting with the server. Code: "+response.getStatus());
-    } else {
-        String responseMessage = response.readEntity(String.class);
-        System.out.println("Error connecting with the server. Code: "+response.getStatus());
-    }
-}  
-  
-	public static void ExampleClient(String hostname, String port) {
-		client = ClientBuilder.newClient();
-		webTarget = client.target(String.format("http://%s:%s/rest/resource", hostname, port));
-	}
- //-------------------------BORRAR después de pruebas-------------------------------------------------
 
     public static void main(String[] args) {
-        host=args[0];
-        port=args[1];
-        //ExampleClient(args[0],args[1]);
-        //sayHello();
-        new VentanaLogin();
+        PictochatntClient.init(args[0], args[1]);
+    	new VentanaLogin();
     }
 }

@@ -4,7 +4,7 @@ public class TokenData {
 	
 	private byte[] token;
 	
-	private TokenData() {
+	public TokenData() {
 		
 	}
 

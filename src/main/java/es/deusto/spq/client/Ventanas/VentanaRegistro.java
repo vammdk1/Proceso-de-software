@@ -1,6 +1,9 @@
 package es.deusto.spq.client.Ventanas;
 
 import javax.swing.*;
+
+import es.deusto.spq.client.PictochatntClient;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Arrays;
@@ -135,6 +138,10 @@ public VentanaRegistro() {
                 	return;
                 }
 				if(Arrays.equals(passwordField.getPassword(),repPasswordField.getPassword())) {
+					if (!PictochatntClient.register(usernameField.getText(), passwordField.getPassword().toString())) {
+						JOptionPane.showMessageDialog(null, "No se ha podido registrar el usuario", "Error", JOptionPane.ERROR_MESSAGE);
+						return;
+					}
 					System.out.println("Contraseña Aceptada");
 					dispose();
 					VentanaMenu VMenu = new VentanaMenu();
