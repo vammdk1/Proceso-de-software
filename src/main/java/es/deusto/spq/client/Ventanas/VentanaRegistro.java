@@ -133,12 +133,12 @@ public VentanaRegistro() {
 					JOptionPane.showMessageDialog(null, "La contraseña es muy corta. Minimo debe contener 8 caracteres.", "Error", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				if (!Pattern.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).+$", new String(passwordField.getPassword()))) {
+				if (!Pattern.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).+$", String.valueOf(passwordField.getPassword()))) {
 					JOptionPane.showMessageDialog(null, "La contraseña debe contener al menos una letra mayúscula, una letra minúscula y un número.", "Error", JOptionPane.ERROR_MESSAGE);
                 	return;
                 }
 				if(Arrays.equals(passwordField.getPassword(),repPasswordField.getPassword())) {
-					if (!PictochatntClient.register(usernameField.getText(), passwordField.getPassword().toString())) {
+					if (!PictochatntClient.register(usernameField.getText(), String.valueOf(passwordField.getPassword()))) {
 						JOptionPane.showMessageDialog(null, "No se ha podido registrar el usuario", "Error", JOptionPane.ERROR_MESSAGE);
 						return;
 					}

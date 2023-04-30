@@ -126,7 +126,7 @@ public VentanaLogin() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String user = usernameField.getText();
-				String password = passwordField.getText();
+				String password = String.valueOf(passwordField.getPassword());
 				
 				if (!PictochatntClient.login(user, password)) {
 					JOptionPane.showMessageDialog(null, "No se ha posido logear", "Error", JOptionPane.ERROR_MESSAGE);

@@ -19,6 +19,7 @@ import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @PersistenceCapable
@@ -54,6 +55,8 @@ public class User {
 		try {
 			SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
 			ret = factory.generateSecret(spec).getEncoded();
+			System.out.println("Pashash: "+ Arrays.toString(ret));
+			System.out.println("salt: "+ Arrays.toString(salt));
 		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
 			//This should never happen
 			logger.error("The hashing algorithm PBKDF2WithHmacSHA1 is not supported on this JVM.");
@@ -64,11 +67,13 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = this.genPassHash(password);
+		System.out.println("testing entrada : "+ Arrays.toString(this.password));
 	}
 
 	public boolean isPasswordCorrect(String password) {
 		byte[] test = this.genPassHash(password);
-		return test.equals(this.password);
+		System.out.println("testing salida : "+ Arrays.toString(this.password));
+		return Arrays.equals(test, this.password) ;
 	}
 	
 	public void save() {
@@ -145,14 +150,12 @@ public class User {
 		Transaction tx = pm.currentTransaction();
 		
 		User result = null; 
-
+		//TODO falla
 		try {
-			tx.begin();
-						
-			Query<?> query = pm.newQuery("SELECT FROM " + User.class.getName() + " WHERE login == '" + login + "'");
+			tx.begin();	
+			Query<?> query = pm.newQuery("SELECT  FROM " + User.class.getName() + " WHERE login == '" + login + "'");
 			query.setUnique(true);
 			result = (User) query.execute();
-			
 			tx.commit();
 		} catch (Exception ex) {
 			System.out.println("  $ Error querying a Category: " + ex.getMessage());
