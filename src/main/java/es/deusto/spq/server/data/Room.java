@@ -53,6 +53,10 @@ public class Room {
 		//TODO: notificar usuarios
 	}
 
+	public void deleteUser (String nombreUsuario){
+		users.remove(users.indexOf(nombreUsuario));
+	}
+
 	@Override
 	public String toString() {
 		return "Sala [messages=" + messages + ", users=" + users + ", name=" + name + ", user=" + user + "]";
