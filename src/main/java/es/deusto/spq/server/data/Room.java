@@ -53,8 +53,8 @@ public class Room {
 		//TODO: notificar usuarios
 	}
 
-	public void deleteUser (String nombreUsuario){
-		users.remove(users.indexOf(nombreUsuario));
+	public void deleteUser (User usuario){
+		users.remove(users.indexOf(usuario));
 	}
 
 	@Override
