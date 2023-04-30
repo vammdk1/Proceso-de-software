@@ -1,9 +1,9 @@
 package es.deusto.spq.pojo;
 
-public class UpdateData extends SesionData{
+public class UpdateData {
 
 	public UpdateData() {
-		super();
+
 	}
 	
 }

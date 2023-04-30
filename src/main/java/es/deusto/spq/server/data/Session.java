@@ -30,7 +30,7 @@ public class Session {
 		this.timeStamp = System.currentTimeMillis()/1000L + expirationTime;
 	}
 	
-	void invalidateSession() {
+	public void invalidateSession() {
 		sessionMap.remove(this.token);
 	}
 	
@@ -46,7 +46,7 @@ public class Session {
 		return this.timeStamp;
 	}
 	
-	static Session getSession(byte[] token) {
+	public static Session getSession(byte[] token) {
 		Session session = null;
 		ArrayList<byte[]> invalidTokens = new ArrayList<>();
 		
@@ -64,7 +64,7 @@ public class Session {
 		return session;
 	}
 	
-	static Session createSession(User user) {
+	public static Session createSession(User user) {
 		byte[] token = new byte[128];
 		sr.nextBytes(token);
 		

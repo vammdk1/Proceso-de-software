@@ -1,8 +1,8 @@
 package es.deusto.spq.pojo;
 
-public class RoomCreateData extends SesionData{
+public class RoomCreateData {
 
 	public RoomCreateData() {
-		super();
+
 	}
 }

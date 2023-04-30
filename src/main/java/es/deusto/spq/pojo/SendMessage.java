@@ -1,6 +1,6 @@
 package es.deusto.spq.pojo;
 
-public class SendMessage extends SesionData {
+public class SendMessage {
 	
 	private String texto;
 	
