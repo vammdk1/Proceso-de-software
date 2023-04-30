@@ -57,8 +57,6 @@ public class User {
 		try {
 			SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
 			ret = factory.generateSecret(spec).getEncoded();
-			System.out.println("Pashash: "+ Arrays.toString(ret));
-			System.out.println("salt: "+ salt);
 		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
 			//This should never happen
 			logger.error("The hashing algorithm PBKDF2WithHmacSHA1 is not supported on this JVM.");
@@ -69,12 +67,10 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = HexUtils.bytesToHex(this.genPassHash(password));
-		System.out.println("testing entrada : "+ this.password);
 	}
 
 	public boolean isPasswordCorrect(String password) {
 		byte[] test = this.genPassHash(password);
-		System.out.println("testing salida : "+ this.password);
 		return Arrays.equals(test, HexUtils.hexToBytes(this.password));
 	}
 	
