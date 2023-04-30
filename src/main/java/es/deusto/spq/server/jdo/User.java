@@ -13,6 +13,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import es.deusto.spq.server.database.PMF;
+import es.deusto.spq.utils.HexUtils;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -31,8 +32,8 @@ public class User {
 
 	@PrimaryKey
 	String login = null;
-	byte[] password = null;
-	byte[] salt = null;
+	String password = null;
+	String salt = null;
 
 	public User() {
 		//For datanucleus
@@ -40,8 +41,9 @@ public class User {
 
 	public User(String login, String password) {
 		this.login = login;
-		this.salt = new byte[16];
-		sr.nextBytes(salt);
+		byte[] saltBytes = new byte[16];
+		sr.nextBytes(saltBytes);
+		this.salt = HexUtils.bytesToHex(saltBytes);
 		this.setPassword(password);
 	}
 
@@ -50,13 +52,13 @@ public class User {
 	}
 	
 	public byte[] genPassHash(String password) {
-		KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 128);
+		KeySpec spec = new PBEKeySpec(password.toCharArray(), HexUtils.hexToBytes(salt), 65536, 128);
 		byte[] ret = null;
 		try {
 			SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
 			ret = factory.generateSecret(spec).getEncoded();
 			System.out.println("Pashash: "+ Arrays.toString(ret));
-			System.out.println("salt: "+ Arrays.toString(salt));
+			System.out.println("salt: "+ salt);
 		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
 			//This should never happen
 			logger.error("The hashing algorithm PBKDF2WithHmacSHA1 is not supported on this JVM.");
@@ -66,14 +68,14 @@ public class User {
 	}
 
 	public void setPassword(String password) {
-		this.password = this.genPassHash(password);
-		System.out.println("testing entrada : "+ Arrays.toString(this.password));
+		this.password = HexUtils.bytesToHex(this.genPassHash(password));
+		System.out.println("testing entrada : "+ this.password);
 	}
 
 	public boolean isPasswordCorrect(String password) {
 		byte[] test = this.genPassHash(password);
-		System.out.println("testing salida : "+ Arrays.toString(this.password));
-		return Arrays.equals(test, this.password) ;
+		System.out.println("testing salida : "+ this.password);
+		return Arrays.equals(test, HexUtils.hexToBytes(this.password));
 	}
 	
 	public void save() {

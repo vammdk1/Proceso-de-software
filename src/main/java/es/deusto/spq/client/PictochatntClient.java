@@ -23,7 +23,7 @@ public class PictochatntClient {
 	private static Client client;
 	private static WebTarget webTarget;
 	
-	private static byte[] token = null;
+	private static String token = null;
 	
 	public static void init(String host, String port) {
 		logger.info("Inicializando cliante");

@@ -2,17 +2,17 @@ package es.deusto.spq.pojo;
 
 public class TokenData {
 	
-	private byte[] token;
+	private String token;
 	
 	public TokenData() {
 		
 	}
 
-	public byte[] getToken() {
+	public String getToken() {
 		return token;
 	}
 
-	public void setToken(byte[] token) {
+	public void setToken(String token) {
 		this.token = token;
 	}
 }

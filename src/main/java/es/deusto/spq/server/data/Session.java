@@ -5,18 +5,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import es.deusto.spq.server.jdo.User;
+import es.deusto.spq.utils.HexUtils;
 
 public class Session {
 	public static final long expirationTime = 600;
 	
-	static HashMap<byte[], Session> sessionMap = new HashMap<>(); 
+	static HashMap<String, Session> sessionMap = new HashMap<>(); 
 	static SecureRandom sr = new SecureRandom(); 
 	
-	byte[] token;
+	String token;
 	User user;
 	long timeStamp;
 
-	protected Session(User user, byte[] token) {
+	protected Session(User user, String token) {
 		this.user = user;
 		this.timeStamp = System.currentTimeMillis()/1000L + expirationTime;
 		this.token = token;
@@ -34,7 +35,7 @@ public class Session {
 		sessionMap.remove(this.token);
 	}
 	
-	public byte[] getToken() {
+	public String getToken() {
 		return this.token;
 	}
 	
@@ -46,16 +47,16 @@ public class Session {
 		return this.timeStamp;
 	}
 	
-	public static Session getSession(byte[] token) {
+	public static Session getSession(String token) {
 		Session session = null;
-		ArrayList<byte[]> invalidTokens = new ArrayList<>();
+		ArrayList<String> invalidTokens = new ArrayList<>();
 		
 		for (Session s : sessionMap.values()) {
 			if (!s.isValid())
 				invalidTokens.add(s.getToken());
 		}
 		
-		for (byte[] t : invalidTokens) {
+		for (String t : invalidTokens) {
 			sessionMap.remove(t);
 		}
 		
@@ -65,8 +66,9 @@ public class Session {
 	}
 	
 	public static Session createSession(User user) {
-		byte[] token = new byte[128];
-		sr.nextBytes(token);
+		byte[] tokenBytes = new byte[128];
+		sr.nextBytes(tokenBytes);
+		String token = HexUtils.bytesToHex(tokenBytes);
 		
 		Session session = new Session(user, token);
 		sessionMap.put(token, session);

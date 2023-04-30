@@ -3,19 +3,19 @@ package es.deusto.spq.pojo;
 public class SessionData {
 	
 	//private sesion NombreAponer  
-	byte[] token;
+	String token;
 	long expirationData;
 
 	public SessionData() {
 		
 	}
 	
-	public SessionData(byte[] token, long expirationData) {
+	public SessionData(String token, long expirationData) {
 		this.token = token;
 		this.expirationData = expirationData;
 	}
 	
-	public byte[] getToken() {
+	public String getToken() {
 		return this.token;
 	}
 	
@@ -23,7 +23,7 @@ public class SessionData {
 		return this.expirationData;
 	}
 
-	public void setToken(byte[] token) {
+	public void setToken(String token) {
 		this.token = token;
 	}
 	
