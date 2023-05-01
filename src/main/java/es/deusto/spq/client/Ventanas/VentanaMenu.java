@@ -4,22 +4,28 @@ import javax.swing.*;
 
 import org.apache.logging.log4j.core.pattern.AbstractStyleNameConverter.Red;
 
+import es.deusto.spq.client.PictochatntClient;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 public class VentanaMenu extends JFrame{
 
-private JTextField usernameField;
-private JPanel mainPanel, leftPanel, datos;
-private JList<String> lista;
-private JScrollPane scrollPane;
-private JButton bCrear, bConectar, bSalir, bRefrescar;
-private JLabel titleLabel;
 
-public VentanaMenu() {
+	private static final long serialVersionUID = -3703712434748598804L;
+	private JTextField usernameField;
+	private JPanel mainPanel, leftPanel, datos;
+	private JList<String> lista;
+	private JScrollPane scrollPane;
+	private JButton bCrear, bConectar, bSalir, bRefrescar;
+	private JLabel titleLabel;
+	
+	public VentanaMenu() {
 
 
         this.setTitle("Menu principal");
@@ -32,12 +38,9 @@ public VentanaMenu() {
         
         //-----------------------------------------------------------------
         //TODO contener en una función aparte para poder usar más adelante
-        String[] data = {"prueba 1", "prueba 2", "prueba 3", "prueba 4", "prueba 5"};
         DefaultListModel<String> tp = new DefaultListModel<>();
-        for(String i : data) {
-        	tp.addElement(i);
-        }
-        lista = new JList<String>(data);
+
+        lista = new JList<String>();
         lista.setModel(tp);
         lista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         lista.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -62,6 +65,12 @@ public VentanaMenu() {
         JLabel Nsala = new JLabel("Nombre de la sala");
 		JTextField Ns = new JTextField(10);
 		
+		
+		
+		
+		refreshRooms();
+		
+		
 		JButton Aceptar = new JButton("Aceptar");
 		Aceptar.addActionListener(new ActionListener() {
 			@Override
@@ -69,13 +78,18 @@ public VentanaMenu() {
 				// TODO Cuando se cierre esta ventana mandar los datos de la sala al servidor 
 				if(Ns.getText().length()>0) {
 					//TODO Conectar automáticamente
-					JOptionPane.showMessageDialog(null, "Sala creada, Enviando datos al servidor", ":)", JOptionPane.INFORMATION_MESSAGE);
-					//tp.addElement(Ns.getText());
 					datos.setVisible(false);
-					DefaultListModel<String> model = (DefaultListModel<String>) lista.getModel();
-					model.addElement(Ns.getText());
+					PictochatntClient.createRoom(Ns.getText());
+					if (PictochatntClient.createRoom(Ns.getText())) {
+						VentanaChat VChat = new VentanaChat();
+						VChat.setVisible(true);
+						VChat.setRoomName(Ns.getText());
+						dispose();
+					}else {
+						JOptionPane.showMessageDialog(null, "Error, sala no creada",">:(",JOptionPane.ERROR_MESSAGE);
+					}
 					Ns.setText("");
-					//dispose();
+					
 				}else {
 					JOptionPane.showMessageDialog(null, "La sala tiene que tener nombre para ser creada",">:(",JOptionPane.ERROR_MESSAGE);
 				}
@@ -127,6 +141,12 @@ public VentanaMenu() {
             	System.exit(0);
             }
         });
+        
+        bRefrescar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	refreshRooms();
+            }
+        });
         leftPanel.add(bCrear);
         leftPanel.add(bConectar);
         leftPanel.add(bSalir);
@@ -140,7 +160,14 @@ public VentanaMenu() {
         this.setVisible(true);
     }
     
-        
+    private void refreshRooms(){
+    	DefaultListModel<String> model = (DefaultListModel<String>) lista.getModel();
+		model.removeAllElements();
+		Set<String> activeRooms = PictochatntClient.getActiveRooms();
+		for (String room : activeRooms) {
+			model.addElement(room);
+		}
+    }
 	
     public static void main(String[] args) {
         new VentanaMenu();

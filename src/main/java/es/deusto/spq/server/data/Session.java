@@ -61,7 +61,9 @@ public class Session {
 		}
 		
 		session = sessionMap.get(token);
-		session.refreshSession();
+		if(session != null) {
+			session.refreshSession();
+		}
 		return session;
 	}
 	

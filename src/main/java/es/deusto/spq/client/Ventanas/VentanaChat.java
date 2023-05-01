@@ -15,6 +15,8 @@ public class VentanaChat extends JFrame{
     JButton palante;
     
     private int x1, y1;
+    
+    JLabel title;
 
 public VentanaChat() {
         setTitle("Chat In");
@@ -68,7 +70,7 @@ public VentanaChat() {
         pTexto.setBounds((int)(screenWidth*0.65),100,(int)(screenWidth*0.3),(int)(screenHeigth*0.75));
         pTexto.setBackground(Color.WHITE);
         
-        JLabel title = new JLabel("Sala XXXX");
+        title = new JLabel("Sala XXXX");
         title.setBounds(200, 200, 500, 75);
         title.setForeground(Color.black);
         title.setFont(x);
@@ -145,7 +147,13 @@ public VentanaChat() {
 				
 			}
 		});
+        
+        
     }
+	
+	public void setRoomName(String name) {
+		title.setText(name);
+	}
 
     public static void main(String[] args) {
         new VentanaChat();

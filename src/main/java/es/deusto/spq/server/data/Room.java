@@ -8,11 +8,11 @@ public class Room {
 	ArrayList<Message> messages = new ArrayList<>();
 	ArrayList<User> users = new ArrayList<>();
 	String name = null;
-	User user = null;
+	User owner = null;
 	
-	public Room(User user, String name) {
+	public Room(User owner, String name) {
 		this.name = name;
-		this.user = user;
+		this.owner = owner;
 	}
 
 	public ArrayList<Message> getMessages() {
@@ -35,16 +35,12 @@ public class Room {
 		return name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public User getUser() {
-		return user;
+	public User getOwner() {
+		return owner;
 	}
 	
-	public void joinUser(User user) {
-		users.add(user);
+	public void joinUser(User owner) {
+		users.add(owner);
 		//TODO: notificar usuarios
 	}
 	
@@ -59,7 +55,7 @@ public class Room {
 
 	@Override
 	public String toString() {
-		return "Sala [messages=" + messages + ", users=" + users + ", name=" + name + ", user=" + user + "]";
+		return "Sala [messages=" + messages + ", users=" + users + ", name=" + name + ", owner=" + owner + "]";
 	}
 	
 	

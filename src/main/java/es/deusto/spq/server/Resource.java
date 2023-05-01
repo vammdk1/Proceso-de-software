@@ -1,8 +1,11 @@
 package es.deusto.spq.server;
 
+import java.util.Set;
+
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -10,11 +13,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import es.deusto.spq.pojo.RegisterData;
+import es.deusto.spq.pojo.RoomData;
 import es.deusto.spq.pojo.SessionData;
 import es.deusto.spq.pojo.TokenData;
 import es.deusto.spq.pojo.UserData;
+import es.deusto.spq.server.data.Room;
 import es.deusto.spq.server.data.Session;
 import es.deusto.spq.server.jdo.User;
+import es.deusto.spq.server.logic.RoomManager;
 
 @Path("/resource")
 @Produces(MediaType.APPLICATION_JSON)
@@ -24,88 +30,14 @@ public class Resource {
 	protected static final Logger logger = LogManager.getLogger();
 
 
-	// @POST
-	// @Path("/sayMessage")
-	// public Response sayMessage(DirectMessage directMessage) {
-	// 	User user = null;
-	// 	try{
-	// 		tx.begin();
-	// 		logger.info("Creating query ...");
-			
-	// 		try (Query<?> q = pm.newQuery("SELECT FROM " + User.class.getName() + " WHERE login == \"" + directMessage.getUserData().getLogin() + "\" &&  password == \"" + directMessage.getUserData().getPassword() + "\"")) {
-	// 			q.setUnique(true);
-	// 			user = (User)q.execute();
-				
-	// 			logger.info("User retrieved: {}", user);
-	// 			if (user != null)  {
-	// 				Message message = new Message(directMessage.getMessageData().getMessage());
-	// 				user.getMessages().add(message);
-	// 				pm.makePersistent(user);					 
-	// 			}
-	// 		} catch (Exception e) {
-	// 			e.printStackTrace();
-	// 		}
-	// 		tx.commit();
-	// 	} finally {
-	// 		if (tx.isActive()) {
-	// 			tx.rollback();
-	// 		}
-	// 	}
-		
-	// 	if (user != null) {
-	// 		cont++;
-	// 		logger.info(" * Client number: {}", cont);
-	// 		MessageData messageData = new MessageData();
-	// 		messageData.setMessage(directMessage.getMessageData().getMessage());
-	// 		return Response.ok(messageData).build();
-	// 	} else {
-	// 		return Response.status(Status.BAD_REQUEST).entity("Login details supplied for message delivery are not correct").build();
-	// 	}
-	// }
-	
-	// @POST
-	// @Path("/register")
-	// public Response registerUser(UserData userData) {
-	// 	try
-    //     {	
-    //         tx.begin();
-    //         logger.info("Checking whether the user already exits or not: '{}'", userData.getLogin());
-	// 		User user = null;
-	// 		try {
-	// 			user = pm.getObjectById(User.class, userData.getLogin());
-	// 		} catch (javax.jdo.JDOObjectNotFoundException jonfe) {
-	// 			logger.info("Exception launched: {}", jonfe.getMessage());
-	// 		}
-	// 		logger.info("User: {}", user);
-	// 		if (user != null) {
-	// 			logger.info("Setting password user: {}", user);
-	// 			user.setPassword(userData.getPassword());
-	// 			logger.info("Password set user: {}", user);
-	// 		} else {
-	// 			logger.info("Creating user: {}", user);
-	// 			user = new User(userData.getLogin(), userData.getPassword());
-	// 			pm.makePersistent(user);					 
-	// 			logger.info("User created: {}", user);
-	// 		}
-	// 		tx.commit();
-	// 		return Response.ok().build();
-    //     }
-    //     finally
-    //     {
-    //         if (tx.isActive())
-    //         {
-    //             tx.rollback();
-    //         }
-      
-	// 	}
-	// }
-
 	 @POST
-	 @Path("/hello")
-	 public Response sayHello() {
-		System.out.println("prueba");
-		 return Response.ok("Hello world!").build();
+	 @Path("/getRooms")
+	 public Response getRooms() {
+		 GenericEntity<Set<String>> entity = new GenericEntity<Set<String>>(RoomManager.getActiveRooms().keySet()) {};
+		 return Response.ok().entity(entity).build();
 	 }
+	 
+	 //login and register
 	 
 	 @POST
 	 @Path("/login")
@@ -163,5 +95,48 @@ public class Resource {
 			 return Response.ok().build();
 		 }
 	 }
+	 
+	 //rooms
+	 
+	 @POST
+	 @Path("/createRoom")
+	 public Response createRoom(RoomData roomData) {
+		 Session session = Session.getSession(roomData.getToken());
+		 if (session == null) {
+			 return Response.status(403).entity("Non valid session").build();
+		 } else {
+			 User user = session.getUser();
+			 if (user == null) {
+				 return Response.status(403).entity("Error finding user").build();
+			 }
+			 RoomManager.createRoom(roomData.getRoomName(), user);
+			 return Response.ok().build();
+		 }
+	 }
+	 
+	 @POST
+	 @Path("/deleteRoom")
+	 public Response deleteRoom(RoomData roomData) {
+		 Session session = Session.getSession(roomData.getToken());
+		 if (session == null) {
+			 return Response.status(403).entity("Non valid session").build();
+		 } else {
+			 User user = session.getUser();
+			 if (user == null) {
+				 return Response.status(403).entity("Error finding user").build();
+			 }
+			 Room room = RoomManager.getRoom(roomData.getRoomName());
+			 if (room == null) {
+				 return Response.status(403).entity("Error finding room").build();
+			 }
+			 if (!room.getOwner().getLogin().equals(user.getLogin())) {
+				 return Response.status(403).entity("Not the owner of the room").build();
+			 }
+			 RoomManager.deleteRoom(room.getName());
+			 return Response.ok().build();
+		 }
+	 }
+	 
+	 
 	 
 }

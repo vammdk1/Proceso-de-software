@@ -35,6 +35,11 @@ public class User {
 	String password = null;
 	String salt = null;
 
+	@Override
+	public String toString() {
+		return "usuario con nombre: " + login;
+	}
+
 	public User() {
 		//For datanucleus
 	}
