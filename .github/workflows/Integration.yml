@@ -31,5 +31,5 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
             sudo /etc/init.d/mysql start
-            mysql –uroot -ppassword < ./sql/create-pds.sql
+            sudo mysql –uroot -ppassword < ./sql/create-pds.sql
             mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=vammdk1_Proceso-de-software
