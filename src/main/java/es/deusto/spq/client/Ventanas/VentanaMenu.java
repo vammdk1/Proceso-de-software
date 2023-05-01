@@ -135,13 +135,18 @@ public class VentanaMenu extends JFrame{
             public void actionPerformed(ActionEvent e) {
             	if(lista.getSelectedValue()!=null) {
             		if (activeRooms.get(lista.getSelectedIndex()).isPrivate()) {
-                    	JOptionPane.showInputDialog(null, "Contraseña");
+            			String pass = JOptionPane.showInputDialog(null, "Contraseña");
                     	//TODO
-                    	JOptionPane.showMessageDialog(null, "Conectando a "+lista.getSelectedValue(),">:(",JOptionPane.INFORMATION_MESSAGE);
-                    	dispose();
-                        VentanaChat VChat = new VentanaChat();
-                        VChat.setVisible(true);
+            			/*
+            			if (!PictochatntClient.conectar()) {
+            				return;
+            			}
+            			*/
+                    	
                     }
+            		dispose();
+                    VentanaChat VChat = new VentanaChat();
+                    VChat.setVisible(true);
             	}
             }
         });
