@@ -51,7 +51,7 @@ public class PictochatntClient {
 		Invocation.Builder invoBuilder = postWebTarget.request(MediaType.APPLICATION_JSON);
 		
 		Response response = invoBuilder.post(Entity.entity(object, MediaType.APPLICATION_JSON));
-		
+		logger.warn("Probando " + response.getStatus() + " vs  " + Status.OK.getStatusCode());
 		if (response.getStatus() != Status.OK.getStatusCode()) {
 			logger.warn("HTTP Error " + response.getStatus() + " in " + path);
 		}
