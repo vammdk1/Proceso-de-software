@@ -1,8 +1,10 @@
 package es.deusto.spq.client.Ventanas;
 
-import javax.swing.*; 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.Time;
+import java.util.Arrays;
 
 public class VentanaChat extends JFrame{
 	
