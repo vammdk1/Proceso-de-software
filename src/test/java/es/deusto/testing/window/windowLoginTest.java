@@ -9,6 +9,9 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.InputEvent;
 import java.util.ArrayList;
 
 import javax.ws.rs.core.GenericEntity;
@@ -74,28 +77,24 @@ public class windowLoginTest {
 	public void testVentanaLogin() {
 		VentanaLogin ventanaLogin = new VentanaLogin();
 		assertTrue(ventanaLogin.isActive());
+		
+		Robot bot;
+		try {
+			bot = new Robot();
+			bot.mouseMove(20,20);
+			bot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+			try{Thread.sleep(250);}catch(InterruptedException e){}
+			
+		} catch (AWTException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		ventanaLogin.dispose();
+		
+		
 	}
 	
-	/*
-
-	@Test
-	public void testVentanaRegister() {
-		VentanaRegistro ventanaRegistro = new VentanaRegistro();
-		assertTrue(ventanaRegistro.isActive());
-		ventanaRegistro.dispose();
-	}
-	
-	
-
-	@Test
-	public void testVentanaChat() {
-		VentanaChat ventanaChat = new VentanaChat();
-		assertTrue(ventanaChat.isActive());
-		ventanaChat.dispose();
-	}
-	
-	*/
 	
 	
 	@Test
@@ -109,6 +108,20 @@ public class windowLoginTest {
 		
 		VentanaMenu ventanaMenu = new VentanaMenu();
 		assertTrue(ventanaMenu.isActive());
+		ventanaMenu.bCrear.doClick();
+		assertTrue(ventanaMenu.datos.isVisible());
+		
+		ventanaMenu.bConectar.doClick();
+		
+		ventanaMenu.bRefrescar.doClick();
+		
+		ventanaMenu.Aceptar.doClick();
+		
+		ventanaMenu.Cancelar.doClick();
+		
+		assertFalse(ventanaMenu.datos.isVisible());
+		
+		//ventanaMenu.bSalir.getActionListeners()
 		ventanaMenu.dispose();
 	}
 	

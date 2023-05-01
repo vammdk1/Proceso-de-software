@@ -11,11 +11,12 @@ import java.util.regex.Pattern;
 
 public class VentanaRegistro extends JFrame{
 
-private JTextField usernameField;
-    private JPasswordField passwordField;
+	public JTextField usernameField;
+    public JPasswordField passwordField;
     private JPasswordField repPasswordField;
-    private JButton loginButton;
+    public JButton loginButton;
     private JButton back;
+    public JPanel panel2;
 
 public VentanaRegistro() {
         setTitle("Sign In");
@@ -33,7 +34,7 @@ public VentanaRegistro() {
             }
         };
         
-        JPanel panel2 = new JPanel() {
+        panel2 = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
@@ -126,20 +127,20 @@ public VentanaRegistro() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(passwordField.getPassword().length==0||usernameField.getText().length()==0) {
-					JOptionPane.showMessageDialog(null, "Rellena todos los apartados", "Error", JOptionPane.ERROR_MESSAGE);
+					ensenarJOption("Rellena todos los apartados");
 					return;
 				}
 				if(passwordField.getPassword().length<8) {
-					JOptionPane.showMessageDialog(null, "La contraseña es muy corta. Minimo debe contener 8 caracteres.", "Error", JOptionPane.ERROR_MESSAGE);
+					ensenarJOption("La contraseña es muy corta. Minimo debe contener 8 caracteres.");
 					return;
 				}
 				if (!Pattern.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).+$", String.valueOf(passwordField.getPassword()))) {
-					JOptionPane.showMessageDialog(null, "La contraseña debe contener al menos una letra mayúscula, una letra minúscula y un número.", "Error", JOptionPane.ERROR_MESSAGE);
-                	return;
+					ensenarJOption("La contraseña debe contener al menos una letra mayúscula, una letra minúscula y un número.");
+					return;
                 }
 				if(Arrays.equals(passwordField.getPassword(),repPasswordField.getPassword())) {
 					if (!PictochatntClient.register(usernameField.getText(), String.valueOf(passwordField.getPassword()))) {
-						JOptionPane.showMessageDialog(null, "No se ha podido registrar el usuario", "Error", JOptionPane.ERROR_MESSAGE);
+						ensenarJOption("No se ha podido registrar el usuario");
 						return;
 					}
 					System.out.println("Contraseña Aceptada");
@@ -147,10 +148,12 @@ public VentanaRegistro() {
 					VentanaMenu VMenu = new VentanaMenu();
 					VMenu.setVisible(true);
 				}else {
-					JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden.", "Error", JOptionPane.ERROR_MESSAGE);
+					ensenarJOption("Las contraseñas no coinciden.");
 				}
 				
 			}
+
+			
 		});
         
         panel2.addMouseListener(new MouseListener() {
@@ -178,4 +181,10 @@ public VentanaRegistro() {
     public static void main(String[] args) {
         new VentanaRegistro();
     }
+
+    public boolean ensenarJOption(String string) {
+		JOptionPane.showMessageDialog(null, string, "Error", JOptionPane.ERROR_MESSAGE);
+		return true;
+		
+	}
 }

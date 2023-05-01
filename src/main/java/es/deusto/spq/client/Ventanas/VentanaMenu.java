@@ -20,10 +20,13 @@ public class VentanaMenu extends JFrame{
 
 	private static final long serialVersionUID = -3703712434748598804L;
 	private JTextField usernameField;
-	private JPanel mainPanel, leftPanel, datos;
-	private JList<String> lista;
+	public JPanel mainPanel, leftPanel, datos;
+	public JList<String> lista;
 	private JScrollPane scrollPane;
-	private JButton bCrear, bConectar, bSalir, bRefrescar;
+	public JButton bCrear;
+	public JButton bConectar;
+	public JButton bSalir, Aceptar, Cancelar;
+	public JButton bRefrescar;
 	private JLabel titleLabel;
 	private JTextField password;
 	private ArrayList<GetRoomData> activeRooms;
@@ -74,7 +77,7 @@ public class VentanaMenu extends JFrame{
 		refreshRooms();
 		
 		
-		JButton Aceptar = new JButton("Aceptar");
+		Aceptar = new JButton("Aceptar");
 		Aceptar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -97,7 +100,7 @@ public class VentanaMenu extends JFrame{
 				}
 			}
 		});
-		JButton Cancelar = new JButton("cancelar");
+		Cancelar = new JButton("cancelar");
 		Cancelar.addActionListener(new ActionListener() {
 			
 			@Override
@@ -184,6 +187,7 @@ public class VentanaMenu extends JFrame{
     }
 	
     public static void main(String[] args) {
-        new VentanaMenu();
+        VentanaMenu v = new VentanaMenu();
+        v.bCrear.doClick();
     }
 }

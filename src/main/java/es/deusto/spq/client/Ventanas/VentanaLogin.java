@@ -33,8 +33,8 @@ public class VentanaLogin extends JFrame{
 private JTextField usernameField;
 private JPasswordField passwordField;
 private JPasswordField repPasswordField;
-private JButton next;
-private JButton createAccount;
+public JButton next;
+public JButton createAccount;
 
 public VentanaLogin() {
         setTitle("Sign In");
