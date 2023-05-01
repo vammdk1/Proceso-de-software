@@ -9,9 +9,20 @@ public abstract class WebSocketData {
 	}
 	
 	public static WebSocketData decode(String str) {
-		int lineEnd = str.indexOf("\n");
-		String type = str.substring(0, lineEnd);
-		String data = str.substring(lineEnd + 1, str.length());
+		
+		int lineEnd;
+		String type;
+		String data;
+		
+		if (str.contains("\n")) {
+			lineEnd = str.indexOf("\n");
+			data = str.substring(lineEnd + 1, str.length());
+		} else {
+			lineEnd = str.length();
+			data = "";
+		}
+		
+		type = str.substring(0, lineEnd);
 		
 		if (type.equals("Send")) {
 			return WebSocketSendData.decodeData(data);
