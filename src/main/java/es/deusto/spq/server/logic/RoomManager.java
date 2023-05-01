@@ -29,8 +29,8 @@ public class RoomManager{
     * @param roomName
     * @param user
     */
-   public static void createRoom(String roomName, User user){
-	   rooms.put(roomName, new Room(user, roomName));
+   public static void createRoom(String roomName, User user, String password){
+	   rooms.put(roomName, new Room(user, roomName, password));
    }
 	
    //TODO crear las slas con token o con user

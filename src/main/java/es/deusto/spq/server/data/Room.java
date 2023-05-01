@@ -9,10 +9,12 @@ public class Room {
 	ArrayList<User> users = new ArrayList<>();
 	String name = null;
 	User owner = null;
+	String password = null;
 	
-	public Room(User owner, String name) {
+	public Room(User owner, String name, String password) {
 		this.name = name;
 		this.owner = owner;
+		this.password = password;
 	}
 
 	public ArrayList<Message> getMessages() {
@@ -39,6 +41,14 @@ public class Room {
 		return owner;
 	}
 	
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public void joinUser(User owner) {
 		users.add(owner);
 		//TODO: notificar usuarios

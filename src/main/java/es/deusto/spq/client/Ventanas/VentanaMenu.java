@@ -5,6 +5,7 @@ import javax.swing.*;
 import org.apache.logging.log4j.core.pattern.AbstractStyleNameConverter.Red;
 
 import es.deusto.spq.client.PictochatntClient;
+import es.deusto.spq.pojo.GetRoomData;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -24,6 +25,8 @@ public class VentanaMenu extends JFrame{
 	private JScrollPane scrollPane;
 	private JButton bCrear, bConectar, bSalir, bRefrescar;
 	private JLabel titleLabel;
+	private JTextField password;
+	private ArrayList<GetRoomData> activeRooms;
 	
 	public VentanaMenu() {
 
@@ -79,8 +82,7 @@ public class VentanaMenu extends JFrame{
 				if(Ns.getText().length()>0) {
 					//TODO Conectar automáticamente
 					datos.setVisible(false);
-					PictochatntClient.createRoom(Ns.getText());
-					if (PictochatntClient.createRoom(Ns.getText())) {
+					if (PictochatntClient.createRoom(Ns.getText(), password.getText())) {
 						VentanaChat VChat = new VentanaChat();
 						VChat.setVisible(true);
 						VChat.setRoomName(Ns.getText());
@@ -105,12 +107,15 @@ public class VentanaMenu extends JFrame{
 			}
 		});
 		
+		JLabel passwordL = new JLabel("Contraseña");
+		password = new JTextField(10);
 		datos.add(Nsala);
 		datos.add(Ns);
+		datos.add(passwordL);
+		datos.add(password);
 		datos.add(Aceptar);
-		datos.add(Cancelar);
-		
-        
+		datos.add(Cancelar);		
+		        
         datos.setVisible(false);
         mainPanel.add(datos, BorderLayout.SOUTH);
         
@@ -129,10 +134,14 @@ public class VentanaMenu extends JFrame{
         bConectar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	if(lista.getSelectedValue()!=null) {
-            		JOptionPane.showMessageDialog(null, "Conectando a "+lista.getSelectedValue(),">:(",JOptionPane.INFORMATION_MESSAGE);
-                	dispose();
-                    VentanaChat VChat = new VentanaChat();
-                    VChat.setVisible(true);
+            		if (activeRooms.get(lista.getSelectedIndex()).isPrivate()) {
+                    	JOptionPane.showInputDialog(null, "Contraseña");
+                    	//TODO
+                    	JOptionPane.showMessageDialog(null, "Conectando a "+lista.getSelectedValue(),">:(",JOptionPane.INFORMATION_MESSAGE);
+                    	dispose();
+                        VentanaChat VChat = new VentanaChat();
+                        VChat.setVisible(true);
+                    }
             	}
             }
         });
@@ -153,8 +162,8 @@ public class VentanaMenu extends JFrame{
         leftPanel.add(bRefrescar);
         
 
-        this.add(mainPanel, BorderLayout.CENTER);
-        this.add(leftPanel, BorderLayout.WEST);
+        getContentPane().add(mainPanel, BorderLayout.CENTER);
+        getContentPane().add(leftPanel, BorderLayout.WEST);
         
       
         this.setVisible(true);
@@ -163,9 +172,9 @@ public class VentanaMenu extends JFrame{
     private void refreshRooms(){
     	DefaultListModel<String> model = (DefaultListModel<String>) lista.getModel();
 		model.removeAllElements();
-		Set<String> activeRooms = PictochatntClient.getActiveRooms();
-		for (String room : activeRooms) {
-			model.addElement(room);
+		activeRooms = PictochatntClient.getActiveRooms();
+		for (GetRoomData room : activeRooms) {
+			model.addElement(room.getNameRoom());
 		}
     }
 	

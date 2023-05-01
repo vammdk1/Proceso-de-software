@@ -18,6 +18,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import es.deusto.spq.pojo.GetRoomData;
 import es.deusto.spq.pojo.RegisterData;
 import es.deusto.spq.pojo.RoomData;
 import es.deusto.spq.pojo.SessionData;
@@ -135,23 +136,28 @@ public class PictochatntClient {
 		}
 	}
 	
-	public static Set<String> getActiveRooms(){
+	public static ArrayList<GetRoomData> getActiveRooms(){
 		Response response = post("/getRooms");
 		
 		if (response.getStatus() != Status.OK.getStatusCode()) {
-			return new HashSet<>();
+			return new ArrayList<GetRoomData>();
 		} else {
-			Set<String> resp = response.readEntity(new GenericType<Set<String>>() {});
+			ArrayList<GetRoomData> resp = response.readEntity(new GenericType<ArrayList<GetRoomData>>() {});
 			return resp;
 		}
 	}
 	
-	public static boolean createRoom(String roomName) {
+	public static boolean createRoom(String roomName, String password) {
 		if (token == null) {
 			return false;
 		}
 		RoomData roomData = new RoomData();
 		roomData.setRoomName(roomName);
+		if (password.length() == 0) {
+			roomData.setPassword(null);
+		} else {
+			roomData.setPassword(password);
+		}
 		roomData.setToken(token);
 		Response response = post("/createRoom", roomData);
 		if (response.getStatus() != Status.OK.getStatusCode()) {

@@ -1,5 +1,7 @@
 package es.deusto.spq.server;
 
+import java.util.ArrayList;
+import java.util.Map;
 import java.util.Set;
 
 import javax.ws.rs.POST;
@@ -12,6 +14,7 @@ import javax.ws.rs.core.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import es.deusto.spq.pojo.GetRoomData;
 import es.deusto.spq.pojo.RegisterData;
 import es.deusto.spq.pojo.RoomData;
 import es.deusto.spq.pojo.SessionData;
@@ -33,7 +36,14 @@ public class Resource {
 	 @POST
 	 @Path("/getRooms")
 	 public Response getRooms() {
-		 GenericEntity<Set<String>> entity = new GenericEntity<Set<String>>(RoomManager.getActiveRooms().keySet()) {};
+		 ArrayList<GetRoomData> roomDatas = new ArrayList<>();
+		 for (Map.Entry<String, Room> entry : RoomManager.getActiveRooms().entrySet()) {
+			 GetRoomData roomData = new GetRoomData();
+			 roomData.setNameRoom(entry.getKey());
+			 roomData.setPrivate(entry.getValue().getPassword() != null);
+			 roomDatas.add(roomData);
+		 }
+		 GenericEntity<ArrayList<GetRoomData>> entity = new GenericEntity<ArrayList<GetRoomData>>(roomDatas) {};
 		 return Response.ok().entity(entity).build();
 	 }
 	 
@@ -109,7 +119,7 @@ public class Resource {
 			 if (user == null) {
 				 return Response.status(403).entity("Error finding user").build();
 			 }
-			 RoomManager.createRoom(roomData.getRoomName(), user);
+			 RoomManager.createRoom(roomData.getRoomName(), user, roomData.getPassword());
 			 return Response.ok().build();
 		 }
 	 }
