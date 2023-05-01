@@ -32,15 +32,21 @@ public class PictochatntClient {
 	private static Client client;
 	private static WebTarget webTarget;
 	
-	private static String token = null;
+	public static String token = null;
+	
+	public static PictochatntClient instace = new PictochatntClient();
+	
+	private PictochatntClient() {
+	}
 	
 	public static void init(String host, String port) {
 		logger.info("Inicializando cliante");
+		instace = new PictochatntClient();
 		client = ClientBuilder.newClient();
 		webTarget = client.target(String.format("http://%s:%s/rest/resource", host, port));
 	}
 	
-	private static <T> Response post(String path, T object) {
+	public <T> Response post(String path, T object) {
 		WebTarget postWebTarget = webTarget.path(path);
 		Invocation.Builder invoBuilder = postWebTarget.request(MediaType.APPLICATION_JSON);
 		
@@ -53,7 +59,7 @@ public class PictochatntClient {
 		return response;
 	}
 	
-	private static Response post(String path) {
+	public Response post(String path) {
 		WebTarget postWebTarget = webTarget.path(path);
 		Invocation.Builder invoBuilder = postWebTarget.request(MediaType.APPLICATION_JSON);
 		
@@ -71,7 +77,7 @@ public class PictochatntClient {
 		userData.setLogin(user);
 		userData.setPassword(password);
 		
-		Response response = post("/login", userData);
+		Response response = instace.post("/login", userData);
 		
 		if (response.getStatus() != Status.OK.getStatusCode()) {
 			return false;
@@ -87,7 +93,7 @@ public class PictochatntClient {
 		registerData.setLogin(user);
 		registerData.setPassword(password);
 		
-		Response response = post("/register", registerData);
+		Response response = instace.post("/register", registerData);
 		
 		if (response.getStatus() != Status.OK.getStatusCode()) {
 			return false;
@@ -106,7 +112,7 @@ public class PictochatntClient {
 			TokenData tokenData = new TokenData();
 			tokenData.setToken(token);
 			
-			Response response = post("/logout", tokenData);
+			Response response = instace.post("/logout", tokenData);
 			
 			if (response.getStatus() != Status.OK.getStatusCode()) {
 				return false;
@@ -125,7 +131,7 @@ public class PictochatntClient {
 			TokenData tokenData = new TokenData();
 			tokenData.setToken(token);
 			
-			Response response = post("/deleteUser", tokenData);
+			Response response = instace.post("/deleteUser", tokenData);
 			
 			if (response.getStatus() != Status.OK.getStatusCode()) {
 				return false;
@@ -137,7 +143,7 @@ public class PictochatntClient {
 	}
 	
 	public static ArrayList<GetRoomData> getActiveRooms(){
-		Response response = post("/getRooms");
+		Response response = instace.post("/getRooms");
 		
 		if (response.getStatus() != Status.OK.getStatusCode()) {
 			return new ArrayList<GetRoomData>();
@@ -159,7 +165,7 @@ public class PictochatntClient {
 			roomData.setPassword(password);
 		}
 		roomData.setToken(token);
-		Response response = post("/createRoom", roomData);
+		Response response = instace.post("/createRoom", roomData);
 		if (response.getStatus() != Status.OK.getStatusCode()) {
 			return false;
 		} else {
@@ -174,11 +180,16 @@ public class PictochatntClient {
 		RoomData roomData = new RoomData();
 		roomData.setToken(token);
 		roomData.setRoomName(roomName);
-		Response response = post("/deleteRoom", roomData);
+		Response response = instace.post("/deleteRoom", roomData);
 		if (response.getStatus() != Status.OK.getStatusCode()) {
 			return false;
 		} else {
 			return true;
 		}
+	}
+
+	public Object getToken() {
+		// TODO Auto-generated method stub
+		return this.token;
 	}
 }
