@@ -1,8 +1,7 @@
 package es.deusto.spq.server;
 
-import java.util.ArrayList;
+import java.util.ArrayList; 
 import java.util.Map;
-import java.util.Set;
 
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;

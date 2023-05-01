@@ -1,12 +1,9 @@
 package es.deusto.spq.client;
 
-import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.LogManager; 
 import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -24,7 +21,6 @@ import es.deusto.spq.pojo.RoomData;
 import es.deusto.spq.pojo.SessionData;
 import es.deusto.spq.pojo.TokenData;
 import es.deusto.spq.pojo.UserData;
-import es.deusto.spq.server.data.Room;
 
 public class PictochatntClient {
 	protected static final Logger logger = LogManager.getLogger();
@@ -190,6 +186,6 @@ public class PictochatntClient {
 
 	public Object getToken() {
 		// TODO Auto-generated method stub
-		return this.token;
+		return PictochatntClient.token;
 	}
 }
