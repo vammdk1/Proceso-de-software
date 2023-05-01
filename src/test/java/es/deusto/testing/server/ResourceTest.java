@@ -17,6 +17,7 @@ import es.deusto.spq.pojo.TokenData;
 import es.deusto.spq.pojo.UserData;
 import es.deusto.spq.server.Resource;
 import es.deusto.spq.server.jdo.User;
+import es.deusto.spq.server.logic.RoomManager;
 
 public class ResourceTest {
 	Resource resource;
@@ -124,6 +125,18 @@ public class ResourceTest {
 		respuesta = resource.createRoom(roomData);
 		assertEquals(403, respuesta.getStatus());
 		
+		RegisterData registerData2 = new RegisterData();
+		registerData2.setLogin("victor");
+		registerData2.setPassword("contrasenna");
+		Response response2 = resource.register(registerData2);
+		SessionData sessionData2 = (SessionData)response2.getEntity();
+		
+		RoomManager roomManager = new RoomManager();
+		roomManager.addUserRoom(new User(registerData2.getLogin(),registerData2.getPassword()), roomData.getRoomName());
+		roomManager.addUserRoom(new User(registerData2.getLogin(),registerData2.getPassword()), "patata");
+		assertEquals(registerData2.getLogin(), roomManager.getRoom(roomData.getRoomName()).getUsers().get(0).getLogin());
+		roomManager.deleteUserRoom(new User(registerData2.getLogin(),registerData2.getPassword()), "patata");
+		
 	}
 	
 	@Test
@@ -206,7 +219,7 @@ public class ResourceTest {
 		assertEquals(403, respuesta.getStatus());
 		
 	}
-	
+
 	
 	
 }
