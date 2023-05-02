@@ -30,7 +30,7 @@ public class WebSocketTest {
 		webSocketData2 = "Join\n1\nHola";
 		webSocketData3 = "Send\n01-01-2001\nPepe\nHola amigos";
 		webSocketData4 = "Receive\n01-01-2001\nPepe\nHola amigos";
-		webSocketData5 = "History\n";
+		webSocketData5 = "History\n01-01-2001-Pepe-Hola amigos\n02-02-2002-Carlos-Buenas noches";
 		wSJD = (WebSocketJoinData) WebSocketData.decode(webSocketData2);
 	}
 	
@@ -74,9 +74,8 @@ public class WebSocketTest {
 		assertEquals(wSJD.getType(), "Leave");
 		assertEquals(WebSocketData.decode(webSocketData3).encode(), "Send\n01-01-2001\nPepe\nHola amigos");
 		assertEquals(WebSocketData.decode(webSocketData4).encode(), "Receive\n01-01-2001\nPepe\nHola amigos");
-		System.out.println(WebSocketData.decode(webSocketData3).getType() + " " + ((WebSocketSendData) WebSocketData.decode(webSocketData3)).getDate() + " " + ((WebSocketSendData) WebSocketData.decode(webSocketData3)).getUser() + " " + ((WebSocketSendData) WebSocketData.decode(webSocketData3)).getMessage());
-		System.out.println(WebSocketData.decode(webSocketData4).getType() + " " + ((WebSocketReceiveData) WebSocketData.decode(webSocketData4)).getDate() + " " + ((WebSocketReceiveData) WebSocketData.decode(webSocketData4)).getUser() + " " + ((WebSocketReceiveData) WebSocketData.decode(webSocketData4)).getMessage());
-		assertEquals(WebSocketData.decode(webSocketData5), null);
-		assertEquals(new WebSocketHistoryData().encode(), null);
+		//System.out.println(WebSocketData.decode(webSocketData3).getType() + " " + ((WebSocketSendData) WebSocketData.decode(webSocketData3)).getDate() + " " + ((WebSocketSendData) WebSocketData.decode(webSocketData3)).getUser() + " " + ((WebSocketSendData) WebSocketData.decode(webSocketData3)).getMessage());
+		//System.out.println(WebSocketData.decode(webSocketData4).getType() + " " + ((WebSocketReceiveData) WebSocketData.decode(webSocketData4)).getDate() + " " + ((WebSocketReceiveData) WebSocketData.decode(webSocketData4)).getUser() + " " + ((WebSocketReceiveData) WebSocketData.decode(webSocketData4)).getMessage());
+		assertEquals(WebSocketData.decode(webSocketData5).encode(), "History\n01-01-2001-Pepe-Hola amigos\n02-02-2002-Carlos-Buenas noches");
 	}
 }
