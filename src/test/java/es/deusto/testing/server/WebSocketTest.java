@@ -7,6 +7,7 @@ import java.io.IOException;
 import org.junit.Before;
 import org.junit.Test;
 
+import es.deusto.spq.server.jdo.User;
 import es.deusto.spq.server.websockets.WebSocket;
 import es.deusto.spq.server.websockets.WebSocketData;
 import es.deusto.spq.server.websockets.WebSocketHistoryData;
@@ -28,9 +29,9 @@ public class WebSocketTest {
 		webSocket = new WebSocket();
 		webSocketData1 = "Leave\n";
 		webSocketData2 = "Join\n1\nHola";
-		webSocketData3 = "Send\n01-01-2001\nPepe\nHola amigos";
+		webSocketData3 = "Send\nHola amigos";
 		webSocketData4 = "Receive\n01-01-2001\nPepe\nHola amigos";
-		webSocketData5 = "History\n01-01-2001-Pepe-Hola amigos\n02-02-2002-Carlos-Buenas noches";
+		webSocketData5 = "History\n112-Pepe-Hola amigos\n222-Carlos-Buenas noches";
 		wSJD = (WebSocketJoinData) WebSocketData.decode(webSocketData2);
 	}
 	
@@ -72,10 +73,10 @@ public class WebSocketTest {
 		assertEquals(WebSocketData.decode(webSocketData2).encode(), "Join\n1\nHola");
 		wSJD.setType("Leave");
 		assertEquals(wSJD.getType(), "Leave");
-		assertEquals(WebSocketData.decode(webSocketData3).encode(), "Send\n01-01-2001\nPepe\nHola amigos");
+		assertEquals(WebSocketData.decode(webSocketData3).encode(), "Send\nHola amigos");
 		assertEquals(WebSocketData.decode(webSocketData4).encode(), "Receive\n01-01-2001\nPepe\nHola amigos");
 		//System.out.println(WebSocketData.decode(webSocketData3).getType() + " " + ((WebSocketSendData) WebSocketData.decode(webSocketData3)).getDate() + " " + ((WebSocketSendData) WebSocketData.decode(webSocketData3)).getUser() + " " + ((WebSocketSendData) WebSocketData.decode(webSocketData3)).getMessage());
 		//System.out.println(WebSocketData.decode(webSocketData4).getType() + " " + ((WebSocketReceiveData) WebSocketData.decode(webSocketData4)).getDate() + " " + ((WebSocketReceiveData) WebSocketData.decode(webSocketData4)).getUser() + " " + ((WebSocketReceiveData) WebSocketData.decode(webSocketData4)).getMessage());
-		assertEquals(WebSocketData.decode(webSocketData5).encode(), "History\n01-01-2001-Pepe-Hola amigos\n02-02-2002-Carlos-Buenas noches");
+		assertEquals(WebSocketData.decode(webSocketData5).encode(),  "History\n112-Pepe-Hola amigos\n222-Carlos-Buenas noches");
 	}
 }

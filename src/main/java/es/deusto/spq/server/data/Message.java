@@ -5,24 +5,40 @@ import java.util.Date;
 import es.deusto.spq.server.jdo.User;
 
 public class Message {
-	User user = null;
-	String text = null;
-	long timestamp;
+	String user = null;
+	private String text = null;
+	private long timestamp;
 
     public Message(String text) {
-        this.text = text;
-		this.timestamp = System.currentTimeMillis();
+        this.setText(text);
+		this.setTimestamp(System.currentTimeMillis());
     }
 
-	public User getUser() {
+	public String getUser() {
         return user;
     }
+	
+	public String getText() {
+		return text;
+	}
+	
+	public long getTimestamp() {
+		return timestamp;
+	}
 
-    public void setUser(User user) {
+    public void setUser(String user) {
         this.user = user;
     }
 
+	public void setText(String text) {
+		this.text = text;
+	}
+	
+	public void setTimestamp(long timestamp) {
+		this.timestamp = timestamp;
+	}
+	
     public String toString() {
-        return "Message: message --> " + this.text + ", timestamp -->  " + new Date(this.timestamp);
+        return "Message: message --> " + this.getText() + ", timestamp -->  " + new Date(this.getTimestamp());
     }
 }
