@@ -12,6 +12,7 @@ import javax.websocket.server.ServerEndpoint;
 @ServerEndpoint(value = "/websocket")
 public class WebSocket {
 
+	/*
 	@OnOpen
 	public void onOpen(Session session) throws IOException {
 		
@@ -30,5 +31,5 @@ public class WebSocket {
 	@OnError
 	public void onError(Session session, Throwable throwable) {
 		
-	}
+	}*/
 }
