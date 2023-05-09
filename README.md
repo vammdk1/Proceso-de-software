@@ -24,3 +24,7 @@ El proyecto requiere de dos ventanas, una para todos los comandos , y otra para 
 Now, the client sample code can be executed in a new command window with
 
     mvn exec:java -Pclient
+
+To launch the Unit Tests
+      
+      mvn test
