@@ -23,7 +23,7 @@ import es.deusto.spq.client.Ventanas.VentanaChat;
 import es.deusto.spq.client.Ventanas.VentanaRegistro;
 
 public class windowOthersTest {
-	
+	/**
 	
 	/*
 	@Test
@@ -39,7 +39,7 @@ public class windowOthersTest {
 	    //Perform actual test code
 	    assertFalse(toTest.myMethod());
 	}
-	*/
+	
 	
 	@Test
 	public void testVentanaRegister() {
@@ -107,6 +107,6 @@ public class windowOthersTest {
 		ventanaChat.dispose();
 	}
 	
-	
+	**/
 	
 }

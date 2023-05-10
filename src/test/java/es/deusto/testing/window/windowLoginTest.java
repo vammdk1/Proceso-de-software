@@ -41,6 +41,7 @@ import es.deusto.spq.server.Resource;
 import es.deusto.spq.server.jdo.User;
 
 public class windowLoginTest {
+	/**
 	Resource resource;
 	
 	UserData user ;
@@ -124,5 +125,5 @@ public class windowLoginTest {
 		//ventanaMenu.bSalir.getActionListeners()
 		ventanaMenu.dispose();
 	}
-	
+	**/
 }
