@@ -6,7 +6,9 @@ import javax.jdo.Extent;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
+import javax.jdo.annotations.Join;
 import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import org.apache.logging.log4j.LogManager;
@@ -34,6 +36,9 @@ public class User {
 	String login = null;
 	String password = null;
 	String salt = null;
+	@Join
+	@Persistent(mappedBy="login", dependentElement="true", defaultFetchGroup="true")
+	ArrayList<String> friendList = new ArrayList<>();
 
 	@Override
 	public String toString() {
@@ -77,6 +82,14 @@ public class User {
 	public boolean isPasswordCorrect(String password) {
 		byte[] test = this.genPassHash(password);
 		return Arrays.equals(test, HexUtils.hexToBytes(this.password));
+	}
+	
+	public ArrayList<String> getFriendsList(){
+		return friendList;
+	}
+	
+	public void addFriend(String user) {
+		friendList.add(user);
 	}
 	
 	public void save() {

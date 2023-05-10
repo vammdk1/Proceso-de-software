@@ -30,6 +30,7 @@ public class VentanaMenu extends JFrame{
 	private JLabel titleLabel;
 	private JTextField password;
 	private ArrayList<GetRoomData> activeRooms;
+	private JButton bPerfil;
 	
 	public VentanaMenu() {
 
@@ -60,7 +61,7 @@ public class VentanaMenu extends JFrame{
         mainPanel.add(scrollPane, BorderLayout.CENTER);
         
         leftPanel = new JPanel();
-        leftPanel.setLayout(new GridLayout(5, 1));
+        leftPanel.setLayout(new GridLayout(6, 1));
         leftPanel.setPreferredSize(new Dimension(200, 0));
         
         titleLabel = new JLabel("Menu principal");
@@ -134,6 +135,15 @@ public class VentanaMenu extends JFrame{
             	
             }
         });
+        bPerfil.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                //System.out.println("Button 1 clicked");
+            	dispose();
+                VentanaPerfil VPerfil = new VentanaPerfil();
+                VPerfil.setVisible(true);
+            	
+            }
+        });
         bConectar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	if(lista.getSelectedValue()!=null) {
@@ -165,6 +175,9 @@ public class VentanaMenu extends JFrame{
             }
         });
         leftPanel.add(bCrear);
+        
+        bPerfil = new JButton("Perfil");
+        leftPanel.add(bPerfil);
         leftPanel.add(bConectar);
         leftPanel.add(bSalir);
         leftPanel.add(bRefrescar);

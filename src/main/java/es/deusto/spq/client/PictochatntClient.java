@@ -15,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import es.deusto.spq.pojo.FriendData;
 import es.deusto.spq.pojo.GetRoomData;
 import es.deusto.spq.pojo.RegisterData;
 import es.deusto.spq.pojo.RoomData;
@@ -136,6 +137,39 @@ public class PictochatntClient {
 				return true;
 			}
 		}
+	}
+	
+	
+	public static ArrayList<String> getFriendList() {
+		
+		TokenData tokenData = new TokenData();
+		tokenData.setToken(token);
+		
+		Response response = instace.post("/getFriends", tokenData);
+		
+		if (response.getStatus() != Status.OK.getStatusCode()) {
+			return new ArrayList<String>();
+		} else {
+			ArrayList<String> resp = response.readEntity(new GenericType<ArrayList<String>>() {});
+			return resp;
+		}
+		
+	}
+	
+	public static boolean addFriend(String name) {
+		
+		FriendData friendData = new FriendData();
+		friendData.setToken(token);
+		friendData.setFriendName(name);
+		
+		Response response = instace.post("/addFriend", friendData);
+		
+		if (response.getStatus() != Status.OK.getStatusCode()) {
+			return false;
+		} else {
+			return true;
+		}
+		
 	}
 	
 	public static ArrayList<GetRoomData> getActiveRooms(){
