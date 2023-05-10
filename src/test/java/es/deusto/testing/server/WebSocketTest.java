@@ -30,7 +30,7 @@ public class WebSocketTest {
 	
 	@Before
 	public void setUp() {
-		webSocket = new WebSocket();
+		//webSocket = new WebSocket();
 		webSocketData1 = "Leave\n";
 		webSocketData2 = "Join\n1\nHola";
 		webSocketData3 = "Send\nHola amigos";
