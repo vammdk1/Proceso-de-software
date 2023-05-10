@@ -13,6 +13,7 @@ import javax.ws.rs.core.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import es.deusto.spq.pojo.FriendData;
 import es.deusto.spq.pojo.GetRoomData;
 import es.deusto.spq.pojo.RegisterData;
 import es.deusto.spq.pojo.RoomData;
@@ -102,6 +103,37 @@ public class Resource {
 			 user.delete();
 			 session.invalidateSession();
 			 return Response.ok().build();
+		 }
+	 }
+	 
+	 @POST
+	 @Path("/getFriends")
+	 public Response getFriends(TokenData tokenData) {
+		 User user = Session.getSession(tokenData.getToken()).getUser();
+		 if (user == null ) {
+			 return Response.status(403).entity("Incorrect user").build();
+		 } else {
+			 return Response.ok().entity( user.getFriendsList()).build();
+		 }
+	 }
+	 
+	 @POST
+	 @Path("/addFriend")
+	 public Response addFriends(FriendData friendData) {
+		 User user = Session.getSession(friendData.getToken()).getUser();
+		 if (user == null) {
+			 return Response.status(403).entity("Incorrect user").build();
+		 } else {
+			 User user2 = User.find(friendData.getFriendName());
+			 if (user2 == null) {
+				 return Response.status(403).entity("friend does not exist").build();
+			 } else {
+				 user.addFriend(user2.getLogin());
+				 user.save();
+				 user2.addFriend(user.getLogin());
+				 user2.save();
+				 return Response.ok().build();
+			 }
 		 }
 	 }
 	 
