@@ -12,7 +12,7 @@ import org.junit.Test;
 
 import es.deusto.spq.server.data.Message;
 import es.deusto.spq.server.jdo.User;
-import es.deusto.spq.server.websockets.WebSocket;
+import es.deusto.spq.server.websockets.PictochatntWebSocketServer;
 import es.deusto.spq.server.websockets.WebSocketData;
 import es.deusto.spq.server.websockets.WebSocketHistoryData;
 import es.deusto.spq.server.websockets.WebSocketJoinData;
@@ -20,7 +20,7 @@ import es.deusto.spq.server.websockets.WebSocketReceiveData;
 import es.deusto.spq.server.websockets.WebSocketSendData;
 
 public class WebSocketTest {
-	WebSocket webSocket;
+	PictochatntWebSocketServer webSocket;
 	String webSocketData1;
 	String webSocketData2;
 	String webSocketData3;
