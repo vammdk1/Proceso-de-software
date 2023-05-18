@@ -35,7 +35,7 @@ public class WebSocketHistoryData extends WebSocketData {
 		for (int i = 0; i < data.length(); i++) {
 			if (data.charAt(i) == '\n') {
 				String currentMessage = data.substring(lastNum, i);
-				Message message = new Message("");
+				Message message = new Message("", "");
 				for (int j = 0; j < currentMessage.length(); j++) {
 						int dateLineEnd = currentMessage.indexOf("-");
 						int userLineEnd = currentMessage.indexOf("-", currentMessage.indexOf("-") + 1);
@@ -53,7 +53,7 @@ public class WebSocketHistoryData extends WebSocketData {
 				messages.add(message);
 			} else if (i == data.length() - 1) {
 				String currentMessage = data.substring(lastNum, i+1);
-				Message message = new Message("");
+				Message message = new Message("", "");
 				for (int j = 0; j < currentMessage.length(); j++) {
 					int dateLineEnd = currentMessage.indexOf("-");
 					int userLineEnd = currentMessage.indexOf("-", currentMessage.indexOf("-") + 1);

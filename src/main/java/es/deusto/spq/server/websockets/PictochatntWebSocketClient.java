@@ -14,7 +14,7 @@ public class PictochatntWebSocketClient {
  
     private Session session;
      
-    CountDownLatch latch= new CountDownLatch(1);
+    CountDownLatch latch = new CountDownLatch(1);
  
     @OnWebSocketMessage
     public void onText(Session session, String message) throws IOException {
@@ -37,6 +37,7 @@ public class PictochatntWebSocketClient {
         }
     }
      
+    
     public CountDownLatch getLatch() {
         return latch;
     }

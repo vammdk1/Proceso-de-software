@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.eclipse.jetty.websocket.api.Session;
 
 import es.deusto.spq.server.data.Room;
 import es.deusto.spq.server.jdo.User;
@@ -34,11 +35,12 @@ public class RoomManager{
    }
 	
    //TODO crear las slas con token o con user
-   public static void addUserRoom(User user, String roomName ){
+   public static boolean addUserRoom(User user, String roomName, Session session ){
 		if(rooms.containsKey(roomName)){
-			rooms.get(roomName).joinUser(user);
+			return rooms.get(roomName).joinUser(user, session);
 		}else{
 			logger.warn("La sala " + roomName + " no existe");
+			return false;
 		}
    }
 
@@ -50,11 +52,12 @@ public class RoomManager{
         }
    }
    
-   public static void deleteUserRoom(User user, String roomName ){
+   public static boolean deleteUserRoom(User user, String roomName ){
 	    if(rooms.containsKey(roomName)){
-	    	rooms.get(roomName).deleteUser(user);
+	    	return rooms.get(roomName).deleteUser(user);
 	    }else{
 	    	logger.warn("La usuario " + user + " no esta en la sala " + roomName);
+	    	return false;
 	    }
    }
    

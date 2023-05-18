@@ -8,7 +8,7 @@ import org.eclipse.jetty.websocket.client.WebSocketClient;
 public class WebSocketApp {
  
     public static void main(String[] args) {
-        String dest = "ws://localhost:8080/websocket";
+        String dest = "ws://localhost:8080/websocket?token=aaa&room=bbb&password=ccc";
         WebSocketClient client = new WebSocketClient();
         try {
             PictochatntWebSocketClient socket = new PictochatntWebSocketClient();
@@ -19,7 +19,7 @@ public class WebSocketApp {
             socket.getLatch().await();
             socket.sendMessage("echo");
             socket.sendMessage("test");
-            Thread.sleep(10000l);
+            Thread.sleep(1000);
  
         } catch (Throwable t) {
             t.printStackTrace();

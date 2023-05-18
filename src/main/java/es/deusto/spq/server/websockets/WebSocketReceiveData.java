@@ -2,11 +2,11 @@ package es.deusto.spq.server.websockets;
 
 public class WebSocketReceiveData extends WebSocketData {
 
-	private String date;
+	private long date;
 	private String user;
 	private String message;
 	
-	public WebSocketReceiveData(String date, String user, String message) {
+	public WebSocketReceiveData(long date, String user, String message) {
 		super("Receive");
 		this.setDate(date);
 		this.setUser(user);
@@ -25,14 +25,14 @@ public class WebSocketReceiveData extends WebSocketData {
 		int dateLineEnd = data.indexOf("\n");
 		int userLineEnd = data.indexOf("\n", data.indexOf("\n") + 1);
 		
-		String date = data.substring(0, dateLineEnd);
+		long date = Long.parseLong(data.substring(0, dateLineEnd));
 		String user = data.substring(dateLineEnd + 1, userLineEnd);
 		String message = data.substring(userLineEnd + 1, data.length());
 		
 		return new WebSocketReceiveData(date, user, message);
 	}
 
-	public String getDate() {
+	public long getDate() {
 		return date;
 	}
 	
@@ -44,7 +44,7 @@ public class WebSocketReceiveData extends WebSocketData {
 		return message;
 	}
 
-	public void setDate(String date) {
+	public void setDate(long date) {
 		this.date = date;
 	}
 
