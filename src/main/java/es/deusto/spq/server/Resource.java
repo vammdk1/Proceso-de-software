@@ -68,6 +68,8 @@ public class Resource {
 		 User user = User.find(registerData.getLogin());
 		 if (user != null) {
 			 return Response.status(403).entity("This user already exists").build();
+		 } else if (registerData.getLogin().equals("SYSTEM")) {
+			 return Response.status(403).entity("This username is not allowed").build();
 		 } else {
 			 user = new User(registerData.getLogin(), registerData.getPassword());
 			 user.save();

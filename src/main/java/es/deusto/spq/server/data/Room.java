@@ -1,15 +1,26 @@
 package es.deusto.spq.server.data;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import es.deusto.spq.server.jdo.User;
+import es.deusto.spq.server.websockets.WebSocketData;
+import es.deusto.spq.server.websockets.WebSocketLeaveData;
+import es.deusto.spq.server.websockets.WebSocketReceiveData;
 
 public class Room {
+	protected static final Logger logger = LogManager.getLogger();
+	
 	ArrayList<Message> messages = new ArrayList<>();
-	ArrayList<User> users = new ArrayList<>();
+	HashMap<User, org.eclipse.jetty.websocket.api.Session> users = new HashMap<User, org.eclipse.jetty.websocket.api.Session>();
 	String name = null;
 	User owner = null;
 	String password = null;
+	
 	
 	public Room(User owner, String name, String password) {
 		this.name = name;
@@ -25,12 +36,8 @@ public class Room {
 		this.messages = messages;
 	}
 
-	public ArrayList<User> getUsers() {
+	public HashMap<User, org.eclipse.jetty.websocket.api.Session> getUsers() {
 		return users;
-	}
-
-	public void setUsers(ArrayList<User> users) {
-		this.users = users;
 	}
 
 	public String getName() {
@@ -49,20 +56,49 @@ public class Room {
 		this.password = password;
 	}
 
-	public void joinUser(User owner) {
-		users.add(owner);
-		//TODO: notificar usuarios
+	public boolean joinUser(User user, org.eclipse.jetty.websocket.api.Session session) {
+		if (users.containsKey(user)) {
+			return false;
+		} else {
+			Message message = new Message(user.getLogin() + " ha entrado en la sala.", "SYSTEM");
+			this.addMessage(message);		
+			users.put(user, session);
+			return true;
+		}
 	}
+	
+	public boolean deleteUser (User usuario){
+		if (!users.containsKey(usuario)) {
+			return false;
+		}
+		WebSocketLeaveData data = new WebSocketLeaveData();
+		try {
+			users.get(usuario).getRemote().sendString(data.encode());
+		} catch (IOException e) {
+			logger.error("Error broadcasting message");
+			e.printStackTrace();
+		}
+		users.remove(usuario);
+		Message message = new Message(usuario.getLogin() + " ha salido de la sala.", "SYSTEM");
+		this.addMessage(message);
+		return true;
+	}
+
 	
 	public void addMessage(Message message) {
 		messages.add(message);
-		//TODO: notificar usuarios
+		WebSocketReceiveData data = new WebSocketReceiveData(message.getTimestamp(), message.getUser(), message.getText());
+		String encodedData = data.encode();
+		for (org.eclipse.jetty.websocket.api.Session s : users.values()) {
+			try {
+				s.getRemote().sendString(encodedData);
+			} catch (IOException e) {
+				logger.error("Error broadcasting message");
+				e.printStackTrace();
+			}
+		}
 	}
-
-	public void deleteUser (User usuario){
-		users.remove(users.indexOf(usuario));
-	}
-
+	
 	@Override
 	public String toString() {
 		return "Sala [messages=" + messages + ", users=" + users + ", name=" + name + ", owner=" + owner + "]";

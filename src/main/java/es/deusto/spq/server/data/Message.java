@@ -9,8 +9,9 @@ public class Message {
 	private String text = null;
 	private long timestamp;
 
-    public Message(String text) {
+    public Message(String text, String user) {
         this.setText(text);
+        this.setUser(user);
 		this.setTimestamp(System.currentTimeMillis());
     }
 

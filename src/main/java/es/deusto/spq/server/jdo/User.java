@@ -129,6 +129,17 @@ public class User {
 			pm.close();
 		}
 	}
+	
+	public boolean equals(User user) {
+		if (user == null) {
+			return false;
+		}
+		return user.getLogin().equals(this.login);
+	}
+	
+	public int hashCode() {
+		return this.login.hashCode();
+	}
 
 	public static List<User> getAll() {
 		PersistenceManager pm = PMF.get().getPersistenceManager();
