@@ -135,6 +135,7 @@ public class VentanaMenu extends JFrame{
             	
             }
         });
+        bPerfil = new JButton("Perfil");
         bPerfil.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 //System.out.println("Button 1 clicked");
@@ -176,7 +177,7 @@ public class VentanaMenu extends JFrame{
         });
         leftPanel.add(bCrear);
         
-        bPerfil = new JButton("Perfil");
+        
         leftPanel.add(bPerfil);
         leftPanel.add(bConectar);
         leftPanel.add(bSalir);
@@ -191,16 +192,18 @@ public class VentanaMenu extends JFrame{
     }
     
     private void refreshRooms(){
+    	
     	DefaultListModel<String> model = (DefaultListModel<String>) lista.getModel();
 		model.removeAllElements();
 		activeRooms = PictochatntClient.getActiveRooms();
 		for (GetRoomData room : activeRooms) {
 			model.addElement(room.getNameRoom());
 		}
+		
     }
 	
     public static void main(String[] args) {
         VentanaMenu v = new VentanaMenu();
-        v.bCrear.doClick();
+        //v.bCrear.doClick();
     }
 }
