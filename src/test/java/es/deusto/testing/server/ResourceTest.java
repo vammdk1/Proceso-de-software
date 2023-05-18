@@ -26,6 +26,8 @@ import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import com.mysql.cj.protocol.x.Ok;
+
 import es.deusto.spq.pojo.RegisterData;
 import es.deusto.spq.pojo.RoomData;
 import es.deusto.spq.pojo.SessionData;
@@ -36,7 +38,11 @@ import es.deusto.spq.server.jdo.User;
 import es.deusto.spq.server.logic.RoomManager;
 
 public class ResourceTest {
+	
+	@Mock
 	Resource resource;
+	
+	Response response;
 	
 	@Mock
     private PersistenceManager persistenceManager;
@@ -44,25 +50,75 @@ public class ResourceTest {
     @Mock
     private Transaction transaction;
     
-	@Before
-	public void setUp() {
-		resource = new Resource();		
-		MockitoAnnotations.openMocks(this);
+    @Before
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
+        Resource resource = mock(Resource.class);
+        //resource = new Resource();
+        
+    }
+    @Test
+    public void testRegisterMock() {
+        // prepare mock Persistence Manager to return User
+        RegisterData registerData = new RegisterData();
+        registerData.setLogin("test-login");
+        registerData.setPassword("passwd");
 
-	        // initializing static mock object PersistenceManagerFactory
-	        try (MockedStatic<JDOHelper> jdoHelper = Mockito.mockStatic(JDOHelper.class)) {
-	            PersistenceManagerFactory pmf = mock(PersistenceManagerFactory.class);
-	            jdoHelper.when(() -> JDOHelper.getPersistenceManagerFactory("datanucleus.properties")).thenReturn(pmf);
-	            
-	            when(pmf.getPersistenceManager()).thenReturn(persistenceManager);
-	            when(persistenceManager.currentTransaction()).thenReturn(transaction);
+        // create a response object
+        Response response = mock(Response.class);
+        when(response.getStatusInfo()).thenReturn(Response.Status.OK);
 
-	            // instantiate tested object with mock dependencies
-	            resource = new Resource();
-	        }		
-	}
+        // simulate that
+        when(resource.register(any(RegisterData.class))).thenReturn(response);
+
+        // call tested method
+        Response result = resource.register(registerData);
+        System.out.println(result.getStatusInfo());
+
+        // verify the password is set to "passwd"
+        ArgumentCaptor<RegisterData> registerDataCaptor = ArgumentCaptor.forClass(RegisterData.class);
+        verify(resource).register(registerDataCaptor.capture());
+        assertEquals("passwd", registerDataCaptor.getValue().getPassword());
+
+        // check expected response
+        assertEquals(response, result);
+        assertEquals(Response.Status.OK, result.getStatusInfo());
+    }
+		/**
+		@Test
+		public void testLoginMock() {
+			RegisterData registerData = new RegisterData();
+			registerData.setLogin("Marian");
+			registerData.setPassword("contrasena");
+			
+			User user = spy(User.class);
+			when(persistenceManager.getObjectById(User.class, registerData.getLogin())).thenReturn(user);
+			
+			Response response = resource.register(registerData);
+			
+			SessionData sessionData = spy(SessionData.class);
+			when(persistenceManager.getObjectById(SessionData.class,sessionData)).thenReturn(sessionData);
+			Response responseS = (Response)response.getEntity();
+			//SessionData sessionData = (SessionData)response.getEntity();
+
+			UserData userData = new UserData();
+			userData.setLogin("Marian");
+			userData.setPassword("contrasena");
+			
+			User user2 = spy(User.class);
+			when(persistenceManager.getObjectById(User.class, userData.getLogin())).thenReturn(user2);
+			
+			Response respuesta = resource.login(userData);
+			//System.out.println("asklfjdañlskfdjañlfjñasdlfj: " + User.getAll());
+			assertEquals(403, respuesta.getStatus());
+			
+			userData.setLogin("daniel");
+			respuesta = resource.login(userData);
+			assertEquals(403, respuesta.getStatus());
+			
+		}**/
 	
-	
+// ------- Pruebas de integración -----------------//
 	/**
 	@Test
 	public void testRegister() {
@@ -255,7 +311,7 @@ public class ResourceTest {
 		assertEquals(403, respuesta.getStatus());
 		
 	}
-**/
-	
+
+	**/
 	
 }
