@@ -5,15 +5,15 @@ This example relies on the DataNucleus Maven plugin. Check the database configur
 
 Run the following command to build everything and enhance the DB classes:
 
-      mvn clean compile
+    mvn clean compile
 
 Make sure that the database was correctly configured. Use the contents of the file *create-message.sql* to create the database and grant privileges. For example,
 
-      mysql –u root -p < sql/create-pds.sql
+    mysql –u root -p < sql/create-pds.sql
 
 Run the following command to create database schema for this sample.
 
-      mvn datanucleus:schema-create
+    mvn datanucleus:schema-create
 
 To launch the server run the command
 
@@ -27,4 +27,9 @@ Now, the client sample code can be executed in a new command window with
 
 To launch the Unit Tests
       
-      mvn test
+    mvn clean test
+    
+To launch the Performance Tests
+
+    mvn verify -Pintegration-tests
+
