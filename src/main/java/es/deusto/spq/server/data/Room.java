@@ -72,7 +72,9 @@ public class Room {
 		}
 		WebSocketLeaveData data = new WebSocketLeaveData();
 		try {
-			users.get(usuario).getRemote().sendString(data.encode());
+			is (users.get(usuario).isOpen()) {
+				users.get(usuario).getRemote().sendString(data.encode());
+			}
 		} catch (IOException e) {
 			logger.error("Error broadcasting message");
 			e.printStackTrace();
@@ -90,6 +92,7 @@ public class Room {
 		String encodedData = data.encode();
 		for (org.eclipse.jetty.websocket.api.Session s : users.values()) {
 			try {
+				if (!s.isOpen()) continue;
 				s.getRemote().sendString(encodedData);
 			} catch (IOException e) {
 				logger.error("Error broadcasting message");
