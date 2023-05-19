@@ -65,16 +65,19 @@ public class Resource {
 	 @POST
 	 @Path("/register")
 	 public Response register(RegisterData registerData) {
+		 logger.info("Checking whether the user already exits or not: '{}'", registerData.getLogin());
 		 User user = User.find(registerData.getLogin());
 		 if (user != null) {
 			 return Response.status(403).entity("This user already exists").build();
 		 } else if (registerData.getLogin().equals("SYSTEM")) {
 			 return Response.status(403).entity("This username is not allowed").build();
 		 } else {
+			 
 			 user = new User(registerData.getLogin(), registerData.getPassword());
 			 user.save();
 			 Session session = Session.createSession(user);
 			 SessionData sessionData = new SessionData(session.getToken(), session.getTimeStamp());
+			 logger.info("regreso: OK");
 			 return Response.ok().entity(sessionData).build();
 		 }
 	 }

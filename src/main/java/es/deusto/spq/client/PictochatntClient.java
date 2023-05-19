@@ -33,7 +33,7 @@ public class PictochatntClient {
 	
 	public static PictochatntClient instace = new PictochatntClient();
 	
-	private PictochatntClient() {
+	public PictochatntClient() {
 	}
 	
 	public static void init(String host, String port) {
