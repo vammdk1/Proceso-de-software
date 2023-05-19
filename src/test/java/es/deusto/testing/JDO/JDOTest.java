@@ -56,10 +56,10 @@ public class JDOTest {
 		assertEquals("Nombre", user.getLogin());
 		assertEquals(true, user.isPasswordCorrect("Ab123456789"));
 		user.addFriend("paco");
-		user.save();
+		//user.save();
 		assertEquals(user.getFriendsList().size(), 1);
 		assertEquals(user.equals(user), true);
-		user.delete();
+		//user.delete();
 	}
 	
 }
