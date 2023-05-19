@@ -124,14 +124,18 @@ public class Resource {
 	 public Response addFriends(FriendData friendData) {
 		 User user = Session.getSession(friendData.getToken()).getUser();
 		 if (user == null) {
+			 logger.debug("user 1 es null");
 			 return Response.status(403).entity("Incorrect user").build();
 		 } else {
 			 User user2 = User.find(friendData.getFriendName());
 			 if (user2 == null) {
+				 logger.debug("user 2 es null");
 				 return Response.status(403).entity("friend does not exist").build();
 			 } else {
+				 user.save();
 				 user.addFriend(user2.getLogin());
 				 user.save();
+				 user2.save();
 				 user2.addFriend(user.getLogin());
 				 user2.save();
 				 return Response.ok().build();
