@@ -2,24 +2,17 @@ package es.deusto.spq.client.Ventanas;
 
 import javax.swing.*;
 
-import org.apache.logging.log4j.core.pattern.AbstractStyleNameConverter.Red;
-
 import es.deusto.spq.client.PictochatntClient;
 import es.deusto.spq.pojo.GetRoomData;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
 
 public class VentanaMenu extends JFrame{
 
 
 	private static final long serialVersionUID = -3703712434748598804L;
-	private JTextField usernameField;
 	public JPanel mainPanel, leftPanel, datos;
 	public JList<String> lista;
 	private JScrollPane scrollPane;
@@ -149,7 +142,7 @@ public class VentanaMenu extends JFrame{
             public void actionPerformed(ActionEvent e) {
             	if(lista.getSelectedValue()!=null) {
             		if (activeRooms.get(lista.getSelectedIndex()).isPrivate()) {
-            			String pass = JOptionPane.showInputDialog(null, "Contraseña");
+            			// String pass = JOptionPane.showInputDialog(null, "Contraseña");
                     	//TODO
             			/*
             			if (!PictochatntClient.conectar()) {
@@ -203,7 +196,7 @@ public class VentanaMenu extends JFrame{
     }
 	
     public static void main(String[] args) {
-        VentanaMenu v = new VentanaMenu();
+        new VentanaMenu();
         //v.bCrear.doClick();
     }
 }

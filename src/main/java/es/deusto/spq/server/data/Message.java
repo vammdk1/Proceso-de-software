@@ -2,8 +2,6 @@ package es.deusto.spq.server.data;
 
 import java.util.Date;
 
-import es.deusto.spq.server.jdo.User;
-
 public class Message {
 	String user = null;
 	private String text = null;

@@ -1,45 +1,5 @@
 package es.deusto.testing.window;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.ArgumentMatchers.nullable;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.when;
-
-import java.awt.AWTException;
-import java.awt.Robot;
-import java.awt.event.InputEvent;
-import java.util.ArrayList;
-
-import javax.ws.rs.core.GenericEntity;
-import javax.ws.rs.core.GenericType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.AdditionalAnswers;
-import org.mockito.ArgumentMatchers;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-
-import es.deusto.spq.client.PictochatntClient;
-import es.deusto.spq.client.Ventanas.VentanaChat;
-import es.deusto.spq.client.Ventanas.VentanaLogin;
-import es.deusto.spq.client.Ventanas.VentanaMenu;
-import es.deusto.spq.client.Ventanas.VentanaRegistro;
-import es.deusto.spq.pojo.GetRoomData;
-import es.deusto.spq.pojo.RegisterData;
-import es.deusto.spq.pojo.RoomData;
-import es.deusto.spq.pojo.SessionData;
-import es.deusto.spq.pojo.TokenData;
-import es.deusto.spq.pojo.UserData;
-import es.deusto.spq.server.Resource;
-import es.deusto.spq.server.jdo.User;
-
 public class windowLoginTest {
 	/**
 	Resource resource;

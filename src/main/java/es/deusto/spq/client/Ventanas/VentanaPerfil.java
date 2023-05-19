@@ -3,7 +3,6 @@ package es.deusto.spq.client.Ventanas;
 import javax.swing.*;
 
 import es.deusto.spq.client.PictochatntClient;
-import es.deusto.spq.pojo.GetRoomData;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -21,8 +20,6 @@ public class VentanaPerfil extends JFrame{
     JList<String> friends;
     JButton cerrarSesion;
     ArrayList<String> friendList;
-    
-    private int x1, y1;
     
     JLabel title;
 
@@ -55,9 +52,9 @@ public VentanaPerfil() {
         };
         panel2.setOpaque(false);
         panel2.setBounds(20,20,50,50);
-        Font y = new Font("Serif", Font.BOLD, 100);
+        // Font y = new Font("Serif", Font.BOLD, 100);
         Font x = new Font("Serif", Font.PLAIN, 35);
-        Font z = new Font("Serif", Font.PLAIN, 25);
+        // Font z = new Font("Serif", Font.PLAIN, 25);
         
         
         JLabel lNombre = new JLabel("Nickname");

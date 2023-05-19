@@ -1,11 +1,8 @@
 package es.deusto.spq.server.websockets;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import es.deusto.spq.server.data.Message;
-import es.deusto.spq.server.jdo.User;
 
 public class WebSocketHistoryData extends WebSocketData {
 

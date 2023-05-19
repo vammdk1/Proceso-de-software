@@ -1,41 +1,23 @@
 package es.deusto.testing.server;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.nullable;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import javax.jdo.JDOHelper;
-import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
-import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Transaction;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import com.mysql.cj.protocol.x.Ok;
-
 import es.deusto.spq.pojo.RegisterData;
-import es.deusto.spq.pojo.RoomData;
-import es.deusto.spq.pojo.SessionData;
-import es.deusto.spq.pojo.TokenData;
-import es.deusto.spq.pojo.UserData;
 import es.deusto.spq.server.Resource;
-import es.deusto.spq.server.jdo.User;
-import es.deusto.spq.server.logic.RoomManager;
 
 public class ResourceTest {
 	
@@ -53,7 +35,7 @@ public class ResourceTest {
     @Before
     public void setUp() {
         MockitoAnnotations.openMocks(this);
-        Resource resource = mock(Resource.class);
+        resource = mock(Resource.class);
         //resource = new Resource();
         
     }

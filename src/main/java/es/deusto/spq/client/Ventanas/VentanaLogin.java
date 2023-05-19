@@ -15,16 +15,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.Invocation;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
-
-import com.mysql.cj.conf.HostInfo;
 
 import es.deusto.spq.client.PictochatntClient;
 
@@ -32,7 +22,6 @@ public class VentanaLogin extends JFrame{
 
 private JTextField usernameField;
 private JPasswordField passwordField;
-private JPasswordField repPasswordField;
 public JButton next;
 public JButton createAccount;
 

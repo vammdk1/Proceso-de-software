@@ -1,7 +1,6 @@
 package es.deusto.testing.cliente;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doAnswer;
@@ -10,25 +9,16 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 
-import javax.ws.rs.POST;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.AdditionalAnswers;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-
-import com.mysql.cj.xdevapi.Client;
 
 import es.deusto.spq.client.PictochatntClient;
 import es.deusto.spq.pojo.GetRoomData;
@@ -37,7 +27,6 @@ import es.deusto.spq.pojo.RoomData;
 import es.deusto.spq.pojo.SessionData;
 import es.deusto.spq.pojo.TokenData;
 import es.deusto.spq.pojo.UserData;
-import net.bytebuddy.asm.Advice.Argument;
 
 public class ClientTest {
 	

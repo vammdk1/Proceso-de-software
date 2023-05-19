@@ -1,6 +1,5 @@
 package es.deusto.spq.server.websockets;
 
-import org.eclipse.jetty.websocket.client.*;
 import java.io.IOException;
 import java.util.concurrent.CountDownLatch;
  

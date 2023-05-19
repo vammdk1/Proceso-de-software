@@ -1,23 +1,14 @@
 package es.deusto.testing.server;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.CALLS_REAL_METHODS;
-import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
-
-import java.io.IOException;
-import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import es.deusto.spq.server.data.Message;
-import es.deusto.spq.server.jdo.User;
 import es.deusto.spq.server.websockets.PictochatntWebSocketServer;
 import es.deusto.spq.server.websockets.WebSocketData;
 import es.deusto.spq.server.websockets.WebSocketHistoryData;
 import es.deusto.spq.server.websockets.WebSocketJoinData;
-import es.deusto.spq.server.websockets.WebSocketReceiveData;
-import es.deusto.spq.server.websockets.WebSocketSendData;
 
 public class WebSocketTest {
 	PictochatntWebSocketServer webSocket;

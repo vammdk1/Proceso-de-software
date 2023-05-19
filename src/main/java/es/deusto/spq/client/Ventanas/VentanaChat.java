@@ -45,7 +45,7 @@ public VentanaChat() {
         };
         panel2.setOpaque(false);
         panel2.setBounds(20,20,50,50);
-        Font y = new Font("Serif", Font.BOLD, 100);
+        // Font y = new Font("Serif", Font.BOLD, 100);
         Font x = new Font("Serif", Font.PLAIN, 35);
         Font z = new Font("Serif", Font.PLAIN, 25);
         

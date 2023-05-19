@@ -3,7 +3,6 @@ package es.deusto.testing.JDO;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
 import javax.jdo.JDOHelper;
@@ -13,7 +12,6 @@ import javax.jdo.Transaction;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.BDDMockito.Then;
 import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;

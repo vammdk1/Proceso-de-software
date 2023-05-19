@@ -8,7 +8,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import es.deusto.spq.server.jdo.User;
-import es.deusto.spq.server.websockets.WebSocketData;
 import es.deusto.spq.server.websockets.WebSocketLeaveData;
 import es.deusto.spq.server.websockets.WebSocketReceiveData;
 
