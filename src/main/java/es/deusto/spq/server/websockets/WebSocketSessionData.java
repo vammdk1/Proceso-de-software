@@ -20,7 +20,10 @@ public class WebSocketSessionData {
 		Map<String, List<String>> map = session.getUpgradeRequest().getParameterMap();
 		if (map.containsKey("token")) {
 			token = map.get("token").get(0);
-			user = es.deusto.spq.server.data.Session.getSession(getToken()).getUser();
+			es.deusto.spq.server.data.Session s = es.deusto.spq.server.data.Session.getSession(getToken());
+			if (s != null) {
+				user = s.getUser();
+			}
 		}
 		
 		if (map.containsKey("room")) {
