@@ -55,13 +55,11 @@ public class JDOTest {
 		user = new User("Nombre","Ab123456789");
 		assertEquals("Nombre", user.getLogin());
 		assertEquals(true, user.isPasswordCorrect("Ab123456789"));
-		//user.save();
-		when(persistenceManager.getObjectById(User.class, User.getAll())).thenReturn(user);
-        //when(persistenceManager.getObjectById(User.class, userData.getLogin())).thenReturn(user);
-		assertNotEquals(0,User.getAll().size());
-		assertEquals(user.getLogin(), User.find(user.getLogin()).getLogin());
-		//user.delete();
-		//assertEquals(user.getLogin(), user.find(user.getLogin()).getLogin());
+		user.addFriend("paco");
+		user.save();
+		assertEquals(user.getFriendsList().size(), 1);
+		assertEquals(user.equals(user), true);
+		user.delete();
 	}
 	
 }
