@@ -8,10 +8,14 @@ public class Message {
 	private long timestamp;
 
     public Message(String text, String user) {
-        this.setText(text);
-        this.setUser(user);
-		this.setTimestamp(System.currentTimeMillis());
+        this(text, user, System.currentTimeMillis());
     }
+
+	public Message(String text, String user, long timestamp) {
+		this.setText(text);
+        this.setUser(user);
+		this.setTimestamp(timestamp);
+	}
 
 	public String getUser() {
         return user;
