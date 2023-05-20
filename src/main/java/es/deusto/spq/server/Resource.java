@@ -2,6 +2,7 @@ package es.deusto.spq.server;
 
 import java.util.ArrayList; 
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -70,6 +71,8 @@ public class Resource {
 			 return Response.status(403).entity("This user already exists").build();
 		 } else if (registerData.getLogin().equals("SYSTEM")) {
 			 return Response.status(403).entity("This username is not allowed").build();
+		 } else if (!Pattern.matches("^[a-zA-Z0-9_.-]*$", registerData.getLogin())) {
+			return Response.status(403).entity("Invalid user name").build();
 		 } else {
 			 user = new User(registerData.getLogin(), registerData.getPassword());
 			 user.save();
