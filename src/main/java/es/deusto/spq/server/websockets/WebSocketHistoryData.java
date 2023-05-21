@@ -1,6 +1,8 @@
 package es.deusto.spq.server.websockets;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Base64;
 
 import es.deusto.spq.server.data.Message;
 
@@ -19,54 +21,21 @@ public class WebSocketHistoryData extends WebSocketData {
 		for (Message m : messages) {
 			String date = Long.toString(m.getTimestamp());
 			String user = m.getUser();
-			String message = m.getText();
-			history += "\n" + date + "-" + user + "-" + message;
+			String message = Base64.getEncoder().encodeToString(m.getText().getBytes());
+			history += "\n" + date + ";" + user + ";" + message;
 		}
 		//System.out.println(messages.get(0) + " " + messages.get(1));
 		return history;		
 	}
 	
 	public static WebSocketHistoryData decodeData(String data) {
-		int lastNum = 0;
 		ArrayList<Message> messages = new ArrayList<>();
-		for (int i = 0; i < data.length(); i++) {
-			if (data.charAt(i) == '\n') {
-				String currentMessage = data.substring(lastNum, i);
-				Message message = new Message("", "");
-				for (int j = 0; j < currentMessage.length(); j++) {
-						int dateLineEnd = currentMessage.indexOf("-");
-						int userLineEnd = currentMessage.indexOf("-", currentMessage.indexOf("-") + 1);
-						long date = Long.parseLong(currentMessage.substring(0, dateLineEnd));
-						String user = currentMessage.substring(dateLineEnd + 1, userLineEnd);
-						String text = currentMessage.substring(userLineEnd + 1, currentMessage.length());
-						message.setTimestamp(date);
-						message.setUser(user);
-						message.setText(text);
-					if (data.charAt(j) == '\n') {
-						break;
-					}
-				}
-				lastNum = i+1;
-				messages.add(message);
-			} else if (i == data.length() - 1) {
-				String currentMessage = data.substring(lastNum, i+1);
-				Message message = new Message("", "");
-				for (int j = 0; j < currentMessage.length(); j++) {
-					int dateLineEnd = currentMessage.indexOf("-");
-					int userLineEnd = currentMessage.indexOf("-", currentMessage.indexOf("-") + 1);
-					long date = Long.parseLong(currentMessage.substring(0, dateLineEnd));
-					String user = currentMessage.substring(dateLineEnd + 1, userLineEnd);
-					String text = currentMessage.substring(userLineEnd + 1, currentMessage.length());
-					message.setTimestamp(date);
-					message.setUser(user);
-					message.setText(text);
-					if (data.charAt(j) == '\n') {
-						break;
-					}
-				}
-				lastNum = i+1;
-				messages.add(message);
-			}
+		for (String msg : data.split("\n")) {
+			String[] parts = msg.split(";");
+			long date = Long.parseLong(parts[0]);
+			String user = parts[1];
+			String text = new String(Base64.getDecoder().decode(parts[2]), StandardCharsets.UTF_8);
+			messages.add(new Message(text, user, date));
 		}
 		return new WebSocketHistoryData(messages);
 	}
