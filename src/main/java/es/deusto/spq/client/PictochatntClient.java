@@ -101,22 +101,6 @@ public class PictochatntClient {
 		}
 	}
 	
-	public static String getUsername() {
-		
-		TokenData tokenData = new TokenData();
-		tokenData.setToken(token);
-		
-		Response response = instace.post("/getUsername", tokenData);
-		
-		if (response.getStatus() != Status.OK.getStatusCode()) {
-			return "Noname";
-		} else {
-			String resp = response.readEntity(new GenericType<String>() {});
-			return resp;
-		}
-		
-	}
-	
 	public static boolean logout() {
 		if (token == null) {
 			logger.warn("Llamando al metodo sin estar logeado");

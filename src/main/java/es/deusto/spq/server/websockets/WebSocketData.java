@@ -17,6 +17,8 @@ public abstract class WebSocketData {
 			return WebSocketSendData.decodeData(data);
 		} else if (type.equals("Receive")) {
 			return WebSocketReceiveData.decodeData(data);
+ 		} else if (type.equals("Join")) {
+ 			return WebSocketJoinData.decodeData(data);
  		} else if (type.equals("Leave")) {
  			return WebSocketLeaveData.decodeData(data);
  		} else if (type.equals("History")) {

@@ -1,8 +1,5 @@
 package es.deusto.spq.server.websockets;
 
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
-
 public class WebSocketSendData extends WebSocketData {
 
 	private String message;
@@ -15,13 +12,13 @@ public class WebSocketSendData extends WebSocketData {
 	@Override
 	public String encode() {
 		return "Send\n"
-				+ Base64.getEncoder().encodeToString(getMessage().getBytes());
+				+ getMessage();
 	}
 
 	public static WebSocketSendData decodeData(String data) {
 		int userLineEnd = data.indexOf("\n");
 		
-		String message = new String(Base64.getDecoder().decode(data.substring(userLineEnd + 1, data.length())), StandardCharsets.UTF_8);
+		String message = data.substring(userLineEnd + 1, data.length());
 		
 		return new WebSocketSendData(message);
 	}
