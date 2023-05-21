@@ -25,8 +25,10 @@ public class VentanaMenu extends JFrame{
 	private ArrayList<GetRoomData> activeRooms;
 	private JButton bPerfil;
 	
+	public static VentanaMenu ventanaMenu;
+	
 	public VentanaMenu() {
-
+		ventanaMenu = this;
 
         this.setTitle("Menu principal");
         //this.setSize(600, 400);
@@ -151,9 +153,9 @@ public class VentanaMenu extends JFrame{
             			*/
                     	
                     }
-            		dispose();
-                    VentanaChat VChat = new VentanaChat();
-                    VChat.setVisible(true);
+            		//dispose();
+                    //VentanaChat VChat = new VentanaChat();
+                    //VChat.setVisible(true);
             	}
             }
         });

@@ -4,6 +4,8 @@ import java.net.URI;
  
 import org.eclipse.jetty.websocket.client.ClientUpgradeRequest;
 import org.eclipse.jetty.websocket.client.WebSocketClient;
+
+import es.deusto.spq.client.PictochatntWebSocketClient;
  
 public class WebSocketApp {
  

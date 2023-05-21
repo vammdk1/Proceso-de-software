@@ -11,6 +11,7 @@ import org.eclipse.jetty.websocket.api.annotations.OnWebSocketConnect;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketMessage;
 import org.eclipse.jetty.websocket.api.annotations.WebSocket;
 
+import es.deusto.spq.server.data.Message;
 import es.deusto.spq.server.logic.RoomManager;
 
 @WebSocket
@@ -19,9 +20,20 @@ public class PictochatntWebSocketServer {
 	HashSet<WebSocketSessionData> connections = new HashSet<WebSocketSessionData>();
 	
     @OnWebSocketMessage
-    public void onText(Session session, String message) throws IOException {
+    public void onMessage(Session session, String message) throws IOException {
         System.out.println("Message received:" + message);
+        WebSocketSessionData sessionData = new WebSocketSessionData(session);
         if (session.isOpen()) {
+        	WebSocketData data = WebSocketData.decode(message);
+        	
+        	if (data.getType().equals("Send")) {
+        		WebSocketSendData sendData = (WebSocketSendData) data;
+        		if (sessionData.getRoom() != null && sessionData.getUser() != null) {
+        			Message m = new Message(sendData.getMessage(), sessionData.getUser().getLogin());
+        			sessionData.getRoom().addMessage(m);
+        		}
+        	}
+        	
             String response = message.toUpperCase();
             session.getRemote().sendString(response);
         }
@@ -67,6 +79,11 @@ public class PictochatntWebSocketServer {
     public void onClose(Session session, int status, String reason) {
         System.out.println(session.getRemoteAddress().getHostString() + " closed!");
         //System.out.println(session.getUpgradeRequest().getRequestURI() + " disconnected!");
+        WebSocketSessionData sessionData = new WebSocketSessionData(session);
+        if (sessionData.getRoom() != null && sessionData.getUser() != null) {
+        	RoomManager.deleteUserRoom(sessionData.getUser(), sessionData.getRoom().getName());
+        }
+        connections.remove(sessionData);
     }
  
 }

@@ -222,7 +222,19 @@ public class PictochatntClient {
 	}
 	
 	public static String getUsername() {
-		return username;
+		
+		TokenData tokenData = new TokenData();
+		tokenData.setToken(token);
+		
+		Response response = instace.post("/getUsername", tokenData);
+		
+		if (response.getStatus() != Status.OK.getStatusCode()) {
+			return "Noname";
+		} else {
+			String resp = response.readEntity(new GenericType<String>() {});
+			return resp;
+		}
+		
 	}
 	
 	public static boolean deleteRoom(String roomName) {

@@ -16,8 +16,11 @@ public class VentanaChat extends JFrame{
     private int x1, y1;
     
     JLabel title;
+    
+    public static VentanaChat ventanaChat;
 
-public VentanaChat() {
+    public VentanaChat() {
+		ventanaChat = this;
         setTitle("Chat In");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);

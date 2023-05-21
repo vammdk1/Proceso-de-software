@@ -20,11 +20,17 @@ public class Message {
 	 * @param text
 	 * @param user
 	 */
-    public Message(String text, String user) {
+	
+	public Message(String text, String user) {
+		this(text, user, System.currentTimeMillis());
+	}
+	
+	public Message(String text, String user, long timestamp) {
+		this.setText(text);
         this.setText(text);
         this.setUser(user);
-		this.setTimestamp(System.currentTimeMillis());
-    }
+		this.setTimestamp(timestamp);
+	}
 
 	public String getUser() {
         return user;
