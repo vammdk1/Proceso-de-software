@@ -10,7 +10,8 @@ import java.util.ArrayList;
 
 public class VentanaPerfil extends JFrame{
 	
-    int screenWidth;
+	private static final long serialVersionUID = -1431105302776220727L;
+	int screenWidth;
     int screenHeigth;
     
     JLabel nombre;
@@ -34,7 +35,9 @@ public VentanaPerfil() {
         
 
         JPanel panel = new JPanel() {
-            @Override
+			private static final long serialVersionUID = 2981548540394874730L;
+
+			@Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 Image image = new ImageIcon("src/main/java/es/deusto/spq/client/Imagenes/Wallpaper.jpeg").getImage();
@@ -43,7 +46,9 @@ public VentanaPerfil() {
         };
         
         JPanel panel2 = new JPanel() {
-            @Override
+			private static final long serialVersionUID = 7693998666584930550L;
+
+			@Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 Image image = new ImageIcon("src/main/java/es/deusto/spq/client/Imagenes/closeImage.png").getImage();

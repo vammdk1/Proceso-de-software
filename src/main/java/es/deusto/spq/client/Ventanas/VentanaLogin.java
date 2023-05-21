@@ -20,6 +20,7 @@ import es.deusto.spq.client.PictochatntClient;
 
 public class VentanaLogin extends JFrame{
 
+private static final long serialVersionUID = 492626296877925914L;
 private JTextField usernameField;
 private JPasswordField passwordField;
 public JButton next;
@@ -32,7 +33,9 @@ public VentanaLogin() {
         setUndecorated(true);
         
         JPanel panel = new JPanel() {
-            @Override
+			private static final long serialVersionUID = -5075850586561274901L;
+
+			@Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 Image image = new ImageIcon("src/main/java/es/deusto/spq/client/Imagenes/Wallpaper.jpeg").getImage();
@@ -41,7 +44,9 @@ public VentanaLogin() {
         };
         
         JPanel panel2 = new JPanel() {
-            @Override
+			private static final long serialVersionUID = -4447025378326642794L;
+			
+			@Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 Image image = new ImageIcon("src/main/java/es/deusto/spq/client/Imagenes/closeImage.png").getImage();
