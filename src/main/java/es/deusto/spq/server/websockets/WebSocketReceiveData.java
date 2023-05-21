@@ -1,5 +1,6 @@
 package es.deusto.spq.server.websockets;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 public class WebSocketReceiveData extends WebSocketData {
@@ -29,7 +30,7 @@ public class WebSocketReceiveData extends WebSocketData {
 		
 		long date = Long.parseLong(data.substring(0, dateLineEnd));
 		String user = data.substring(dateLineEnd + 1, userLineEnd);
-		String message = String.valueOf(Base64.getDecoder().decode(data.substring(userLineEnd + 1, data.length())));
+		String message = new String(Base64.getDecoder().decode(data.substring(userLineEnd + 1, data.length())), StandardCharsets.UTF_8);
 		
 		return new WebSocketReceiveData(date, user, message);
 	}

@@ -1,5 +1,6 @@
 package es.deusto.spq.server.websockets;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Base64;
 
@@ -23,7 +24,7 @@ public class WebSocketHistoryData extends WebSocketData {
 			String message = Base64.getEncoder().encodeToString(m.getText().getBytes());
 			history += "\n" + date + ";" + user + ";" + message;
 		}
-		//System.out.println(messages.get(0) + " " + messages.get(1));
+		
 		return history;		
 	}
 	
@@ -33,7 +34,7 @@ public class WebSocketHistoryData extends WebSocketData {
 			String[] parts = msg.split(";");
 			long date = Long.parseLong(parts[0]);
 			String user = parts[1];
-			String text = String.valueOf(Base64.getDecoder().decode(parts[2]));
+			String text = new String(Base64.getDecoder().decode(parts[2]), StandardCharsets.UTF_8);
 			messages.add(new Message(text, user, date));
 		}
 		return new WebSocketHistoryData(messages);
