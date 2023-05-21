@@ -1,3 +1,6 @@
+/** \file
+ * La clase RegisterData sirve de intermediario entre el cliente y el servidor para la información correspodiente al registro.
+ */
 package es.deusto.spq.pojo;
 
 public class RegisterData {
@@ -5,6 +8,9 @@ public class RegisterData {
 	private String login;
 	private String password;
 	
+	/**
+	 * Constructor vacío al que se le van añadiendo atributos.
+	 */
 	public RegisterData() {
 		
 	}
