@@ -1,7 +1,6 @@
 package es.deusto.testing.JDO;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -58,8 +57,11 @@ public class JDOTest {
 		user.addFriend("paco");
 		user.save();
 		//assertEquals(user.getFriendsList().size(), 1);
+		//user.save();
+		assertEquals(user.getFriendsList().size(), 1);
+
 		assertEquals(user.equals(user), true);
-		user.delete();
+		//user.delete();
 	}
 	
 }

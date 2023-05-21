@@ -2,6 +2,7 @@ package es.deusto.spq.server;
 
 import java.util.ArrayList; 
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -71,6 +72,8 @@ public class Resource {
 			 return Response.status(403).entity("This user already exists").build();
 		 } else if (registerData.getLogin().equals("SYSTEM")) {
 			 return Response.status(403).entity("This username is not allowed").build();
+		 } else if (!Pattern.matches("^[a-zA-Z0-9_.-]*$", registerData.getLogin())) {
+			return Response.status(403).entity("Invalid user name").build();
 		 } else {
 			 
 			 user = new User(registerData.getLogin(), registerData.getPassword());
@@ -91,6 +94,17 @@ public class Resource {
 		 } else {
 			 session.invalidateSession();
 			 return Response.ok().build();
+		 }
+	 }
+	 
+	 @POST
+	 @Path("/getUsername")
+	 public Response getUsername(TokenData tokenData) {
+		 User user = Session.getSession(tokenData.getToken()).getUser();
+		 if (user == null ) {
+			 return Response.status(403).entity("Incorrect user").build();
+		 } else {
+			 return Response.ok().entity( user.getLogin()).build();
 		 }
 	 }
 	 
@@ -127,14 +141,18 @@ public class Resource {
 	 public Response addFriends(FriendData friendData) {
 		 User user = Session.getSession(friendData.getToken()).getUser();
 		 if (user == null) {
+			 logger.debug("user 1 es null");
 			 return Response.status(403).entity("Incorrect user").build();
 		 } else {
 			 User user2 = User.find(friendData.getFriendName());
 			 if (user2 == null) {
+				 logger.debug("user 2 es null");
 				 return Response.status(403).entity("friend does not exist").build();
 			 } else {
+				 user.save();
 				 user.addFriend(user2.getLogin());
 				 user.save();
+				 user2.save();
 				 user2.addFriend(user.getLogin());
 				 user2.save();
 				 return Response.ok().build();

@@ -20,7 +20,7 @@ public class VentanaPerfil extends JFrame{
     JList<String> friends;
     JButton cerrarSesion;
     ArrayList<String> friendList;
-    
+    JLabel lUser;
     JLabel title;
 
 public VentanaPerfil() {
@@ -61,7 +61,7 @@ public VentanaPerfil() {
         lNombre.setBounds((int)(screenWidth*0.1),(int)(screenHeigth*0.5),500,50);
         lNombre.setFont(x);
         
-        JLabel lUser = new JLabel("aaaa");
+        lUser = new JLabel("aaaa");
         //TODO lUser.setText(PictochatntClient.getUser());
         lUser.setBounds((int)(screenWidth*0.3),(int)(screenHeigth*0.5),500,50);
         lUser.setFont(x);
@@ -139,7 +139,7 @@ public VentanaPerfil() {
     }
 
 	public void refrescar() {
-		
+		lUser.setText(PictochatntClient.getUsername());
 		DefaultListModel<String> model = (DefaultListModel<String>) friends.getModel();
 		model.removeAllElements();
 		friendList = PictochatntClient.getFriendList();

@@ -27,4 +27,9 @@ Now, the client sample code can be executed in a new command window with
 
 To launch the Unit Tests
       
-    mvn test
+    mvn clean test
+    
+To launch the Performance Tests
+
+    mvn verify -Pintegration-tests
+

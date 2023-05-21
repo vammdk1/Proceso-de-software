@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import es.deusto.spq.server.jdo.User;
+import es.deusto.spq.server.websockets.WebSocketHistoryData;
 import es.deusto.spq.server.websockets.WebSocketLeaveData;
 import es.deusto.spq.server.websockets.WebSocketReceiveData;
 
@@ -62,6 +63,15 @@ public class Room {
 			Message message = new Message(user.getLogin() + " ha entrado en la sala.", "SYSTEM");
 			this.addMessage(message);		
 			users.put(user, session);
+			if (session.isOpen()) {
+				WebSocketHistoryData historyData = new WebSocketHistoryData(messages);
+				try {
+					session.getRemote().sendString(historyData.encode());
+				} catch (IOException e) {
+					logger.error("Error broadcasting messages");
+					e.printStackTrace();
+				}
+			}
 			return true;
 		}
 	}
@@ -72,7 +82,9 @@ public class Room {
 		}
 		WebSocketLeaveData data = new WebSocketLeaveData();
 		try {
-			users.get(usuario).getRemote().sendString(data.encode());
+			if (users.get(usuario).isOpen()) {
+				users.get(usuario).getRemote().sendString(data.encode());
+			}
 		} catch (IOException e) {
 			logger.error("Error broadcasting message");
 			e.printStackTrace();
@@ -90,6 +102,7 @@ public class Room {
 		String encodedData = data.encode();
 		for (org.eclipse.jetty.websocket.api.Session s : users.values()) {
 			try {
+				if (!s.isOpen()) continue;
 				s.getRemote().sendString(encodedData);
 			} catch (IOException e) {
 				logger.error("Error broadcasting message");
