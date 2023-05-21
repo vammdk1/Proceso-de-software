@@ -1,3 +1,6 @@
+/** \file
+ * La clase Room contiene la información necesaria para la creación de una sala de chat y la gestión de sus usuarios.
+ */
 package es.deusto.spq.server.data;
 
 import java.io.IOException;
@@ -20,7 +23,12 @@ public class Room {
 	User owner = null;
 	String password = null;
 	
-	
+	/**
+	 * Constructor de una sala a partir de la persona que la ha creado, el nombre asignado a la sala y su contraseña en caso de ser privada.
+	 * @param owner
+	 * @param name
+	 * @param password
+	 */
 	public Room(User owner, String name, String password) {
 		this.name = name;
 		this.owner = owner;
@@ -55,6 +63,12 @@ public class Room {
 		this.password = password;
 	}
 
+	/**
+	 * Añade una nuevo usuario a la sala.
+	 * @param user
+	 * @param session
+	 * @return
+	 */
 	public boolean joinUser(User user, org.eclipse.jetty.websocket.api.Session session) {
 		if (users.containsKey(user)) {
 			return false;
@@ -66,6 +80,11 @@ public class Room {
 		}
 	}
 	
+	/**
+	 * Elimina un usuario de la sala.
+	 * @param usuario
+	 * @return
+	 */
 	public boolean deleteUser (User usuario){
 		if (!users.containsKey(usuario)) {
 			return false;
@@ -83,7 +102,10 @@ public class Room {
 		return true;
 	}
 
-	
+	/**
+	 * Envia un mensaje en la sala.
+	 * @param message
+	 */
 	public void addMessage(Message message) {
 		messages.add(message);
 		WebSocketReceiveData data = new WebSocketReceiveData(message.getTimestamp(), message.getUser(), message.getText());

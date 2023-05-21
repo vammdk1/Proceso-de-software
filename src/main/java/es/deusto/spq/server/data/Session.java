@@ -1,3 +1,6 @@
+/** \file
+ * La clase Session guarda la información que necesita una sesión para identificar un usuario y lleva un registro de todas las sesiones abiertas.
+ */
 package es.deusto.spq.server.data;
 
 import java.security.SecureRandom;
@@ -17,6 +20,11 @@ public class Session {
 	User user;
 	long timeStamp;
 
+	/**
+	 * Constructor de una sesión a partir del usuario y su token. 
+	 * @param user
+	 * @param token
+	 */
 	protected Session(User user, String token) {
 		this.user = user;
 		this.timeStamp = System.currentTimeMillis()/1000L + expirationTime;
@@ -66,7 +74,11 @@ public class Session {
 		}
 		return session;
 	}
-	
+	 /**
+	  * Permite registrar una sesión nueva. 
+	  * @param user
+	  * @return
+	  */
 	public static Session createSession(User user) {
 		byte[] tokenBytes = new byte[128];
 		sr.nextBytes(tokenBytes);

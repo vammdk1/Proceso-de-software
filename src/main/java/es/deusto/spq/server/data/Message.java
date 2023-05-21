@@ -1,12 +1,25 @@
+/** \file
+ * La clase Message contiene la información que se enviará en un mensaje. 
+ */
 package es.deusto.spq.server.data;
 
 import java.util.Date;
 
+/**
+ * Clase Mensaje
+ * @author Marian
+ *
+ */
 public class Message {
 	String user = null;
 	private String text = null;
 	private long timestamp;
 
+	/**
+	 * Constructor de un mensaje a partir del texto y el usuario que lo manda
+	 * @param text
+	 * @param user
+	 */
     public Message(String text, String user) {
         this.setText(text);
         this.setUser(user);
