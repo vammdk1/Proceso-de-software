@@ -1,10 +1,16 @@
+/** \file
+ * La clase UserData sirve de intermediario entre el cliente y el servidor para la información correspodiente al usuario.
+ */
 package es.deusto.spq.pojo;
 
 public class UserData {
 
     private String login;
     private String password;
-
+    
+    /**
+	 * Constructor vacío al que se le van añadiendo atributos.
+	 */
     public UserData() {
         // required by serialization
     }

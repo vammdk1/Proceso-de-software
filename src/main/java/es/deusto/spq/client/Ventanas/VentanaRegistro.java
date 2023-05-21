@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 
 public class VentanaRegistro extends JFrame{
 
+	private static final long serialVersionUID = 6088300115274817613L;
 	public JTextField usernameField;
     public JPasswordField passwordField;
     private JPasswordField repPasswordField;
@@ -26,7 +27,9 @@ public VentanaRegistro() {
         
 
         JPanel panel = new JPanel() {
-            @Override
+			private static final long serialVersionUID = 2071603412868808804L;
+
+			@Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 Image image = new ImageIcon("src/main/java/es/deusto/spq/client/Imagenes/Wallpaper.jpeg").getImage();
@@ -35,7 +38,9 @@ public VentanaRegistro() {
         };
         
         panel2 = new JPanel() {
-            @Override
+			private static final long serialVersionUID = -7810219304834092663L;
+
+			@Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 Image image = new ImageIcon("src/main/java/es/deusto/spq/client/Imagenes/closeImage.png").getImage();

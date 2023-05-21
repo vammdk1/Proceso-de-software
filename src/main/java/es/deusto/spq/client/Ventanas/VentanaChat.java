@@ -6,7 +6,8 @@ import java.awt.event.*;
 
 public class VentanaChat extends JFrame{
 	
-    int screenWidth;
+	private static final long serialVersionUID = 6788025475843454961L;
+	int screenWidth;
     int screenHeigth;
     
     JTextField texto;
@@ -27,7 +28,8 @@ public VentanaChat() {
         
 
         JPanel panel = new JPanel() {
-            @Override
+			private static final long serialVersionUID = -4560585749615976907L;
+			@Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 Image image = new ImageIcon("src/main/java/es/deusto/spq/client/Imagenes/Wallpaper.jpeg").getImage();
@@ -36,7 +38,8 @@ public VentanaChat() {
         };
         
         JPanel panel2 = new JPanel() {
-            @Override
+			private static final long serialVersionUID = -506574610894438989L;
+			@Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 Image image = new ImageIcon("src/main/java/es/deusto/spq/client/Imagenes/closeImage.png").getImage();

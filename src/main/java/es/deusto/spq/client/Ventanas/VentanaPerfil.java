@@ -10,7 +10,8 @@ import java.util.ArrayList;
 
 public class VentanaPerfil extends JFrame{
 	
-    int screenWidth;
+	private static final long serialVersionUID = -1431105302776220727L;
+	int screenWidth;
     int screenHeigth;
     
     JLabel nombre;
@@ -20,6 +21,8 @@ public class VentanaPerfil extends JFrame{
     JList<String> friends;
     JButton cerrarSesion;
     ArrayList<String> friendList;
+    JLabel lUser;
+    
     
     JLabel title;
 
@@ -34,7 +37,9 @@ public VentanaPerfil() {
         
 
         JPanel panel = new JPanel() {
-            @Override
+			private static final long serialVersionUID = 2981548540394874730L;
+
+			@Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 Image image = new ImageIcon("src/main/java/es/deusto/spq/client/Imagenes/Wallpaper.jpeg").getImage();
@@ -43,7 +48,9 @@ public VentanaPerfil() {
         };
         
         JPanel panel2 = new JPanel() {
-            @Override
+			private static final long serialVersionUID = 7693998666584930550L;
+
+			@Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 Image image = new ImageIcon("src/main/java/es/deusto/spq/client/Imagenes/closeImage.png").getImage();
@@ -54,14 +61,14 @@ public VentanaPerfil() {
         panel2.setBounds(20,20,50,50);
         // Font y = new Font("Serif", Font.BOLD, 100);
         Font x = new Font("Serif", Font.PLAIN, 35);
-        // Font z = new Font("Serif", Font.PLAIN, 25);
+        Font z = new Font("Serif", Font.PLAIN, 25);
         
         
         JLabel lNombre = new JLabel("Nickname");
         lNombre.setBounds((int)(screenWidth*0.1),(int)(screenHeigth*0.5),500,50);
         lNombre.setFont(x);
         
-        JLabel lUser = new JLabel("aaaa");
+        lUser = new JLabel("aaaa");
         //TODO lUser.setText(PictochatntClient.getUser());
         lUser.setBounds((int)(screenWidth*0.3),(int)(screenHeigth*0.5),500,50);
         lUser.setFont(x);
@@ -77,6 +84,7 @@ public VentanaPerfil() {
         friends = new JList<String>();
         DefaultListModel<String> tp = new DefaultListModel<>();
         friends.setModel(tp);
+        friends.setFont(z);
         JScrollPane pFriends = new JScrollPane(friends);
         pFriends.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         pFriends.setBounds((int)(screenWidth*0.55),(int)(screenHeigth*0.2),(int)(screenWidth*0.4),(int)(screenHeigth*0.65));
@@ -139,7 +147,7 @@ public VentanaPerfil() {
     }
 
 	public void refrescar() {
-		
+		lUser.setText(PictochatntClient.getUsername());
 		DefaultListModel<String> model = (DefaultListModel<String>) friends.getModel();
 		model.removeAllElements();
 		friendList = PictochatntClient.getFriendList();

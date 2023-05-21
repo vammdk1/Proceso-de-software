@@ -30,12 +30,17 @@ public class PictochatntClient {
 	private static WebTarget webTarget;
 	
 	public static String token = null;
+	private static String username = "NoName";
 	
 	public static PictochatntClient instace = new PictochatntClient();
 	
 	public PictochatntClient() {
 	}
-	
+	/**
+	 * Static Init method
+	 * @param String host 
+	 * @param String port
+	 */
 	public static void init(String host, String port) {
 		logger.info("Inicializando cliante");
 		instace = new PictochatntClient();
@@ -43,6 +48,13 @@ public class PictochatntClient {
 		webTarget = client.target(String.format("http://%s:%s/rest/resource", host, port));
 	}
 	
+	/**
+	 * Post method
+	 * @param <T>
+	 * @param path
+	 * @param object
+	 * @return Response
+	 */
 	public <T> Response post(String path, T object) {
 		WebTarget postWebTarget = webTarget.path(path);
 		Invocation.Builder invoBuilder = postWebTarget.request(MediaType.APPLICATION_JSON);
@@ -55,7 +67,11 @@ public class PictochatntClient {
 		
 		return response;
 	}
-	
+	/**
+	 * Post method
+	 * @param path
+	 * @return Response
+	 */
 	public Response post(String path) {
 		WebTarget postWebTarget = webTarget.path(path);
 		Invocation.Builder invoBuilder = postWebTarget.request(MediaType.APPLICATION_JSON);
@@ -81,6 +97,7 @@ public class PictochatntClient {
 		} else {
 			SessionData sessionData = response.readEntity(SessionData.class);
 			token = sessionData.getToken();
+			username = user;
 			return true;
 		}
 	}
@@ -97,6 +114,7 @@ public class PictochatntClient {
 		} else {
 			SessionData sessionData = response.readEntity(SessionData.class);
 			token = sessionData.getToken();
+			username = user;
 			return true;
 		}
 	}
@@ -201,6 +219,10 @@ public class PictochatntClient {
 		} else {
 			return true;
 		}
+	}
+	
+	public static String getUsername() {
+		return username;
 	}
 	
 	public static boolean deleteRoom(String roomName) {

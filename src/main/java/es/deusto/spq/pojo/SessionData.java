@@ -1,3 +1,6 @@
+/** \file
+ * La clase SessionData sirve de intermediario entre el cliente y el servidor para la información correspodiente a la sesión.
+ */
 package es.deusto.spq.pojo;
 
 public class SessionData {
@@ -6,6 +9,9 @@ public class SessionData {
 	String token;
 	long expirationData;
 
+	/**
+	 * Constructor vacio al que se le van añadiendo atributos.
+	 */
 	public SessionData() {
 		
 	}
