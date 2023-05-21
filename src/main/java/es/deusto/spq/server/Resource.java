@@ -95,6 +95,7 @@ public class Resource {
 	 public Response logout(TokenData tokenData) {
 		 Session session = Session.getSession(tokenData.getToken());
 		 if (session == null) {
+			 logger.info("Sesión inválida");
 			 return Response.status(403).entity("Non valid session").build();
 		 } else {
 			 session.invalidateSession();
@@ -145,6 +146,8 @@ public class Resource {
 			 if (user2 == null) {
 				 return Response.status(403).entity("friend does not exist").build();
 			 } else {
+				 logger.info("Usuario '{}' agregando a usuario '{}'",user.getLogin(),user2.getLogin());
+				 //TODO error de almacenamiento de datos
 				 user.addFriend(user2);
 				 user.save();
 				 user2.addFriend(user);
@@ -155,18 +158,19 @@ public class Resource {
 	 }
 	 
 	 //rooms
-	 
 	 @POST
 	 @Path("/createRoom")
 	 public Response createRoom(RoomData roomData) {
 		 Session session = Session.getSession(roomData.getToken());
 		 if (session == null) {
+			 logger.info("Sesión inválida");
 			 return Response.status(403).entity("Non valid session").build();
 		 } else {
 			 User user = session.getUser();
 			 if (user == null) {
 				 return Response.status(403).entity("Error finding user").build();
 			 }
+			 logger.info("Creando sala: '{}'", roomData.getRoomName());
 			 RoomManager.createRoom(roomData.getRoomName(), user, roomData.getPassword());
 			 return Response.ok().build();
 		 }

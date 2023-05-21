@@ -2,6 +2,7 @@ package es.deusto.testing.server;
 
 import static org.junit.Assert.assertEquals;
 
+import java.rmi.server.UID;
 import java.util.UUID;
 
 import javax.jdo.JDOHelper;
@@ -30,8 +31,11 @@ import com.github.noconnor.junitperf.reporting.providers.HtmlReportGenerator;
 
 import categories.IntegrationTest;
 import categories.PerformanceTest;
+import es.deusto.spq.pojo.FriendData;
 import es.deusto.spq.pojo.RegisterData;
+import es.deusto.spq.pojo.RoomData;
 import es.deusto.spq.pojo.SessionData;
+import es.deusto.spq.pojo.TokenData;
 import es.deusto.spq.pojo.UserData;
 import es.deusto.spq.server.Main;
 import es.deusto.spq.server.jdo.User;
@@ -82,7 +86,7 @@ public class ResourcePerfTest {
     }
 
     @Test
-    @JUnitPerfTest(threads = 1, durationMs = 2000)
+    @JUnitPerfTest(threads = 1, durationMs = 5000,warmUpMs = 2000)
     public void testRegisterUser() {
         RegisterData user = new RegisterData();
         user.setLogin("prueba-"+contador);
@@ -99,7 +103,7 @@ public class ResourcePerfTest {
   
     
     @Test
-    @JUnitPerfTest(threads = 1, durationMs = 5000)
+    @JUnitPerfTest(threads = 1, durationMs = 5000,warmUpMs = 2000)
     public void TestLogginUser() {
     	RegisterData user = new RegisterData();
     	user.setLogin("prueba-"+contador);
@@ -110,7 +114,6 @@ public class ResourcePerfTest {
             .request(MediaType.APPLICATION_JSON)
             .post(Entity.entity(user, MediaType.APPLICATION_JSON));
 
-
         Response response1 = target.path("login")
                 .request(MediaType.APPLICATION_JSON)
                 .post(Entity.entity(user, MediaType.APPLICATION_JSON));
@@ -118,35 +121,38 @@ public class ResourcePerfTest {
         assertEquals(Family.SUCCESSFUL, response1.getStatusInfo().getFamily());
     }
     
-    //TODO ESTO NO FUNCIONA (Eliminar?)
-    /**
+    
     @Test
-    @JUnitPerfTest(threads = 1, durationMs = 000)
+    @JUnitPerfTest(threads = 1, durationMs = 5000,warmUpMs = 2000)
     public void TestLogOutUser() {
     	RegisterData user = new RegisterData();
-        user.setLogin("prueba-"+UUID.randomUUID().toString());
+    	user.setLogin("prueba-"+contador);
+        contador+=1;
         user.setPassword("1234");
 
         Response response = target.path("register")
             .request(MediaType.APPLICATION_JSON)
             .post(Entity.entity(user, MediaType.APPLICATION_JSON));
 
-
         Response response1 = target.path("login")
                 .request(MediaType.APPLICATION_JSON)
                 .post(Entity.entity(user, MediaType.APPLICATION_JSON));
+        TokenData tok = new TokenData();
+        
+        tok.setToken(response1.readEntity(SessionData.class).getToken());
         
         Response response2 = target.path("logout")
                 .request(MediaType.APPLICATION_JSON)
-                .post(Entity.entity(user, MediaType.APPLICATION_JSON));
+                .post(Entity.entity(tok, MediaType.APPLICATION_JSON));
 
         assertEquals(Family.SUCCESSFUL, response2.getStatusInfo().getFamily());
     }
-    **/
     
+    //TODO No funciona
+    /**
     @Test
-    @JUnitPerfTest(threads = 1, durationMs = 5000)
-    public void TestLogOutUser() {
+    @JUnitPerfTest(threads = 1, durationMs = 5000,warmUpMs = 2000)
+    public void TestDeleteUser() {
     	RegisterData user = new RegisterData();
     	user.setLogin("prueba-"+contador);
         contador+=1;
@@ -160,13 +166,107 @@ public class ResourcePerfTest {
         Response response1 = target.path("login")
                 .request(MediaType.APPLICATION_JSON)
                 .post(Entity.entity(user, MediaType.APPLICATION_JSON));
+        TokenData tok = new TokenData();
         
-        Response response2 = target.path("logout")
+        tok.setToken(response1.readEntity(SessionData.class).getToken());
+        
+        Response response2 = target.path("deleteUser")
                 .request(MediaType.APPLICATION_JSON)
-                .post(Entity.entity(response1.readEntity(SessionData.class).getToken(), MediaType.APPLICATION_JSON));
+                .post(Entity.entity(tok, MediaType.APPLICATION_JSON));
 
         assertEquals(Family.SUCCESSFUL, response2.getStatusInfo().getFamily());
     }
- 
+    **/
     
+    @Test
+    @JUnitPerfTest(threads = 1, durationMs = 5000,warmUpMs = 2000)
+    public void TestRooms() {
+    	RegisterData user = new RegisterData();
+    	user.setLogin("prueba-"+contador);
+        contador+=1;
+        user.setPassword("1234");
+
+        Response response = target.path("register")
+            .request(MediaType.APPLICATION_JSON)
+            .post(Entity.entity(user, MediaType.APPLICATION_JSON));
+
+
+        Response response1 = target.path("login")
+                .request(MediaType.APPLICATION_JSON)
+                .post(Entity.entity(user, MediaType.APPLICATION_JSON));
+        RoomData room = new RoomData();
+        
+        room.setToken(response1.readEntity(SessionData.class).getToken());
+        room.setRoomName("Room -> "+ UUID.randomUUID().toString());
+        room.setPassword("");
+        
+        Response response2 = target.path("createRoom")
+                .request(MediaType.APPLICATION_JSON)
+                .post(Entity.entity(room, MediaType.APPLICATION_JSON));
+
+        assertEquals(Family.SUCCESSFUL, response2.getStatusInfo().getFamily());
+        
+        Response response3 = target.path("getRooms")
+                .request(MediaType.APPLICATION_JSON)
+                .post(Entity.entity(room, MediaType.APPLICATION_JSON));
+
+        assertEquals(Family.SUCCESSFUL, response3.getStatusInfo().getFamily());
+        
+        Response response4 = target.path("deleteRoom")
+                .request(MediaType.APPLICATION_JSON)
+                .post(Entity.entity(room, MediaType.APPLICATION_JSON));
+        
+        assertEquals(Family.SUCCESSFUL, response4.getStatusInfo().getFamily());
+    }
+    
+    @Test
+    @JUnitPerfTest(threads = 1, durationMs = 5000,warmUpMs = 2000)
+    public void TestFriends() {
+    	RegisterData user = new RegisterData();
+    	user.setLogin("prueba-"+contador);
+        contador+=1;
+        user.setPassword("1234");
+
+        Response response = target.path("register")
+                .request(MediaType.APPLICATION_JSON)
+                .post(Entity.entity(user, MediaType.APPLICATION_JSON));
+        
+        
+        
+        RegisterData friend = new RegisterData();
+        friend.setLogin("Patata");
+        friend.setPassword("1234");
+
+        target.path("register").request(MediaType.APPLICATION_JSON).post(Entity.entity(friend, MediaType.APPLICATION_JSON));
+
+        Response response1 = target.path("login")
+                .request(MediaType.APPLICATION_JSON)
+                .post(Entity.entity(user, MediaType.APPLICATION_JSON));
+        
+        //TokenData tok2 = new TokenData();
+        //tok2.setToken(response1.readEntity(SessionData.class).getToken());
+        
+        FriendData fData = new FriendData();
+        fData.setToken(response1.readEntity(SessionData.class).getToken());
+        fData.setFriendName("Patata");
+        
+        Response response2 = target.path("addFriend")
+                .request(MediaType.APPLICATION_JSON)
+                .post(Entity.entity(fData, MediaType.APPLICATION_JSON));
+
+        assertEquals(Family.SUCCESSFUL, response2.getStatusInfo().getFamily());
+        
+        //Preguntar por que falla
+        //TokenData tok2 = new TokenData();
+        //tok2.setToken(response1.readEntity(SessionData.class).getToken());
+        
+        
+        /**
+        Response response3 = target.path("getFriends")
+                .request(MediaType.APPLICATION_JSON)
+                .post(Entity.entity(tok, MediaType.APPLICATION_JSON));
+
+        assertEquals(Family.SUCCESSFUL, response3.getStatusInfo().getFamily());
+        **/
+    }
 }
