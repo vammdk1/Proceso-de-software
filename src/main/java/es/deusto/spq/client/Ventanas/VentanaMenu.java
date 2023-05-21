@@ -159,7 +159,14 @@ public class VentanaMenu extends JFrame{
         });
         bSalir.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	System.exit(0);
+            	if (PictochatntClient.logout()) {
+            		dispose();
+                    VentanaLogin VLogin = new VentanaLogin();
+                    VLogin.setVisible(true);
+            	}else {
+            		JOptionPane.showMessageDialog(null, "no se ha podido desconectar", "Error", JOptionPane.ERROR_MESSAGE);
+            	}
+
             }
         });
         

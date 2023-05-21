@@ -118,7 +118,11 @@ public class Resource {
 			 return Response.ok().build();
 		 }
 	 }
-	 
+	 /**
+	  * Get method to get the friendlist
+	  * @param tokenData token
+	  * @return arraylist<String>
+	  */
 	 @POST
 	 @Path("/getFriends")
 	 public Response getFriends(TokenData tokenData) {
@@ -126,7 +130,7 @@ public class Resource {
 		 if (user == null ) {
 			 return Response.status(403).entity("Incorrect user").build();
 		 } else {
-			 return Response.ok().entity( user.getFriendsList()).build();
+			 return Response.ok().entity( user.getFriendListInStringFormat()).build();
 		 }
 	 }
 	 
@@ -141,9 +145,9 @@ public class Resource {
 			 if (user2 == null) {
 				 return Response.status(403).entity("friend does not exist").build();
 			 } else {
-				 user.addFriend(user2.getLogin());
+				 user.addFriend(user2);
 				 user.save();
-				 user2.addFriend(user.getLogin());
+				 user2.addFriend(user);
 				 user2.save();
 				 return Response.ok().build();
 			 }

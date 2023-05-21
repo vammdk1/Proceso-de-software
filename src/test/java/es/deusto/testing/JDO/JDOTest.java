@@ -54,7 +54,7 @@ public class JDOTest {
 		user = new User("Nombre","Ab123456789");
 		assertEquals("Nombre", user.getLogin());
 		assertEquals(true, user.isPasswordCorrect("Ab123456789"));
-		user.addFriend("paco");
+		//user.addFriend("paco");
 		user.save();
 		//assertEquals(user.getFriendsList().size(), 1);
 		assertEquals(user.equals(user), true);

@@ -38,7 +38,7 @@ public class User {
 	String salt = null;
 	@Join
 	@Persistent(mappedBy="login", dependentElement="true", defaultFetchGroup="true")
-	ArrayList<String> friendList = new ArrayList<>();
+	List<User> friendList = new ArrayList<>();
 
 	@Override
 	public String toString() {
@@ -84,11 +84,19 @@ public class User {
 		return Arrays.equals(test, HexUtils.hexToBytes(this.password));
 	}
 	
-	public ArrayList<String> getFriendsList(){
-		return friendList;
+	public ArrayList<User> getFriendsList(){
+		return (ArrayList<User>) friendList;
 	}
 	
-	public void addFriend(String user) {
+	public ArrayList<String> getFriendListInStringFormat(){
+		ArrayList<String> friends = new ArrayList<>();
+		for (User u : friendList) {
+			friends.add(u.login);
+		}
+		return friends;
+	}
+	
+	public void addFriend(User user) {
 		friendList.add(user);
 	}
 	
