@@ -95,6 +95,17 @@ public class Resource {
 	 }
 	 
 	 @POST
+	 @Path("/getUsername")
+	 public Response getUsername(TokenData tokenData) {
+		 User user = Session.getSession(tokenData.getToken()).getUser();
+		 if (user == null ) {
+			 return Response.status(403).entity("Incorrect user").build();
+		 } else {
+			 return Response.ok().entity( user.getLogin()).build();
+		 }
+	 }
+	 
+	 @POST
 	 @Path("/deleteUser")
 	 public Response deleteUser(TokenData tokenData) {
 		 Session session = Session.getSession(tokenData.getToken());
