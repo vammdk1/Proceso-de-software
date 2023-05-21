@@ -2,6 +2,7 @@ package es.deusto.spq.server;
 
 import java.util.ArrayList; 
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -54,8 +55,10 @@ public class Resource {
 	 public Response login(UserData userData) {
 		 User user = User.find(userData.getLogin());
 		 if (user == null || !user.isPasswordCorrect(userData.getPassword())) {
+			 logger.info("Usuario o contraseña erroneos");
 			 return Response.status(403).entity("Incorrect username or password").build();
 		 } else {
+			 logger.info("Iniciand sesión");
 			 Session session = Session.createSession(user);
 			 SessionData sessionData = new SessionData(session.getToken(), session.getTimeStamp());
 			 return Response.ok().entity(sessionData).build();
@@ -65,19 +68,24 @@ public class Resource {
 	 @POST
 	 @Path("/register")
 	 public Response register(RegisterData registerData) {
-		 logger.info("Checking whether the user already exits or not: '{}'", registerData.getLogin());
+		 logger.info("Probando existencia previa de usuario: '{}'", registerData.getLogin());
 		 User user = User.find(registerData.getLogin());
 		 if (user != null) {
+			 logger.info("Usuario '{}' ya existe", registerData.getLogin());
 			 return Response.status(403).entity("This user already exists").build();
 		 } else if (registerData.getLogin().equals("SYSTEM")) {
+			 logger.info("No es posible crear un usuario con el nombre de '{}' ", registerData.getLogin());
 			 return Response.status(403).entity("This username is not allowed").build();
+		 } else if (!Pattern.matches("^[a-zA-Z0-9_.-]*$", registerData.getLogin())) {
+			 logger.info("Nombre de usuario '{}' inválido ", registerData.getLogin());
+			return Response.status(403).entity("Invalid user name").build();
 		 } else {
-			 
+			 logger.info("Creando usuario de nombre: '{}'", registerData.getLogin());
 			 user = new User(registerData.getLogin(), registerData.getPassword());
 			 user.save();
 			 Session session = Session.createSession(user);
 			 SessionData sessionData = new SessionData(session.getToken(), session.getTimeStamp());
-			 logger.info("regreso: OK");
+			 
 			 return Response.ok().entity(sessionData).build();
 		 }
 	 }

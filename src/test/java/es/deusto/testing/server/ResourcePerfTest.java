@@ -30,6 +30,7 @@ import com.github.noconnor.junitperf.reporting.providers.HtmlReportGenerator;
 
 import categories.IntegrationTest;
 import categories.PerformanceTest;
+import es.deusto.spq.pojo.RegisterData;
 import es.deusto.spq.pojo.UserData;
 import es.deusto.spq.server.Main;
 import es.deusto.spq.server.jdo.User;
@@ -80,8 +81,8 @@ public class ResourcePerfTest {
     @Test
     @JUnitPerfTest(threads = 10, durationMs = 2000)
     public void testRegisterUser() {
-        UserData user = new UserData();
-        user.setLogin(UUID.randomUUID().toString());
+        RegisterData user = new RegisterData();
+        user.setLogin("prueba-"+UUID.randomUUID().toString());
         user.setPassword("1234");
 
         Response response = target.path("register")
@@ -89,5 +90,52 @@ public class ResourcePerfTest {
             .post(Entity.entity(user, MediaType.APPLICATION_JSON));
 
         assertEquals(Family.SUCCESSFUL, response.getStatusInfo().getFamily());
+        
     }
+    
+    
+    @Test
+    @JUnitPerfTest(threads = 2, durationMs = 5000)
+    public void TestLogginUser() {
+    	RegisterData user = new RegisterData();
+        user.setLogin("prueba-"+UUID.randomUUID().toString());
+        user.setPassword("1234");
+
+        Response response = target.path("register")
+            .request(MediaType.APPLICATION_JSON)
+            .post(Entity.entity(user, MediaType.APPLICATION_JSON));
+
+
+        Response response1 = target.path("login")
+                .request(MediaType.APPLICATION_JSON)
+                .post(Entity.entity(user, MediaType.APPLICATION_JSON));
+
+        assertEquals(Family.SUCCESSFUL, response1.getStatusInfo().getFamily());
+    }
+    
+    @Test
+    @JUnitPerfTest(threads = 1, durationMs = 5000)
+    public void TestLogOutUser() {
+    	RegisterData user = new RegisterData();
+        user.setLogin("prueba-"+UUID.randomUUID().toString());
+        user.setPassword("1234");
+
+        Response response = target.path("register")
+            .request(MediaType.APPLICATION_JSON)
+            .post(Entity.entity(user, MediaType.APPLICATION_JSON));
+
+
+        Response response1 = target.path("login")
+                .request(MediaType.APPLICATION_JSON)
+                .post(Entity.entity(user, MediaType.APPLICATION_JSON));
+        
+        Response response2 = target.path("logout")
+                .request(MediaType.APPLICATION_JSON)
+                .post(Entity.entity(user, MediaType.APPLICATION_JSON));
+
+        assertEquals(Family.SUCCESSFUL, response2.getStatusInfo().getFamily());
+    }
+    
+ 
+    
 }
