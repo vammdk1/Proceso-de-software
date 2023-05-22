@@ -1,6 +1,9 @@
 package es.deusto.spq.client.Ventanas;
 
-import javax.swing.*; 
+import javax.swing.*;
+
+import es.deusto.spq.client.PictochatntClient;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.text.SimpleDateFormat;
@@ -114,10 +117,7 @@ public class VentanaChat extends JFrame{
 			public void mouseEntered(MouseEvent e) {}
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				dispose();
-				VentanaMenu vMenu = new VentanaMenu();
-				vMenu.setVisible(true);
-				
+				PictochatntClient.leaveRoom();
 			}
 		});
         
@@ -149,9 +149,9 @@ public class VentanaChat extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				taTexto.append("(Time)(User) " + texto.getText() + "\n");
+				//taTexto.append("(Time)(User) " + texto.getText() + "\n");
+				PictochatntClient.sendMessage(texto.getText());
 				texto.setText("");
-				
 			}
 		});
         

@@ -82,10 +82,8 @@ public class VentanaMenu extends JFrame{
 					//TODO Conectar automáticamente
 					datos.setVisible(false);
 					if (PictochatntClient.createRoom(Ns.getText(), password.getText())) {
-						VentanaChat VChat = new VentanaChat();
-						VChat.setVisible(true);
-						VChat.setRoomName(Ns.getText());
-						dispose();
+						PictochatntClient.joinRoom(Ns.getText(), password.getText());
+						//TODO Set room name
 					}else {
 						JOptionPane.showMessageDialog(null, "Error, sala no creada",">:(",JOptionPane.ERROR_MESSAGE);
 					}
@@ -143,19 +141,12 @@ public class VentanaMenu extends JFrame{
         bConectar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	if(lista.getSelectedValue()!=null) {
+            		String password = "";
             		if (activeRooms.get(lista.getSelectedIndex()).isPrivate()) {
-            			// String pass = JOptionPane.showInputDialog(null, "Contraseña");
-                    	//TODO
-            			/*
-            			if (!PictochatntClient.conectar()) {
-            				return;
-            			}
-            			*/
+            			password = JOptionPane.showInputDialog(null, "Contraseña");
                     	
                     }
-            		//dispose();
-                    //VentanaChat VChat = new VentanaChat();
-                    //VChat.setVisible(true);
+            		PictochatntClient.joinRoom(activeRooms.get(lista.getSelectedIndex()).getNameRoom(), password);
             	}
             }
         });

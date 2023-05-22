@@ -321,13 +321,13 @@ public class PictochatntClient {
 			return false;
 		}
 		pictochatntWsClient.clientExited();
-		if (wsClient.isRunning()) {
+		if (pictochatntWsClient.isConnected()) {
 			try {
 				wsClient.stop();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				return false;
+				return true;
 			}
 		}
 		wsClient = null;

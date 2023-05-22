@@ -130,6 +130,7 @@ public VentanaLogin() {
                 System.out.println("Contraseña Aceptada");
 				dispose();
 				VentanaMenu VMenu = new VentanaMenu();
+				VentanaMenu.ventanaMenu = VMenu;
 				VMenu.setVisible(true);
 				
 //				if(passwordField.getPassword().length==0) {

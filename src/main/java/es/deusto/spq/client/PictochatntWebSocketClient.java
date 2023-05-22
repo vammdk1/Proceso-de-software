@@ -1,9 +1,11 @@
 package es.deusto.spq.client;
 
-import java.io.IOException; 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
 
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketClose;
@@ -24,6 +26,7 @@ public class PictochatntWebSocketClient {
  
 	private Session session;
     private boolean left;
+    private ArrayList<Message> pendingMessages = new ArrayList<Message>();;
      
     CountDownLatch latch = new CountDownLatch(1);
  
@@ -31,13 +34,25 @@ public class PictochatntWebSocketClient {
     public void onMessage(Session session, String message) throws IOException {
         WebSocketData data = WebSocketData.decode(message);
         
+        if (data == null) {
+        	return;
+        }
+        
         if (data.getType().equals("Receive")) {
         	WebSocketReceiveData receiveData = (WebSocketReceiveData) data;
-        	VentanaChat.ventanaChat.addMessage(receiveData.getUser(), receiveData.getMessage(), receiveData.getDate());
+        	if (VentanaChat.ventanaChat == null) {
+        		pendingMessages.add(new Message(receiveData.getMessage(), receiveData.getUser(), receiveData.getDate()));
+        	} else {
+        		VentanaChat.ventanaChat.addMessage(receiveData.getUser(), receiveData.getMessage(), receiveData.getDate());
+        	}
         } else if (data.getType().equals("History")) {
         	WebSocketHistoryData historyData = (WebSocketHistoryData) data;
-        	for (Message m : historyData.getMessages()) {
-        		VentanaChat.ventanaChat.addMessage(m.getUser(), m.getText(), m.getTimestamp());
+        	if (VentanaChat.ventanaChat == null) {
+        		pendingMessages.addAll(historyData.getMessages());
+        	} else {
+        		for (Message m : historyData.getMessages()) {
+        			VentanaChat.ventanaChat.addMessage(m.getUser(), m.getText(), m.getTimestamp());
+        		}
         	}
         } else if (data.getType().equals("Leave")) {
         	left = true;
@@ -48,10 +63,16 @@ public class PictochatntWebSocketClient {
     public void onConnect(Session session) {
     	this.session = session;
         System.out.println("Connected to server");
-        VentanaMenu.ventanaMenu.dispose();
-        VentanaMenu.ventanaMenu = null;
-        VentanaChat.ventanaChat = new VentanaChat();
-        VentanaChat.ventanaChat.setVisible(true);
+        SwingUtilities.invokeLater(() -> {
+        	VentanaMenu.ventanaMenu.dispose();
+            VentanaMenu.ventanaMenu = null;
+            VentanaChat.ventanaChat = new VentanaChat();
+            VentanaChat.ventanaChat.setVisible(true);
+            for (Message m : pendingMessages) {
+            	VentanaChat.ventanaChat.addMessage(m.getUser(), m.getText(), m.getTimestamp());
+            }
+            pendingMessages.clear();
+        });
         left = false;
         latch.countDown();
     }
@@ -59,6 +80,7 @@ public class PictochatntWebSocketClient {
     @OnWebSocketClose
     public void onClose(Session session, int status, String reason) {
     	System.out.println("Disconnected from server!");
+    	System.out.println(status + " " + reason);
     	if (!left) {
     		JOptionPane.showMessageDialog(null, "Has sido expulsado de la sala.", "Error", JOptionPane.ERROR_MESSAGE);
     	}
@@ -83,6 +105,10 @@ public class PictochatntWebSocketClient {
 	    	return true;
     	}
     	return false;
+    }
+    
+    public boolean isConnected() {
+    	return session != null && session.isOpen();
     }
      
     
