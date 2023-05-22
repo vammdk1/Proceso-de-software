@@ -85,6 +85,12 @@ public class PictochatntClient {
 		return response;
 	}
 	
+	/**
+	 * Method to login in the server
+	 * @param String user
+	 * @param String password
+	 * @return true if login done correctly
+	 */
 	public static boolean login(String user, String password) {
 		UserData userData = new UserData();
 		userData.setLogin(user);
@@ -102,6 +108,12 @@ public class PictochatntClient {
 		}
 	}
 	
+	/**
+	 * Method to register a user in the server
+	 * @param String user
+	 * @param String password
+	 * @return true if register done correctly
+	 */
 	public static boolean register(String user, String password) {
 		RegisterData registerData = new RegisterData();
 		registerData.setLogin(user);
@@ -119,6 +131,10 @@ public class PictochatntClient {
 		}
 	}
 	
+	/**
+	 * Method to logout of the server
+	 * @return true if logout done correctly
+	 */
 	public static boolean logout() {
 		if (token == null) {
 			logger.warn("Llamando al metodo sin estar logeado");
@@ -138,6 +154,10 @@ public class PictochatntClient {
 		}
 	}
 	
+	/**
+	 * Method to delete an user from the server
+	 * @return true if logout done correctly
+	 */
 	public static boolean deleteUser() {
 		if (token == null) {
 			logger.warn("Llamando al metodo sin estar logeado");
@@ -157,7 +177,10 @@ public class PictochatntClient {
 		}
 	}
 	
-	
+	/**
+	 * Method to get the list of friends of an user
+	 * @return the ArrayList of the names of the friends
+	 */
 	public static ArrayList<String> getFriendList() {
 		
 		TokenData tokenData = new TokenData();
@@ -174,6 +197,11 @@ public class PictochatntClient {
 		
 	}
 	
+	/**
+	 * Method to add a friend to an user
+	 * @param String name
+	 * @return true if logout done correctly
+	 */
 	public static boolean addFriend(String name) {
 		
 		FriendData friendData = new FriendData();
@@ -190,6 +218,10 @@ public class PictochatntClient {
 		
 	}
 	
+	/**
+	 * Method to get the list of rooms that are active
+	 * @return the ArrayList of the active rooms
+	 */
 	public static ArrayList<GetRoomData> getActiveRooms(){
 		Response response = instace.post("/getRooms");
 		
@@ -201,6 +233,13 @@ public class PictochatntClient {
 		}
 	}
 	
+	/**
+	 * Method to add a rooms
+	 * with no password the room is public
+	 * @param String roomName
+	 * @param String password
+	 * @return true if the create method done correctly
+	 */
 	public static boolean createRoom(String roomName, String password) {
 		if (token == null) {
 			return false;
@@ -221,22 +260,21 @@ public class PictochatntClient {
 		}
 	}
 	
+	/**
+	 * Method to get the name of the user
+	 * @return the name
+	 */
 	public static String getUsername() {
 		
-		TokenData tokenData = new TokenData();
-		tokenData.setToken(token);
-		
-		Response response = instace.post("/getUsername", tokenData);
-		
-		if (response.getStatus() != Status.OK.getStatusCode()) {
-			return "Noname";
-		} else {
-			String resp = response.readEntity(new GenericType<String>() {});
-			return resp;
-		}
+		return username;
 		
 	}
 	
+	/**
+	 * Method to delete a room 
+	 * @param String roomName
+	 * @return true if the delete has been done correctly
+	 */
 	public static boolean deleteRoom(String roomName) {
 		if (token == null) {
 			return false;
@@ -252,6 +290,10 @@ public class PictochatntClient {
 		}
 	}
 
+	/**
+	 * Method to get the token of the user
+	 * @return the token
+	 */
 	public Object getToken() {
 		// TODO Auto-generated method stub
 		return PictochatntClient.token;
