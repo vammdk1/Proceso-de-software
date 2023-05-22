@@ -2,7 +2,10 @@ package es.deusto.spq.client;
 
 import org.apache.logging.log4j.LogManager; 
 import org.apache.logging.log4j.Logger;
+import org.eclipse.jetty.websocket.client.ClientUpgradeRequest;
+import org.eclipse.jetty.websocket.client.WebSocketClient;
 
+import java.net.URI;
 import java.util.ArrayList;
 
 import javax.ws.rs.client.Client;
@@ -33,6 +36,9 @@ public class PictochatntClient {
 	private static String username = "NoName";
 	
 	public static PictochatntClient instace = new PictochatntClient();
+	
+	private static WebSocketClient wsClient;
+	private static PictochatntWebSocketClient pictochatntWsClient;
 	
 	public PictochatntClient() {
 	}
@@ -250,6 +256,52 @@ public class PictochatntClient {
 		} else {
 			return true;
 		}
+	}
+	
+	public static boolean joinRoom(String roomName, String password) {
+		if (token == null || wsClient != null || pictochatntWsClient != null) {
+			return false;
+		}
+		String dest = "ws://localhost:8080/websocket?token=" + token + "&room=" + roomName + "&password=" + password;
+        wsClient = new WebSocketClient();
+        try {
+        	pictochatntWsClient = new PictochatntWebSocketClient();
+            wsClient.start();
+            URI echoUri = new URI(dest);
+            ClientUpgradeRequest request = new ClientUpgradeRequest();
+            wsClient.connect(pictochatntWsClient, echoUri, request);
+            pictochatntWsClient.getLatch().await();
+        } catch (Throwable t) {
+            t.printStackTrace();
+            return false;
+        }
+        return true;
+	}
+	
+	public static boolean leaveRoom() {
+		if (wsClient == null || pictochatntWsClient == null) {
+			return false;
+		}
+		pictochatntWsClient.clientExited();
+		if (wsClient.isRunning()) {
+			try {
+				wsClient.stop();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+			}
+		}
+		wsClient = null;
+		pictochatntWsClient = null;
+		return true;
+	}
+	
+	public static boolean sendMessage(String message) {
+		if (pictochatntWsClient != null) {
+			return pictochatntWsClient.sendMessage(message);
+		}
+		return false;
 	}
 
 	public Object getToken() {

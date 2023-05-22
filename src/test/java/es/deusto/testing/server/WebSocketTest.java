@@ -5,9 +5,9 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
+import es.deusto.spq.pojo.WebSocketData;
+import es.deusto.spq.pojo.WebSocketHistoryData;
 import es.deusto.spq.server.websockets.PictochatntWebSocketServer;
-import es.deusto.spq.server.websockets.WebSocketData;
-import es.deusto.spq.server.websockets.WebSocketHistoryData;
 
 public class WebSocketTest {
 	PictochatntWebSocketServer webSocket;

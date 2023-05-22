@@ -1,4 +1,4 @@
-package es.deusto.spq.server.websockets;
+package es.deusto.spq.pojo;
 
 import java.util.List;
 import java.util.Map;

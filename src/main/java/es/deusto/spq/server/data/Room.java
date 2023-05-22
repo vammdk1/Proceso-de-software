@@ -10,10 +10,11 @@ import java.util.HashMap;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import es.deusto.spq.pojo.Message;
+import es.deusto.spq.pojo.WebSocketHistoryData;
+import es.deusto.spq.pojo.WebSocketLeaveData;
+import es.deusto.spq.pojo.WebSocketReceiveData;
 import es.deusto.spq.server.jdo.User;
-import es.deusto.spq.server.websockets.WebSocketHistoryData;
-import es.deusto.spq.server.websockets.WebSocketLeaveData;
-import es.deusto.spq.server.websockets.WebSocketReceiveData;
 
 public class Room {
 	protected static final Logger logger = LogManager.getLogger();

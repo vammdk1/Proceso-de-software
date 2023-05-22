@@ -1,4 +1,4 @@
-package es.deusto.spq.server.websockets;
+package es.deusto.spq.pojo;
 
 public abstract class WebSocketData {
 	

@@ -1,10 +1,8 @@
-package es.deusto.spq.server.websockets;
+package es.deusto.spq.pojo;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Base64;
-
-import es.deusto.spq.server.data.Message;
 
 public class WebSocketHistoryData extends WebSocketData {
 

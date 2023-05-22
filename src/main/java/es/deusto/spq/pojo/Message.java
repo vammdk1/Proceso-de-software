@@ -1,7 +1,7 @@
 /** \file
  * La clase Message contiene la información que se enviará en un mensaje. 
  */
-package es.deusto.spq.server.data;
+package es.deusto.spq.pojo;
 
 import java.util.Date;
 

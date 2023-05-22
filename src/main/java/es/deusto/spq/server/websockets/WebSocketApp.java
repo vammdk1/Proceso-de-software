@@ -19,8 +19,8 @@ public class WebSocketApp {
             ClientUpgradeRequest request = new ClientUpgradeRequest();
             client.connect(socket, echoUri, request);
             socket.getLatch().await();
-            socket.sendMessage("echo");
-            socket.sendMessage("test");
+            //socket.sendMessage("echo");
+            //socket.sendMessage("test");
             Thread.sleep(1000);
  
         } catch (Throwable t) {

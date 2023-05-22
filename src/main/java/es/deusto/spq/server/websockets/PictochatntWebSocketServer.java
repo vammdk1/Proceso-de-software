@@ -11,7 +11,10 @@ import org.eclipse.jetty.websocket.api.annotations.OnWebSocketConnect;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketMessage;
 import org.eclipse.jetty.websocket.api.annotations.WebSocket;
 
-import es.deusto.spq.server.data.Message;
+import es.deusto.spq.pojo.Message;
+import es.deusto.spq.pojo.WebSocketData;
+import es.deusto.spq.pojo.WebSocketSendData;
+import es.deusto.spq.pojo.WebSocketSessionData;
 import es.deusto.spq.server.logic.RoomManager;
 
 @WebSocket

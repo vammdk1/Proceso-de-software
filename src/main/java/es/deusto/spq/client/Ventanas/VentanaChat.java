@@ -3,6 +3,8 @@ package es.deusto.spq.client.Ventanas;
 import javax.swing.*; 
 import java.awt.*;
 import java.awt.event.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class VentanaChat extends JFrame{
 	
@@ -16,6 +18,7 @@ public class VentanaChat extends JFrame{
     private int x1, y1;
     
     JLabel title;
+    JTextArea taTexto;
     
     public static VentanaChat ventanaChat;
 
@@ -62,7 +65,7 @@ public class VentanaChat extends JFrame{
         
         
         
-        JTextArea taTexto = new JTextArea(8,40);
+        taTexto = new JTextArea(8,40);
         taTexto.setBounds(1000,100,100,100);
         taTexto.setLocation(1000,100);
         taTexto.setFont(z);
@@ -153,6 +156,12 @@ public class VentanaChat extends JFrame{
 		});
         
         
+    }
+    
+    public void addMessage(String user, String text, long timeStamp) {
+    	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+    	Date date = new Date(timeStamp);
+    	taTexto.append("" + sdf.format(date) + " (" + user + ") " + text + "\n");
     }
 	
 	public void setRoomName(String name) {
