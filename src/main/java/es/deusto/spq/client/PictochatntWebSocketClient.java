@@ -54,6 +54,9 @@ public class PictochatntWebSocketClient {
         			VentanaChat.ventanaChat.addMessage(m.getUser(), m.getText(), m.getTimestamp());
         		}
         	}
+            //TODO: restaurar historial cliente
+        } else if (data.getType().equals("Paint")) {
+            //TODO: pintar cliente
         } else if (data.getType().equals("Leave")) {
         	left = true;
         }
