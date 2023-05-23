@@ -199,7 +199,7 @@ public class Resource {
 			 if (user2 == null) {
 				 return Response.status(403).entity("friend does not exist").build();
 			 } else {
-				 logger.info("Usuario '{}' eliminando a usuario '{}'",user.getLogin(),user2.getLogin());
+				 logger.info("Usuario '{}' eliminando a amigo '{}'",user.getLogin(),user2.getLogin());
 				 //TODO error de almacenamiento de datos
 				 user.deleteFriend(user2);
 				 user.save();

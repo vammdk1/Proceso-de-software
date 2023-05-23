@@ -41,7 +41,7 @@ public class User {
 	String salt = null;
 	@Join
 	@Persistent(mappedBy="login", dependentElement="true", defaultFetchGroup="true")
-	List<User> friendList = new ArrayList<>();
+	ArrayList<User> friendList = new ArrayList<>();
 
 	@Override
 	public String toString() {
@@ -109,7 +109,14 @@ public class User {
 	}
 	
 	public void deleteFriend(User user) {
-		friendList.remove(user);
+		if (this.friendList != null && this.friendList.size() > 0) {
+			for (User u : this.friendList) {
+				if (u.getLogin().equals(user.getLogin())) {
+					this.friendList.remove(u);
+					return;
+				}
+			}
+		}
 	}
 	
 	/**
