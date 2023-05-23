@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@PersistenceCapable
+@PersistenceCapable(detachable="true")
 public class User {
 
 	protected static final Logger logger = LogManager.getLogger();
