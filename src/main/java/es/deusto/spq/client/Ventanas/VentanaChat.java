@@ -17,10 +17,10 @@ public class VentanaChat extends JFrame{
 	int screenWidth;
     int screenHeigth;
     
+    boolean erasing = false;
+    
     JTextField texto;
     JButton palante;
-    
-    private int x1, y1;
     
     JPanel pDibujo;
     
@@ -70,7 +70,19 @@ public class VentanaChat extends JFrame{
         
         
         pDibujo = new JPanel();
-        pDibujo.setBounds(50,100,(int)(screenWidth*0.6),(int)(screenHeigth*0.85));
+        
+        double w = screenWidth*0.6;
+        double h = screenHeigth*0.85;
+        
+        int s;
+        
+        if (w > h) {
+        	s = (int) h;
+        } else {
+        	s = (int) w;
+        }
+        
+        pDibujo.setBounds(50 + ((int) w/2 - s/2) ,100 + ((int) h/2 - s/2), s, s);
         pDibujo.setBackground(Color.WHITE);
         
         
@@ -133,34 +145,29 @@ public class VentanaChat extends JFrame{
         pDibujo.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-            	/*
-            	x1 = e.getXOnScreen();
-                y1 = e.getYOnScreen(); 
-                if (e.getButton() == 1) {
-                    // Botón izquierdo del mouse (pintar en blanco)
-                	g.setColor(Color.black);
-                	g2d.setStroke(new BasicStroke(3));
+            	if (e.getButton() == 1) {
+            		erasing = false;
+                    // Botón izquierdo del mouse (pintar en negro)
                 } else if (e.getButton() == 3) {
-                    // Botón derecho del mouse (pintar en negro)
-                    g.setColor(Color.white);
-                    g2d.setStroke(new BasicStroke(5));
-                }*/
+                    // Botón derecho del mouse (pintar en blanco)
+                	erasing = true;
+                }
             }
         });
         
         pDibujo.addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
-            	/*
-                int x2 = e.getXOnScreen();
-                int y2 = e.getYOnScreen();
-                if (pDibujo.contains(e.getPoint())) {
-                    
-                    g2d.drawLine(x1, y1, x2, y2);
-
-                    x1 = x2;
-                    y1 = y2;
-                }*/
+            	
+                int x = e.getX();
+                int y = e.getY();
+                
+                Rectangle r = g.getClipBounds();
+                double ratio = size / r.getWidth();
+                x = (int) (x * ratio);
+                y = (int) (y * ratio);
+                
+                PictochatntClient.paint(x, y, erasing);
             }
         });;
         

@@ -16,7 +16,11 @@ public class PictochatntWebSocketServlet extends WebSocketServlet{
 	@Override
     public void configure(WebSocketServletFactory factory) {
          
-          factory.register(PictochatntWebSocketServer.class);
+		factory.getPolicy().setMaxTextMessageSize(Integer.MAX_VALUE);
+		factory.getPolicy().setMaxTextMessageBufferSize(Integer.MAX_VALUE);
+		factory.getPolicy().setMaxBinaryMessageBufferSize(Integer.MAX_VALUE);
+		factory.getPolicy().setMaxBinaryMessageSize(Integer.MAX_VALUE);
+		factory.register(PictochatntWebSocketServer.class);
          
     }
  

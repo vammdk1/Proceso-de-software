@@ -25,6 +25,8 @@ import es.deusto.spq.pojo.RoomData;
 import es.deusto.spq.pojo.SessionData;
 import es.deusto.spq.pojo.TokenData;
 import es.deusto.spq.pojo.UserData;
+import es.deusto.spq.pojo.WebSocketPaintData;
+import es.deusto.spq.pojo.WebSocketPaintData.Mode;
 
 public class PictochatntClient {
 	protected static final Logger logger = LogManager.getLogger();
@@ -381,7 +383,14 @@ public class PictochatntClient {
 	 * Method to send paint messages to the server
 	 * @return
 	 */
-	public static boolean paint() {
+	public static boolean paint(int x, int y, boolean erase) {
+		WebSocketPaintData paintData;
+		if (erase) {
+			paintData = new WebSocketPaintData(x, y, Mode.Erase);
+		} else {
+			paintData = new WebSocketPaintData(x, y, Mode.Paint);
+		}
+		 
 		return true;
 		//TODO hacerlo
 	}
