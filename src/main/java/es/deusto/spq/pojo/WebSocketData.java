@@ -21,6 +21,8 @@ public abstract class WebSocketData {
  			return WebSocketLeaveData.decodeData(data);
  		} else if (type.equals("History")) {
  			return WebSocketHistoryData.decodeData(data);
+ 		} else if (type.equals("Paint")) {
+ 			return WebSocketPaintData.decodeData(data);
  		} else {
  			return null;
  		}

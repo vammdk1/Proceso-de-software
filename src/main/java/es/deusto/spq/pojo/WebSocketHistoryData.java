@@ -7,10 +7,12 @@ import java.util.Base64;
 public class WebSocketHistoryData extends WebSocketData {
 
 	private ArrayList<Message> messages;
+	private byte[] paint;
 	
-	public WebSocketHistoryData(ArrayList<Message> messages) {
+	public WebSocketHistoryData(ArrayList<Message> messages, byte[] paint) {
 		super("History");
 		this.setMessages(messages);
+		this.paint = paint;
 	}
 	
 	@Override
@@ -23,6 +25,8 @@ public class WebSocketHistoryData extends WebSocketData {
 			history += "\n" + date + ";" + user + ";" + message;
 		}
 		//System.out.println(messages.get(0) + " " + messages.get(1));
+		String imageString = Base64.getEncoder().encodeToString(paint);
+		//history += "\n";
 		return history;		
 	}
 	

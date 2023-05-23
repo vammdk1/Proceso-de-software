@@ -8,12 +8,12 @@ public class WebSocketPaintData extends WebSocketData {
 	int y;
 	Mode mode;
 	
-	enum Mode {
+	public enum Mode {
 		Paint,
 		Erase,
 	}
 	
-	protected WebSocketPaintData(int x, int y, Mode mode) {
+	public WebSocketPaintData(int x, int y, Mode mode) {
 		super("Paint");
 		this.x = x;
 		this.y = y;
