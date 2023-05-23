@@ -356,6 +356,15 @@ public class PictochatntClient {
 		}
 		return false;
 	}
+	
+	/**
+	 * Method to send paint messages to the server
+	 * @return
+	 */
+	public static boolean paint() {
+		return true;
+		//TODO hacerlo
+	}
 
 	/**
 	 * Method to get the token of the user

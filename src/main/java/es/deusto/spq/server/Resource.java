@@ -202,9 +202,6 @@ public class Resource {
 				 logger.info("Usuario '{}' eliminando a amigo '{}'",user.getLogin(),user2.getLogin());
 				 //TODO error de almacenamiento de datos
 				 user.deleteFriend(user2);
-				 user.save();
-				 user2.deleteFriend(user);
-				 user2.save();
 				 return Response.ok().build();
 			 }
 		 }
