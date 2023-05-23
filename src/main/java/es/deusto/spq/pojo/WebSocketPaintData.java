@@ -1,8 +1,5 @@
 package es.deusto.spq.pojo;
 
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
-
 public class WebSocketPaintData extends WebSocketData {
 	int x;
 	int y;
@@ -58,5 +55,28 @@ public class WebSocketPaintData extends WebSocketData {
 		return new WebSocketPaintData(x, y, mode);
 		
 	}
+
+	public int getX() {
+		return x;
+	}
 	
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
+
+	public Mode getMode() {
+		return mode;
+	}
+
+	public void setMode(Mode mode) {
+		this.mode = mode;
+	}
 }

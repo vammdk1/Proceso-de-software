@@ -143,7 +143,7 @@ public class Room {
 			this.addMessage(message);		
 			users.put(user, session);
 			if (session.isOpen()) {
-				WebSocketHistoryData historyData = new WebSocketHistoryData(messages);
+				WebSocketHistoryData historyData = new WebSocketHistoryData(messages, image);
 				try {
 					session.getRemote().sendString(historyData.encode());
 				} catch (IOException e) {

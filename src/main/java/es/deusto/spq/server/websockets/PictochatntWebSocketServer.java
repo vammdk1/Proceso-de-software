@@ -13,8 +13,10 @@ import org.eclipse.jetty.websocket.api.annotations.WebSocket;
 
 import es.deusto.spq.pojo.Message;
 import es.deusto.spq.pojo.WebSocketData;
+import es.deusto.spq.pojo.WebSocketPaintData;
 import es.deusto.spq.pojo.WebSocketSendData;
 import es.deusto.spq.pojo.WebSocketSessionData;
+import es.deusto.spq.pojo.WebSocketPaintData.Mode;
 import es.deusto.spq.server.logic.RoomManager;
 
 @WebSocket
@@ -29,13 +31,22 @@ public class PictochatntWebSocketServer {
         if (session.isOpen()) {
         	WebSocketData data = WebSocketData.decode(message);
         	
+            if (data == null) {
+                return;
+            }
+
         	if (data.getType().equals("Send")) {
         		WebSocketSendData sendData = (WebSocketSendData) data;
         		if (sessionData.getRoom() != null && sessionData.getUser() != null) {
         			Message m = new Message(sendData.getMessage(), sessionData.getUser().getLogin());
         			sessionData.getRoom().addMessage(m);
         		}
-        	}
+        	} else if (data.getType().equals("Paint")) {
+                WebSocketPaintData paintData = (WebSocketPaintData) data;
+                if (sessionData.getRoom() != null && sessionData.getUser() != null) {
+                    sessionData.getRoom().paint(paintData.getX(), paintData.getY(), paintData.getMode() == Mode.Erase);
+                }
+            }
         	
             String response = message.toUpperCase();
             session.getRemote().sendString(response);

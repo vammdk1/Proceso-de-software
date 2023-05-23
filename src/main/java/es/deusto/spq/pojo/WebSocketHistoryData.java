@@ -24,22 +24,27 @@ public class WebSocketHistoryData extends WebSocketData {
 			String message = Base64.getEncoder().encodeToString(m.getText().getBytes());
 			history += "\n" + date + ";" + user + ";" + message;
 		}
-		//System.out.println(messages.get(0) + " " + messages.get(1));
-		String imageString = Base64.getEncoder().encodeToString(paint);
-		//history += "\n";
+		history += "\nimage;" + Base64.getEncoder().encodeToString(paint);
 		return history;		
 	}
 	
 	public static WebSocketHistoryData decodeData(String data) {
 		ArrayList<Message> messages = new ArrayList<>();
+		byte[] image = null;
 		for (String msg : data.split("\n")) {
 			String[] parts = msg.split(";");
-			long date = Long.parseLong(parts[0]);
-			String user = parts[1];
-			String text = new String(Base64.getDecoder().decode(parts[2]), StandardCharsets.UTF_8);
-			messages.add(new Message(text, user, date));
+			if (msg.startsWith("image;")) {
+				String imageString = parts[1];
+				image = Base64.getDecoder().decode(imageString);
+			} else {
+				long date = Long.parseLong(parts[0]);
+				String user = parts[1];
+				String text = new String(Base64.getDecoder().decode(parts[2]), StandardCharsets.UTF_8);
+				messages.add(new Message(text, user, date));
+			}
+			
 		}
-		return new WebSocketHistoryData(messages);
+		return new WebSocketHistoryData(messages, image);
 	}
 
 	public ArrayList<Message> getMessages() {
@@ -48,5 +53,13 @@ public class WebSocketHistoryData extends WebSocketData {
 
 	public void setMessages(ArrayList<Message> messages2) {
 		this.messages = messages2;
+	}
+
+	public byte[] getImage() {
+		return paint;
+	}
+
+	public void setImage(byte[] paint) {
+		this.paint = paint;
 	}
 }
