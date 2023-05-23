@@ -1,3 +1,6 @@
+/**\file
+ * La clase User contine la información necesaria para la creación de un usuario.
+ */
 package es.deusto.spq.server.jdo;
 
 import javax.crypto.SecretKeyFactory;
@@ -49,6 +52,11 @@ public class User {
 		//For datanucleus
 	}
 
+	/**
+	 * Constructor de un usuario a partir de su nombre y su contraseña.
+	 * @param login
+	 * @param password
+	 */
 	public User(String login, String password) {
 		this.login = login;
 		byte[] saltBytes = new byte[16];
@@ -100,6 +108,9 @@ public class User {
 		friendList.add(user);
 	}
 	
+	/**
+	 * Guarda en la base de datos un usuario.
+	 */
 	public void save() {
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
@@ -119,6 +130,9 @@ public class User {
 		}
 	}
 
+	/**
+	 * Elimina de la base de datos un usuario.
+	 */
 	public void delete() {
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
@@ -149,6 +163,10 @@ public class User {
 		return this.login.hashCode();
 	}
 
+	/**
+	 * Método estático que coge todos los usuarios. 
+	 * @return
+	 */
 	public static List<User> getAll() {
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		pm.setDetachAllOnCommit(true);
@@ -179,6 +197,11 @@ public class User {
 		return users;		
 	}
 
+	/**
+	 * Método estático que busca un usuario en la base de datos.
+	 * @param login
+	 * @return
+	 */
 	public static User find(String login) {
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		pm.setDetachAllOnCommit(true);
