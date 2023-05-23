@@ -137,7 +137,7 @@ public VentanaPerfil() {
             			JOptionPane.showMessageDialog(null, "Error al eliminar amigo", "Error", JOptionPane.ERROR_MESSAGE);
             		}
             	}
-				
+				refrescar();
 			}
 		});
         
