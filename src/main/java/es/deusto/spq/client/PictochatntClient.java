@@ -224,6 +224,21 @@ public class PictochatntClient {
 		
 	}
 	
+	public static boolean deleteFriend(String selectedValue) {
+		FriendData friendData = new FriendData();
+		friendData.setToken(token);
+		friendData.setFriendName(selectedValue);
+		
+		Response response = instace.post("/deleteFriend", friendData);
+		
+		if (response.getStatus() != Status.OK.getStatusCode()) {
+			return false;
+		} else {
+			return true;
+		}
+		
+	}
+	
 	/**
 	 * Method to get the list of rooms that are active
 	 * @return the ArrayList of the active rooms
@@ -350,4 +365,5 @@ public class PictochatntClient {
 		// TODO Auto-generated method stub
 		return PictochatntClient.token;
 	}
+	
 }

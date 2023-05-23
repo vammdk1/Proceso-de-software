@@ -108,6 +108,10 @@ public class User {
 		friendList.add(user);
 	}
 	
+	public void deleteFriend(User user) {
+		friendList.remove(user);
+	}
+	
 	/**
 	 * Guarda en la base de datos un usuario.
 	 */

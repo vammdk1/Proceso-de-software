@@ -184,6 +184,33 @@ public class Resource {
 	 }
 	 
 	 /**
+	  * Method that allows user to delete a friend 
+	  * @param friendData FriendData that has all the information from the session of the user and the name of the new friend
+	  * @return Returns Ok status if everything goes fine or returns 403 status if there is any problem within the process
+	  */
+	 @POST
+	 @Path("/deleteFriend")
+	 public Response deleteFriend(FriendData friendData) {
+		 User user = Session.getSession(friendData.getToken()).getUser();
+		 if (user == null) {
+			 return Response.status(403).entity("Incorrect user").build();
+		 } else {
+			 User user2 = User.find(friendData.getFriendName());
+			 if (user2 == null) {
+				 return Response.status(403).entity("friend does not exist").build();
+			 } else {
+				 logger.info("Usuario '{}' eliminando a usuario '{}'",user.getLogin(),user2.getLogin());
+				 //TODO error de almacenamiento de datos
+				 user.deleteFriend(user2);
+				 user.save();
+				 user2.deleteFriend(user);
+				 user2.save();
+				 return Response.ok().build();
+			 }
+		 }
+	 }
+	 
+	 /**
 	  * Method that allows an user to create a new room
 	  * @param roomData RoomData with the current user session information, including the name and optional password for the room
 	  * @return Returns Ok status if everything goes fine or returns 403 status if there is any problem within the process

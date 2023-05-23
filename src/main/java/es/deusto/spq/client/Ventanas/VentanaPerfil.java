@@ -78,8 +78,12 @@ public VentanaPerfil() {
         lAmigos.setFont(x);
         
         JButton bAnadirAmigo = new JButton("Add");
-        bAnadirAmigo.setBounds((int)(screenWidth*0.65),(int)(screenHeigth*0.85),(int)(screenWidth*0.2),(int)(screenHeigth*0.07));
+        bAnadirAmigo.setBounds((int)(screenWidth*0.55),(int)(screenHeigth*0.85),(int)(screenWidth*0.18),(int)(screenHeigth*0.07));
         bAnadirAmigo.setFont(x);
+        
+        JButton bDeleteAmigo = new JButton("Delete");
+        bDeleteAmigo.setBounds((int)(screenWidth*0.77),(int)(screenHeigth*0.85),(int)(screenWidth*0.18),(int)(screenHeigth*0.07));
+        bDeleteAmigo.setFont(x);
         
         friends = new JList<String>();
         DefaultListModel<String> tp = new DefaultListModel<>();
@@ -100,6 +104,7 @@ public VentanaPerfil() {
         panel.add(panel2);
         panel.add(lNombre);
         panel.add(bAnadirAmigo);
+        panel.add(bDeleteAmigo);
         panel.add(lUser);
         panel.add(lAmigos);
         panel.add(pFriends);
@@ -119,6 +124,19 @@ public VentanaPerfil() {
 				}else {
 					JOptionPane.showMessageDialog(null, "El amigo no esta registrado", "Error", JOptionPane.ERROR_MESSAGE);
 				}
+				
+			}
+		});
+        
+        bDeleteAmigo.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(friends.getSelectedValue()!=null) {
+            		if(!PictochatntClient.deleteFriend(friends.getSelectedValue())) {
+            			JOptionPane.showMessageDialog(null, "Error al eliminar amigo", "Error", JOptionPane.ERROR_MESSAGE);
+            		}
+            	}
 				
 			}
 		});
