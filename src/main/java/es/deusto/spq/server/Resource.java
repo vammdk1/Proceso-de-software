@@ -33,7 +33,10 @@ public class Resource {
 
 	protected static final Logger logger = LogManager.getLogger();
 
-
+	/**
+	 * Method that returns all active rooms for an user to connect
+	 * @return Returns Ok status with the information of the rooms if everything goes fine or returns 403 status if there is any problem within the process
+	 */
 	 @POST
 	 @Path("/getRooms")
 	 public Response getRooms() {
@@ -49,7 +52,11 @@ public class Resource {
 	 }
 	 
 	 //login and register
-	 
+	 /**
+	  * Method that allows an user to log in the app 
+	  * @param userData UserData with the information of the user to create his session 
+	  * @return Returns Ok status including the session data if everything goes fine or returns 403 status if there is any problem within the process
+	  */
 	 @POST
 	 @Path("/login")
 	 public Response login(UserData userData) {
@@ -64,6 +71,11 @@ public class Resource {
 			 return Response.ok().entity(sessionData).build();
 		 }
 	 }
+	 /**
+	  * Method to register an user in the app
+	  * @param registerData RegisterData that has all de new user information to be registered 
+	  * @return Returns Ok status with a new session for the user if everything goes fine or returns 403 status if there is any problem within the process
+	  */
 	 
 	 @POST
 	 @Path("/register")
@@ -89,7 +101,11 @@ public class Resource {
 			 return Response.ok().entity(sessionData).build();
 		 }
 	 }
-	 
+	 /**
+	  * Method that allows user to log out from the app
+	  * @param tokenData TokenData with the information for the closing session 
+	  * @return Returns Ok status if everything goes fine or returns 403 status if there is any problem within the process
+	  */
 	 @POST
 	 @Path("/logout")
 	 public Response logout(TokenData tokenData) {
@@ -103,6 +119,11 @@ public class Resource {
 		 }
 	 }
 	 
+	 /**
+	  * Method that allows user to delete his account form the app
+	  * @param tokenData TokenData from the session of the user that is deleting its account
+	  * @return Returns Ok status if everything goes fine or returns 403 status if there is any problem within the process
+	  */
 	 @POST
 	 @Path("/deleteUser")
 	 public Response deleteUser(TokenData tokenData) {
@@ -120,9 +141,9 @@ public class Resource {
 		 }
 	 }
 	 /**
-	  * Get method to get the friendlist
-	  * @param tokenData token
-	  * @return arraylist<String>
+	  * Get method to get the friendlist of an user
+	  * @param tokenData TokenData with the information of the user making the request 
+	  * @return Returns Ok status with an Arraylist<String> of friends if everything goes fine or returns 403 status if there is any problem within the process 
 	  */
 	 @POST
 	 @Path("/getFriends")
@@ -135,6 +156,11 @@ public class Resource {
 		 }
 	 }
 	 
+	 /**
+	  * Method that allows user to add a friend 
+	  * @param friendData FriendData that has all the information from the session of the user and the name of the new friend
+	  * @return Returns Ok status if everything goes fine or returns 403 status if there is any problem within the process
+	  */
 	 @POST
 	 @Path("/addFriend")
 	 public Response addFriends(FriendData friendData) {
@@ -157,6 +183,11 @@ public class Resource {
 		 }
 	 }
 	 
+	 /**
+	  * Method that allows an user to create a new room
+	  * @param roomData RoomData with the current user session information, including the name and optional password for the room
+	  * @return Returns Ok status if everything goes fine or returns 403 status if there is any problem within the process
+	  */
 	 //rooms
 	 @POST
 	 @Path("/createRoom")
@@ -176,6 +207,11 @@ public class Resource {
 		 }
 	 }
 	 
+	 /**
+	  * Method that deletes a room when needed 
+	  * @param roomData RoomData with all the information of the session from the user that is deleting the room
+	  * @return Returns Ok status if everything goes fine or returns 403 status if there is any problem within the process
+	  */
 	 @POST
 	 @Path("/deleteRoom")
 	 public Response deleteRoom(RoomData roomData) {
