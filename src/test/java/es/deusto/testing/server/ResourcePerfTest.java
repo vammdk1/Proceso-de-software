@@ -2,7 +2,6 @@ package es.deusto.testing.server;
 
 import static org.junit.Assert.assertEquals;
 
-import java.rmi.server.UID;
 import java.util.UUID;
 
 import javax.jdo.JDOHelper;
@@ -36,7 +35,6 @@ import es.deusto.spq.pojo.RegisterData;
 import es.deusto.spq.pojo.RoomData;
 import es.deusto.spq.pojo.SessionData;
 import es.deusto.spq.pojo.TokenData;
-import es.deusto.spq.pojo.UserData;
 import es.deusto.spq.server.Main;
 import es.deusto.spq.server.jdo.User;
 
@@ -110,7 +108,7 @@ public class ResourcePerfTest {
         contador+=1;
         user.setPassword("1234");
 
-        Response response = target.path("register")
+        target.path("register")
             .request(MediaType.APPLICATION_JSON)
             .post(Entity.entity(user, MediaType.APPLICATION_JSON));
 
@@ -130,7 +128,7 @@ public class ResourcePerfTest {
         contador+=1;
         user.setPassword("1234");
 
-        Response response = target.path("register")
+        target.path("register")
             .request(MediaType.APPLICATION_JSON)
             .post(Entity.entity(user, MediaType.APPLICATION_JSON));
 
@@ -186,7 +184,7 @@ public class ResourcePerfTest {
         contador+=1;
         user.setPassword("1234");
 
-        Response response = target.path("register")
+        target.path("register")
             .request(MediaType.APPLICATION_JSON)
             .post(Entity.entity(user, MediaType.APPLICATION_JSON));
 
@@ -227,7 +225,7 @@ public class ResourcePerfTest {
         contador+=1;
         user.setPassword("1234");
 
-        Response response = target.path("register")
+        target.path("register")
                 .request(MediaType.APPLICATION_JSON)
                 .post(Entity.entity(user, MediaType.APPLICATION_JSON));
         
