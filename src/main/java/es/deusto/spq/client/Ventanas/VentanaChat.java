@@ -22,7 +22,8 @@ public class VentanaChat extends JFrame{
     
     JLabel title;
     JTextArea taTexto;
-    
+    Graphics g;
+    Graphics2D g2d;
     public static VentanaChat ventanaChat;
 
     public VentanaChat() {
@@ -105,6 +106,8 @@ public class VentanaChat extends JFrame{
         setLayout(null);
         setVisible(true);
         
+        g = getGraphics();
+        g2d = (Graphics2D) g;
         panel2.addMouseListener(new MouseListener() {
 			
 			@Override
@@ -124,8 +127,17 @@ public class VentanaChat extends JFrame{
         pDibujo.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                x1 = e.getXOnScreen();
-                y1 = e.getYOnScreen();
+            	x1 = e.getXOnScreen();
+                y1 = e.getYOnScreen(); 
+                if (e.getButton() == 1) {
+                    // Botón izquierdo del mouse (pintar en blanco)
+                	g.setColor(Color.black);
+                	g2d.setStroke(new BasicStroke(2));
+                } else if (e.getButton() == 3) {
+                    // Botón derecho del mouse (pintar en negro)
+                    g.setColor(Color.white);
+                    g2d.setStroke(new BasicStroke(5));
+                }
             }
         });
         
@@ -134,10 +146,9 @@ public class VentanaChat extends JFrame{
             public void mouseDragged(MouseEvent e) {
                 int x2 = e.getXOnScreen();
                 int y2 = e.getYOnScreen();
-
                 if (pDibujo.contains(e.getPoint())) {
-                    Graphics g = getGraphics();
-                    g.drawLine(x1, y1, x2, y2);
+                    
+                    g2d.drawLine(x1, y1, x2, y2);
 
                     x1 = x2;
                     y1 = y2;
@@ -150,6 +161,7 @@ public class VentanaChat extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//taTexto.append("(Time)(User) " + texto.getText() + "\n");
+				
 				PictochatntClient.sendMessage(texto.getText());
 				texto.setText("");
 			}
