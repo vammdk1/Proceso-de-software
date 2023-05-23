@@ -224,6 +224,11 @@ public class PictochatntClient {
 		
 	}
 	
+	/**
+	 * Method to delete a friend to an user
+	 * @param selectedValue
+	 * @return
+	 */
 	public static boolean deleteFriend(String selectedValue) {
 		FriendData friendData = new FriendData();
 		friendData.setToken(token);
@@ -311,6 +316,12 @@ public class PictochatntClient {
 		}
 	}
 	
+	/**
+	 * Method to send join room message to the server
+	 * @param roomName
+	 * @param password
+	 * @return
+	 */
 	public static boolean joinRoom(String roomName, String password) {
 		if (token == null || wsClient != null || pictochatntWsClient != null) {
 			return false;
@@ -331,6 +342,10 @@ public class PictochatntClient {
         return true;
 	}
 	
+	/**
+	 * Method to send leave room message to the server
+	 * @return
+	 */
 	public static boolean leaveRoom() {
 		if (wsClient == null || pictochatntWsClient == null) {
 			return false;
@@ -350,6 +365,11 @@ public class PictochatntClient {
 		return true;
 	}
 	
+	/**
+	 * Method to send messages to the server
+	 * @param message
+	 * @return
+	 */
 	public static boolean sendMessage(String message) {
 		if (pictochatntWsClient != null) {
 			return pictochatntWsClient.sendMessage(message);
