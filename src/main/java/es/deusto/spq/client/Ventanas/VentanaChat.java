@@ -2,6 +2,8 @@ package es.deusto.spq.client.Ventanas;
 
 import javax.swing.*;
 
+import org.apache.commons.math3.analysis.solvers.RegulaFalsiSolver;
+
 import es.deusto.spq.client.PictochatntClient;
 
 import java.awt.*;
@@ -18,6 +20,7 @@ public class VentanaChat extends JFrame{
     int screenHeigth;
     
     boolean erasing = false;
+    double ratio;
     
     JTextField texto;
     JButton palante;
@@ -26,8 +29,6 @@ public class VentanaChat extends JFrame{
     
     JLabel title;
     JTextArea taTexto;
-    Graphics g;
-    Graphics2D g2d;
     BufferedImage bImage = new BufferedImage(size, size, BufferedImage.TYPE_INT_RGB);
     
     public static VentanaChat ventanaChat;
@@ -69,12 +70,25 @@ public class VentanaChat extends JFrame{
         Font z = new Font("Serif", Font.PLAIN, 25);
         
         
-        pDibujo = new JPanel();
+        pDibujo = new JPanel() {
+	        /**
+			 * 
+			 */
+			private static final long serialVersionUID = -7249652798292608268L;
+
+			@Override
+	        protected void paintComponent(Graphics g) {
+	        	Rectangle r = g.getClipBounds();
+	        	Graphics2D g2d = (Graphics2D) g;
+	    		g2d.drawImage(bImage, 0, 0, (int) r.getWidth(), (int) r.getHeight(), Color.WHITE, null);
+	    		pDibujo.repaint();
+	        }
+        };
         
         double w = screenWidth*0.6;
         double h = screenHeigth*0.85;
         
-        int s;
+        double s;
         
         if (w > h) {
         	s = (int) h;
@@ -82,7 +96,8 @@ public class VentanaChat extends JFrame{
         	s = (int) w;
         }
         
-        pDibujo.setBounds(50 + ((int) w/2 - s/2) ,100 + ((int) h/2 - s/2), s, s);
+        ratio = size / s;
+        pDibujo.setBounds(50 + (int) (w/2 - s/2), 100 + (int) (h/2 - s/2), (int) s, (int) s);
         pDibujo.setBackground(Color.WHITE);
         
         
@@ -124,8 +139,6 @@ public class VentanaChat extends JFrame{
         setLayout(null);
         setVisible(true);
         
-        g = getGraphics();
-        g2d = (Graphics2D) g;
         panel2.addMouseListener(new MouseListener() {
 			
 			@Override
@@ -162,10 +175,14 @@ public class VentanaChat extends JFrame{
                 int x = e.getX();
                 int y = e.getY();
                 
-                Rectangle r = g.getClipBounds();
-                double ratio = size / r.getWidth();
                 x = (int) (x * ratio);
                 y = (int) (y * ratio);
+                
+                if (x < 0 || x >= size || y < 0 || y >= size) {
+                	return;
+                }
+                
+                System.out.println(x + " ============= " + y);
                 
                 PictochatntClient.paint(x, y, erasing);
             }
@@ -198,15 +215,14 @@ public class VentanaChat extends JFrame{
 	public void getImageHistory(byte[] image) {
 		for (int x = 0; x < size; x++) {
 			for (int y = 0; y < size; y++) {
-				if (image[y*size+x] != 0) {
+				if (image[y*size+x] == 0) {
 					bImage.setRGB(x, y, 0xFFFFFF);
 				} else {
 					bImage.setRGB(x, y, 0x000000);
 				}
 			}
 		}
-		Rectangle r = g.getClipBounds();
-		g2d.drawImage(bImage, 0, 0, (int) r.getWidth(), (int) r.getHeight(), Color.WHITE, null);
+		
 		pDibujo.repaint();
 	}
 	
@@ -246,8 +262,6 @@ public class VentanaChat extends JFrame{
 			}
 		}
 		
-		Rectangle r = g.getClipBounds();
-		g2d.drawImage(bImage, 0, 0, (int) r.getWidth(), (int) r.getHeight(), Color.WHITE, null);
 		pDibujo.repaint();
 	}
 

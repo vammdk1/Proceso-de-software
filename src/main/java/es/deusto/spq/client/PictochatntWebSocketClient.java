@@ -83,6 +83,7 @@ public class PictochatntWebSocketClient {
             VentanaMenu.ventanaMenu = null;
             VentanaChat.ventanaChat = new VentanaChat();
             VentanaChat.ventanaChat.setVisible(true);
+            VentanaChat.ventanaChat.setRoomName(PictochatntClient.getCurrentRoomName());
             for (Message m : pendingMessages) {
             	VentanaChat.ventanaChat.addMessage(m.getUser(), m.getText(), m.getTimestamp());
             }

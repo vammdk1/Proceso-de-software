@@ -25,8 +25,6 @@ import es.deusto.spq.pojo.RoomData;
 import es.deusto.spq.pojo.SessionData;
 import es.deusto.spq.pojo.TokenData;
 import es.deusto.spq.pojo.UserData;
-import es.deusto.spq.pojo.WebSocketPaintData;
-import es.deusto.spq.pojo.WebSocketPaintData.Mode;
 
 public class PictochatntClient {
 	protected static final Logger logger = LogManager.getLogger();
@@ -41,6 +39,8 @@ public class PictochatntClient {
 	
 	private static WebSocketClient wsClient;
 	private static PictochatntWebSocketClient pictochatntWsClient;
+	
+	private static String currentRoomName;
 	
 	public PictochatntClient() {
 	}
@@ -337,6 +337,7 @@ public class PictochatntClient {
             ClientUpgradeRequest request = new ClientUpgradeRequest();
             wsClient.connect(pictochatntWsClient, echoUri, request);
             pictochatntWsClient.getLatch().await();
+            currentRoomName = roomName;
         } catch (Throwable t) {
             t.printStackTrace();
             return false;
@@ -359,7 +360,6 @@ public class PictochatntClient {
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				return true;
 			}
 		}
 		wsClient = null;
@@ -384,14 +384,10 @@ public class PictochatntClient {
 	 * @return
 	 */
 	public static boolean paint(int x, int y, boolean erase) {
-		WebSocketPaintData paintData;
-		if (erase) {
-			paintData = new WebSocketPaintData(x, y, Mode.Erase);
-		} else {
-			paintData = new WebSocketPaintData(x, y, Mode.Paint);
-		}
-		 
-		return true;
+		if (pictochatntWsClient != null) {
+			return pictochatntWsClient.sendPaintMessage(x, y, erase);
+		} 
+		return false;
 		//TODO hacerlo
 	}
 
@@ -402,6 +398,9 @@ public class PictochatntClient {
 	public Object getToken() {
 		// TODO Auto-generated method stub
 		return PictochatntClient.token;
+	}
+	public static String getCurrentRoomName() {
+		return currentRoomName;
 	}
 	
 }

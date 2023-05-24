@@ -1,6 +1,7 @@
 package es.deusto.spq.server.logic;
 
 import java.util.HashMap;
+import java.util.HashSet;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -46,6 +47,11 @@ public class RoomManager{
 
    public static void deleteRoom(String roomName){
         if(rooms.containsKey(roomName)){
+        	Room room = getRoom(roomName);
+        	HashSet<User> users = new HashSet<User>(room.getUsers().keySet()); 
+        	for (User u : users) {
+        		room.deleteUser(u);
+        	}
         	rooms.remove(roomName);
         }else{
         	logger.warn("La sala " + roomName + " no existe");

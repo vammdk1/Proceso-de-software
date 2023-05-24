@@ -4,6 +4,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Base64;
 
+import es.deusto.spq.utils.ByteUtils;
+
 public class WebSocketHistoryData extends WebSocketData {
 
 	private ArrayList<Message> messages;
@@ -24,7 +26,7 @@ public class WebSocketHistoryData extends WebSocketData {
 			String message = Base64.getEncoder().encodeToString(m.getText().getBytes());
 			history += "\n" + date + ";" + user + ";" + message;
 		}
-		history += "\nimage;" + Base64.getEncoder().encodeToString(paint);
+		history += "\nimage;" + Base64.getEncoder().encodeToString(ByteUtils.byteArrayToBits(paint));
 		return history;		
 	}
 	
@@ -35,7 +37,7 @@ public class WebSocketHistoryData extends WebSocketData {
 			String[] parts = msg.split(";");
 			if (msg.startsWith("image;")) {
 				String imageString = parts[1];
-				image = Base64.getDecoder().decode(imageString);
+				image = ByteUtils.bitArrayToBytes(Base64.getDecoder().decode(imageString));
 			} else {
 				long date = Long.parseLong(parts[0]);
 				String user = parts[1];

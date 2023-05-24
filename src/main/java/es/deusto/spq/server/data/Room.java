@@ -17,6 +17,7 @@ import es.deusto.spq.pojo.WebSocketPaintData;
 import es.deusto.spq.pojo.WebSocketReceiveData;
 import es.deusto.spq.pojo.WebSocketPaintData.Mode;
 import es.deusto.spq.server.jdo.User;
+import es.deusto.spq.server.logic.RoomManager;
 
 public class Room {
 	protected static final Logger logger = LogManager.getLogger();
@@ -28,6 +29,8 @@ public class Room {
 	String name = null;
 	User owner = null;
 	String password = null;
+	
+	boolean closing = false;
 	
 	/**
 	 * Constructor de una sala a partir de la persona que la ha creado, el nombre asignado a la sala y su contraseña en caso de ser privada.
@@ -164,6 +167,20 @@ public class Room {
 		if (!users.containsKey(usuario)) {
 			return false;
 		}
+		
+		if (usuario.equals(owner) && !closing) {
+			closing = true;
+			RoomManager.deleteRoom(name);
+			return true;
+		}
+		
+		if (closing && !usuario.equals(owner)) {
+			if (users.get(usuario).isOpen()) {
+				users.get(usuario).close();
+			}
+			return true;
+		}
+		
 		WebSocketLeaveData data = new WebSocketLeaveData();
 		try {
 			if (users.get(usuario).isOpen()) {
@@ -173,6 +190,14 @@ public class Room {
 			logger.error("Error broadcasting message");
 			e.printStackTrace();
 		}
+		
+		if (closing && usuario.equals(owner)) {
+			if (users.get(usuario).isOpen()) {
+				users.get(usuario).close();
+			}
+			return true;
+		}
+		
 		users.remove(usuario);
 		Message message = new Message(usuario.getLogin() + " ha salido de la sala.", "SYSTEM");
 		this.addMessage(message);
