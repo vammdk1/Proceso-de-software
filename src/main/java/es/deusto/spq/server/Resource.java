@@ -164,12 +164,15 @@ public class Resource {
 	 @POST
 	 @Path("/addFriend")
 	 public Response addFriends(FriendData friendData) {
+		 logger.info("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 		 User user = Session.getSession(friendData.getToken()).getUser();
 		 if (user == null) {
+			 logger.info("Error en Usuario ");
 			 return Response.status(403).entity("Incorrect user").build();
 		 } else {
 			 User user2 = User.find(friendData.getFriendName());
 			 if (user2 == null) {
+				 logger.info("Error en Amigo ");
 				 return Response.status(403).entity("friend does not exist").build();
 			 } else {
 				 logger.info("Usuario '{}' agregando a usuario '{}'",user.getLogin(),user2.getLogin());

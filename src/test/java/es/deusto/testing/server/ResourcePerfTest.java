@@ -30,6 +30,7 @@ import com.github.noconnor.junitperf.reporting.providers.HtmlReportGenerator;
 
 import categories.IntegrationTest;
 import categories.PerformanceTest;
+import es.deusto.spq.client.PictochatntClient;
 import es.deusto.spq.pojo.FriendData;
 import es.deusto.spq.pojo.RegisterData;
 import es.deusto.spq.pojo.RoomData;
@@ -45,7 +46,6 @@ public class ResourcePerfTest {
     
     private static HttpServer server;
     private WebTarget target;
-    private static int contador;
 
     @Rule
     public JUnitPerfRule perfTestRule = new JUnitPerfRule(new HtmlReportGenerator("target/junitperf/report.html"));
@@ -54,7 +54,6 @@ public class ResourcePerfTest {
     public static void prepareTests() throws Exception {
         // start the server
         server = Main.startServer();
-        contador = 1;
         
         
     }
@@ -82,13 +81,12 @@ public class ResourcePerfTest {
             pm.close();
         }
     }
-
+    
     @Test
-    @JUnitPerfTest(threads = 1, durationMs = 5000,warmUpMs = 2000)
+    @JUnitPerfTest(threads = 10, durationMs = 5000,warmUpMs = 2000)
     public void testRegisterUser() {
         RegisterData user = new RegisterData();
-        user.setLogin("prueba-"+contador);
-        contador+=1;
+        user.setLogin("prueba-"+ UUID.randomUUID().toString());
         user.setPassword("1234");
 
         Response response = target.path("register")
@@ -101,11 +99,10 @@ public class ResourcePerfTest {
   
     
     @Test
-    @JUnitPerfTest(threads = 1, durationMs = 5000,warmUpMs = 2000)
+    @JUnitPerfTest(threads = 10, durationMs = 5000,warmUpMs = 2000)
     public void TestLogginUser() {
     	RegisterData user = new RegisterData();
-    	user.setLogin("prueba-"+contador);
-        contador+=1;
+    	user.setLogin("prueba-"+ UUID.randomUUID().toString());
         user.setPassword("1234");
 
         target.path("register")
@@ -121,11 +118,10 @@ public class ResourcePerfTest {
     
     
     @Test
-    @JUnitPerfTest(threads = 1, durationMs = 5000,warmUpMs = 2000)
+    @JUnitPerfTest(threads = 10, durationMs = 5000,warmUpMs = 2000)
     public void TestLogOutUser() {
     	RegisterData user = new RegisterData();
-    	user.setLogin("prueba-"+contador);
-        contador+=1;
+    	user.setLogin("prueba-"+ UUID.randomUUID().toString());
         user.setPassword("1234");
 
         target.path("register")
@@ -146,14 +142,11 @@ public class ResourcePerfTest {
         assertEquals(Family.SUCCESSFUL, response2.getStatusInfo().getFamily());
     }
     
-    //TODO No funciona
-    /**
     @Test
     @JUnitPerfTest(threads = 1, durationMs = 5000,warmUpMs = 2000)
     public void TestDeleteUser() {
     	RegisterData user = new RegisterData();
-    	user.setLogin("prueba-"+contador);
-        contador+=1;
+    	user.setLogin("prueba-"+ UUID.randomUUID().toString());
         user.setPassword("1234");
 
         Response response = target.path("register")
@@ -174,14 +167,13 @@ public class ResourcePerfTest {
 
         assertEquals(Family.SUCCESSFUL, response2.getStatusInfo().getFamily());
     }
-    **/
+    
     
     @Test
-    @JUnitPerfTest(threads = 1, durationMs = 5000,warmUpMs = 2000)
+    @JUnitPerfTest(threads = 10, durationMs = 5000,warmUpMs = 2000)
     public void TestRooms() {
     	RegisterData user = new RegisterData();
-    	user.setLogin("prueba-"+contador);
-        contador+=1;
+    	user.setLogin("prueba-"+ UUID.randomUUID().toString());
         user.setPassword("1234");
 
         target.path("register")
@@ -221,18 +213,15 @@ public class ResourcePerfTest {
     @JUnitPerfTest(threads = 1, durationMs = 5000,warmUpMs = 2000)
     public void TestFriends() {
     	RegisterData user = new RegisterData();
-    	user.setLogin("prueba-"+contador);
-        contador+=1;
+    	user.setLogin("prueba-"+ UUID.randomUUID().toString());
         user.setPassword("1234");
 
         target.path("register")
                 .request(MediaType.APPLICATION_JSON)
                 .post(Entity.entity(user, MediaType.APPLICATION_JSON));
         
-        
-        
         RegisterData friend = new RegisterData();
-        friend.setLogin("Patata");
+        friend.setLogin("Friend-"+user.getLogin());
         friend.setPassword("1234");
 
         target.path("register").request(MediaType.APPLICATION_JSON).post(Entity.entity(friend, MediaType.APPLICATION_JSON));
@@ -240,31 +229,26 @@ public class ResourcePerfTest {
         Response response1 = target.path("login")
                 .request(MediaType.APPLICATION_JSON)
                 .post(Entity.entity(user, MediaType.APPLICATION_JSON));
+       
+        TokenData tok2 = new TokenData();
+        tok2.setToken(response1.readEntity(SessionData.class).getToken());
         
-        //TokenData tok2 = new TokenData();
-        //tok2.setToken(response1.readEntity(SessionData.class).getToken());
         
         FriendData fData = new FriendData();
-        fData.setToken(response1.readEntity(SessionData.class).getToken());
-        fData.setFriendName("Patata");
+        fData.setToken(tok2.getToken());
+        fData.setFriendName(friend.getLogin());
         
-        Response response2 = target.path("addFriend")
-                .request(MediaType.APPLICATION_JSON)
-                .post(Entity.entity(fData, MediaType.APPLICATION_JSON));
-
+        //Response response2 = (new PictochatntClient()).post("/addFriend",fData);
+        Response response2 = target.path("addFriend").request(MediaType.APPLICATION_JSON).post(Entity.entity(fData, MediaType.APPLICATION_JSON));
+        System.out.println(response2);
         assertEquals(Family.SUCCESSFUL, response2.getStatusInfo().getFamily());
         
-        //Preguntar por que falla
-        //TokenData tok2 = new TokenData();
-        //tok2.setToken(response1.readEntity(SessionData.class).getToken());
-        
-        
-        /**
+      
         Response response3 = target.path("getFriends")
                 .request(MediaType.APPLICATION_JSON)
-                .post(Entity.entity(tok, MediaType.APPLICATION_JSON));
+                .post(Entity.entity(tok2, MediaType.APPLICATION_JSON));
 
         assertEquals(Family.SUCCESSFUL, response3.getStatusInfo().getFamily());
-        **/
+        
     }
 }
