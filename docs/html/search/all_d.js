@@ -1,0 +1,6 @@
+var searchData=
+[
+  ['onclose_0',['onClose',['../classes_1_1deusto_1_1spq_1_1client_1_1_pictochatnt_web_socket_client.html#a55f798514e1c7f419e7eca88abb204d3',1,'es.deusto.spq.client.PictochatntWebSocketClient.onClose()'],['../classes_1_1deusto_1_1spq_1_1server_1_1websockets_1_1_pictochatnt_web_socket_server.html#ad3623de940d818333c17f997e63f9e2c',1,'es.deusto.spq.server.websockets.PictochatntWebSocketServer.onClose()']]],
+  ['onconnect_1',['onConnect',['../classes_1_1deusto_1_1spq_1_1client_1_1_pictochatnt_web_socket_client.html#a62605b778d9db6f6899d253b17ba68ca',1,'es.deusto.spq.client.PictochatntWebSocketClient.onConnect()'],['../classes_1_1deusto_1_1spq_1_1server_1_1websockets_1_1_pictochatnt_web_socket_server.html#aec9ab453eaa46b14b7e3b0db665b410c',1,'es.deusto.spq.server.websockets.PictochatntWebSocketServer.onConnect()']]],
+  ['onmessage_2',['onMessage',['../classes_1_1deusto_1_1spq_1_1client_1_1_pictochatnt_web_socket_client.html#a60872ec5fdbfdbbcb31df41c20588a44',1,'es.deusto.spq.client.PictochatntWebSocketClient.onMessage()'],['../classes_1_1deusto_1_1spq_1_1server_1_1websockets_1_1_pictochatnt_web_socket_server.html#aaf465be529746322b4c13232299c8685',1,'es.deusto.spq.server.websockets.PictochatntWebSocketServer.onMessage()']]]
+];

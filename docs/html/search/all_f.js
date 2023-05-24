@@ -1,0 +1,19 @@
+var searchData=
+[
+  ['refrescar_0',['refrescar',['../classes_1_1deusto_1_1spq_1_1client_1_1_ventanas_1_1_ventana_perfil.html#a5c2dd4d1cd276d7d803570878c081e2d',1,'es::deusto::spq::client::Ventanas::VentanaPerfil']]],
+  ['register_1',['register',['../classes_1_1deusto_1_1spq_1_1client_1_1_pictochatnt_client.html#a20b1c7f7c7b6f94a570ed247a10ad90f',1,'es.deusto.spq.client.PictochatntClient.register()'],['../classes_1_1deusto_1_1spq_1_1server_1_1_resource.html#a9b7988198e367766d8c53bff233d8bc2',1,'es.deusto.spq.server.Resource.register()']]],
+  ['registerdata_2',['RegisterData',['../classes_1_1deusto_1_1spq_1_1pojo_1_1_register_data.html',1,'es.deusto.spq.pojo.RegisterData'],['../classes_1_1deusto_1_1spq_1_1pojo_1_1_register_data.html#ab3ced2cfee077be903fa2ab80f7ecf89',1,'es.deusto.spq.pojo.RegisterData.RegisterData()']]],
+  ['registerdata_2ejava_3',['RegisterData.java',['../_register_data_8java.html',1,'']]],
+  ['resource_4',['Resource',['../classes_1_1deusto_1_1spq_1_1server_1_1_resource.html',1,'es::deusto::spq::server']]],
+  ['resource_2ejava_5',['Resource.java',['../_resource_8java.html',1,'']]],
+  ['resourceperftest_6',['ResourcePerfTest',['../classes_1_1deusto_1_1testing_1_1server_1_1_resource_perf_test.html',1,'es::deusto::testing::server']]],
+  ['resourceperftest_2ejava_7',['ResourcePerfTest.java',['../_resource_perf_test_8java.html',1,'']]],
+  ['resourcetest_8',['ResourceTest',['../classes_1_1deusto_1_1testing_1_1server_1_1_resource_test.html',1,'es::deusto::testing::server']]],
+  ['resourcetest_2ejava_9',['ResourceTest.java',['../_resource_test_8java.html',1,'']]],
+  ['room_10',['Room',['../classes_1_1deusto_1_1spq_1_1server_1_1data_1_1_room.html',1,'es.deusto.spq.server.data.Room'],['../classes_1_1deusto_1_1spq_1_1server_1_1data_1_1_room.html#a848d879907e624b9daa3c13c604f360d',1,'es.deusto.spq.server.data.Room.Room()']]],
+  ['room_2ejava_11',['Room.java',['../_room_8java.html',1,'']]],
+  ['roomdata_12',['RoomData',['../classes_1_1deusto_1_1spq_1_1pojo_1_1_room_data.html',1,'es.deusto.spq.pojo.RoomData'],['../classes_1_1deusto_1_1spq_1_1pojo_1_1_room_data.html#a5321501f077a7faad77afdb176c7415b',1,'es.deusto.spq.pojo.RoomData.RoomData()']]],
+  ['roomdata_2ejava_13',['RoomData.java',['../_room_data_8java.html',1,'']]],
+  ['roommanager_14',['RoomManager',['../classes_1_1deusto_1_1spq_1_1server_1_1logic_1_1_room_manager.html',1,'es::deusto::spq::server::logic']]],
+  ['roommanager_2ejava_15',['RoomManager.java',['../_room_manager_8java.html',1,'']]]
+];
