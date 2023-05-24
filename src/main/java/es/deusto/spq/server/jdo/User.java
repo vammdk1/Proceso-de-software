@@ -69,6 +69,11 @@ public class User {
 		return this.login;
 	}
 	
+	/**
+	 * Este metodo genera un hash para la contraseña
+	 * @param password
+	 * @return
+	 */
 	public byte[] genPassHash(String password) {
 		KeySpec spec = new PBEKeySpec(password.toCharArray(), HexUtils.hexToBytes(salt), 65536, 128);
 		byte[] ret = null;

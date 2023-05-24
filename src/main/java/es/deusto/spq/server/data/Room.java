@@ -53,6 +53,12 @@ public class Room {
 		return image;
 	}
 	
+	/**
+	 * Este método pinta en el panel de dibujo de una habitación
+	 * @param x
+	 * @param y
+	 * @param erase
+	 */
 	public void paint(int x, int y, boolean erase) {
 		int startX = x - 1;
 		int startY = y - 1;

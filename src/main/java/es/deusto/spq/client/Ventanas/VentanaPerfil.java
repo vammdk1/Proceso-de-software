@@ -163,7 +163,10 @@ public VentanaPerfil() {
         refrescar();
         
     }
-
+	
+	/**
+	 * This method refreshes the friend list from a user
+	 */
 	public void refrescar() {
 		lUser.setText(PictochatntClient.getUsername());
 		DefaultListModel<String> model = (DefaultListModel<String>) friends.getModel();

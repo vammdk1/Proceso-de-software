@@ -202,6 +202,12 @@ public class VentanaChat extends JFrame{
         
     }
     
+    /**
+     * This method adds a message to the message panel
+     * @param user
+     * @param text
+     * @param timeStamp
+     */
     public void addMessage(String user, String text, long timeStamp) {
     	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     	Date date = new Date(timeStamp);
@@ -212,6 +218,10 @@ public class VentanaChat extends JFrame{
 		title.setText(name);
 	}
 	
+	/**
+	 * This method gets the current drawing when a new user enters the room
+	 * @param image
+	 */
 	public void getImageHistory(byte[] image) {
 		for (int x = 0; x < size; x++) {
 			for (int y = 0; y < size; y++) {
@@ -226,6 +236,12 @@ public class VentanaChat extends JFrame{
 		pDibujo.repaint();
 	}
 	
+	/**
+	 * This method sets a pixel to a determined color given his position
+	 * @param x
+	 * @param y
+	 * @param erase
+	 */
 	private void setPixel(int x, int y, boolean erase) {
 		if (!erase) {
 			bImage.setRGB(x, y, 0x000000);
@@ -234,6 +250,12 @@ public class VentanaChat extends JFrame{
 		}
 	}
 	
+	/**
+	 * This method paints on the position given
+	 * @param x
+	 * @param y
+	 * @param erase
+	 */
 	public void paint(int x, int y, boolean erase) {
 		int startX = x - 1;
 		int startY = y - 1;

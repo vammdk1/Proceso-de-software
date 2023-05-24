@@ -187,6 +187,11 @@ public VentanaRegistro() {
         new VentanaRegistro();
     }
 
+    /**
+     * This method shows a dialog if there is an error
+     * @param string
+     * @return
+     */
     public boolean ensenarJOption(String string) {
 		JOptionPane.showMessageDialog(null, string, "Error", JOptionPane.ERROR_MESSAGE);
 		return true;

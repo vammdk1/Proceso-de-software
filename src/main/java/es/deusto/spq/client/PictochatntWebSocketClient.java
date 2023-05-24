@@ -33,6 +33,12 @@ public class PictochatntWebSocketClient {
      
     CountDownLatch latch = new CountDownLatch(1);
  
+    /**
+     * This method handles the message sending for the WebSockets
+     * @param session
+     * @param message
+     * @throws IOException
+     */
     @OnWebSocketMessage
     public void onMessage(Session session, String message) throws IOException {
         WebSocketData data = WebSocketData.decode(message);
@@ -74,6 +80,10 @@ public class PictochatntWebSocketClient {
         }
     }
  
+   /**
+    * This method handles the connection establishment for the WebSockets
+    * @param session
+    */
     @OnWebSocketConnect
     public void onConnect(Session session) {
     	this.session = session;
@@ -97,6 +107,12 @@ public class PictochatntWebSocketClient {
         latch.countDown();
     }
     
+    /**
+     * This method handles the connection closing for the WebSockets
+     * @param session
+     * @param status
+     * @param reason
+     */
     @OnWebSocketClose
     public void onClose(Session session, int status, String reason) {
     	System.out.println("Disconnected from server!");
@@ -112,6 +128,12 @@ public class PictochatntWebSocketClient {
         session = null;
     }
     
+    
+    /**
+     * This method sends a message to the server remote
+     * @param message
+     * @return
+     */
     public boolean sendMessage(String message) {
     	WebSocketSendData data = new WebSocketSendData(message); 
     	if (session != null && session.isOpen()) {
@@ -127,6 +149,13 @@ public class PictochatntWebSocketClient {
     	return false;
     }
     
+    /**
+     * This method sends the paint data encoded to the server remote
+     * @param x
+     * @param y
+     * @param erase
+     * @return
+     */
     public boolean sendPaintMessage(int x, int y, boolean erase) {
     	WebSocketPaintData paintData;
     	if (erase) {

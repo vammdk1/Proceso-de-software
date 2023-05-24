@@ -2,6 +2,11 @@ package es.deusto.spq.utils;
 
 public class ByteUtils {
     
+	/**
+	 * This method converts bytes to bits
+	 * @param bytes
+	 * @return
+	 */
     public static byte[] byteArrayToBits(byte[] bytes) {
         byte[] bits = new byte[(bytes.length + 7) / 8];
         for (int i = 0; i < bytes.length; i++) {
@@ -17,6 +22,11 @@ public class ByteUtils {
         return bits;
     }
 
+    /**
+     * This method converts bits to bytes
+     * @param bits
+     * @return
+     */
     public static byte[] bitArrayToBytes(byte[] bits) {
         byte[] bytes = new byte[bits.length * 8];
         for (int i = 0; i < bytes.length; i++) {

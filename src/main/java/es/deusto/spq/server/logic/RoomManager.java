@@ -45,6 +45,10 @@ public class RoomManager{
 		}
    }
 
+   /**
+    * This method deletes a room
+    * @param roomName
+    */
    public static void deleteRoom(String roomName){
         if(rooms.containsKey(roomName)){
         	Room room = getRoom(roomName);
@@ -58,6 +62,12 @@ public class RoomManager{
         }
    }
    
+   /**
+    * This method deletes a user from a room
+    * @param user
+    * @param roomName
+    * @return
+    */
    public static boolean deleteUserRoom(User user, String roomName ){
 	    if(rooms.containsKey(roomName)){
 	    	return rooms.get(roomName).deleteUser(user);

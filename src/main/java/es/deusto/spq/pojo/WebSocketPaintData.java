@@ -17,6 +17,9 @@ public class WebSocketPaintData extends WebSocketData {
 		this.mode = mode;
 	}
 
+	/**
+	 * This method encodes a WebSocketPaintData to a string
+	 */
 	@Override
 	public String encode() {
 		String modeString = "";

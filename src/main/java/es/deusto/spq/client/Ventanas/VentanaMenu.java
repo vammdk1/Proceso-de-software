@@ -184,6 +184,9 @@ public class VentanaMenu extends JFrame{
         this.setVisible(true);
     }
     
+	/**
+	 * This method refresh the rooms from the main menu
+	 */
     private void refreshRooms(){
     	
     	DefaultListModel<String> model = (DefaultListModel<String>) lista.getModel();

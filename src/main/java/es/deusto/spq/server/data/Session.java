@@ -31,14 +31,24 @@ public class Session {
 		this.token = token;
 	}
 	
+	/**
+	 * Este método determina si una sesión es válida en base al tiempo que lleva activo
+	 * @return
+	 */
 	boolean isValid() {
 		return System.currentTimeMillis()/1000L < timeStamp;
 	}
 	
+	/**
+	 * Este método refresca la sesión
+	 */
 	void refreshSession() {
 		this.timeStamp = System.currentTimeMillis()/1000L + expirationTime;
 	}
 	
+	/**
+	 * Este método invalida una sesión
+	 */
 	public void invalidateSession() {
 		sessionMap.remove(this.token);
 	}

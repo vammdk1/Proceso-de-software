@@ -6,6 +6,12 @@ public class HexUtils {
 	
 	private static final byte[] HEX_ARRAY = "0123456789abcdef".getBytes(StandardCharsets.US_ASCII);
 	
+	/**
+	 * This method converts bytes to hex
+	 * @param bytes
+	 * @return
+	 */
+	
 	public static String bytesToHex(byte[] bytes) {
 	    byte[] hexChars = new byte[bytes.length * 2];
 	    for (int j = 0; j < bytes.length; j++) {
@@ -16,6 +22,11 @@ public class HexUtils {
 	    return new String(hexChars, StandardCharsets.UTF_8);
 	}
 	
+	/**
+	 * This method converts hex to bytes
+	 * @param s
+	 * @return
+	 */
 	public static byte[] hexToBytes(String s) {
 	    int len = s.length();
 	    byte[] data = new byte[len / 2];

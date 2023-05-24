@@ -24,6 +24,12 @@ public class PictochatntWebSocketServer {
  
 	HashSet<WebSocketSessionData> connections = new HashSet<WebSocketSessionData>();
 	
+	/**
+	 * This method sets the behavior the server musts follow when receiving a message
+	 * @param session
+	 * @param message
+	 * @throws IOException
+	 */
     @OnWebSocketMessage
     public void onMessage(Session session, String message) throws IOException {
         System.out.println("Message received:" + message);
@@ -53,6 +59,11 @@ public class PictochatntWebSocketServer {
         }
     }
  
+    /**
+     * This method sets the behavior the server musts follow when connecting to a room
+     * @param session
+     * @throws IOException
+     */
     @OnWebSocketConnect
     public void onConnect(Session session) throws IOException {
         System.out.println(session.getRemoteAddress().getHostString() + " connected!");
@@ -89,6 +100,12 @@ public class PictochatntWebSocketServer {
         connections.add(data);
     }
  
+    /**
+     * This method sets the behavior the server musts follow when leaving a room
+     * @param session
+     * @param status
+     * @param reason
+     */
     @OnWebSocketClose
     public void onClose(Session session, int status, String reason) {
         System.out.println(session.getRemoteAddress().getHostString() + " closed!");

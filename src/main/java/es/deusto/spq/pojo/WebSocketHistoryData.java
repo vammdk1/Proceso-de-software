@@ -11,12 +11,20 @@ public class WebSocketHistoryData extends WebSocketData {
 	private ArrayList<Message> messages;
 	private byte[] paint;
 	
+	/**
+	 * Constructor
+	 * @param messages
+	 * @param paint
+	 */
 	public WebSocketHistoryData(ArrayList<Message> messages, byte[] paint) {
 		super("History");
 		this.setMessages(messages);
 		this.paint = paint;
 	}
 	
+	/**
+	 * This method encodes a WebSocketHistoryData to a string
+	 */
 	@Override
 	public String encode() {
 		String history = "History";
@@ -30,6 +38,11 @@ public class WebSocketHistoryData extends WebSocketData {
 		return history;		
 	}
 	
+	/**
+	 * This method decodes the data from a string to a WebSocketHistoryData object
+	 * @param data
+	 * @return
+	 */
 	public static WebSocketHistoryData decodeData(String data) {
 		ArrayList<Message> messages = new ArrayList<>();
 		byte[] image = null;

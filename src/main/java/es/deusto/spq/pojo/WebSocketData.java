@@ -8,6 +8,11 @@ public abstract class WebSocketData {
 		this.type = type;
 	}
 	
+	/**
+	 * This method decodes a given string and converts it into an object who extends from WebSocketData
+	 * @param str
+	 * @return
+	 */
 	public static WebSocketData decode(String str) {
 		int lineEnd = str.indexOf("\n");
 		String type = str.substring(0, lineEnd);

@@ -16,6 +16,9 @@ public class WebSocketReceiveData extends WebSocketData {
 		this.setMessage(message);
 	}
 	
+	/**
+	 * This method encodes a WebSocketReceiveData to a string
+	 */
 	@Override
 	public String encode() {
 		return "Receive\n"
