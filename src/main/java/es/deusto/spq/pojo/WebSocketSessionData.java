@@ -16,6 +16,10 @@ public class WebSocketSessionData {
 	private Room room;
 	private String password;
 	
+	/**
+	 * Constructor
+	 * @param session
+	 */
 	public WebSocketSessionData(Session session) {
 		Map<String, List<String>> map = session.getUpgradeRequest().getParameterMap();
 		if (map.containsKey("token")) {

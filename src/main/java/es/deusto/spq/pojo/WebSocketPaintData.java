@@ -38,6 +38,11 @@ public class WebSocketPaintData extends WebSocketData {
 		return null;
 	}
 
+	/**
+	 * This method decodes the data from a string to a WebSocketPaintData object
+	 * @param data
+	 * @return
+	 */
 	public static WebSocketPaintData decodeData(String data) {
 		int xLineEnd = data.indexOf("\n");
 		int yLineEnd = data.indexOf("\n", data.indexOf("\n") + 1);

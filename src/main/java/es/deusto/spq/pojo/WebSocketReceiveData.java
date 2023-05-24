@@ -27,6 +27,11 @@ public class WebSocketReceiveData extends WebSocketData {
 				Base64.getEncoder().encodeToString(getMessage().getBytes());
 	}
 
+	/**
+	 * This method decodes the data from a string to a WebSocketReceiveData object
+	 * @param data
+	 * @return
+	 */
 	public static WebSocketReceiveData decodeData(String data) {
 		int dateLineEnd = data.indexOf("\n");
 		int userLineEnd = data.indexOf("\n", data.indexOf("\n") + 1);
