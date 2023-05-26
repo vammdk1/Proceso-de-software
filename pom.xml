@@ -254,7 +254,6 @@
         		<configuration>
           			<parallel>none</parallel>
                 	<threadCount>1</threadCount>
-          			<argLine>--add-opens java.base/java.lang=ALL-UNNAMED</argLine>
         		</configuration>
       		</plugin>		
 		</plugins>

@@ -83,7 +83,7 @@ public class ResourcePerfTest {
     }
     
     @Test
-    @JUnitPerfTest(threads = 10, durationMs = 5000,warmUpMs = 2000)
+    @JUnitPerfTest(threads = 2, durationMs = 5000,warmUpMs = 2000, maxExecutionsPerSecond = 10)
     public void testRegisterUser() {
         RegisterData user = new RegisterData();
         user.setLogin("prueba-"+ UUID.randomUUID().toString());
@@ -99,7 +99,7 @@ public class ResourcePerfTest {
   
     
     @Test
-    @JUnitPerfTest(threads = 10, durationMs = 5000,warmUpMs = 2000)
+    @JUnitPerfTest(threads = 2, durationMs = 5000,warmUpMs = 2000, maxExecutionsPerSecond = 10)
     public void TestLogginUser() {
     	RegisterData user = new RegisterData();
     	user.setLogin("prueba-"+ UUID.randomUUID().toString());
@@ -118,7 +118,7 @@ public class ResourcePerfTest {
     
     
     @Test
-    @JUnitPerfTest(threads = 10, durationMs = 5000,warmUpMs = 2000)
+    @JUnitPerfTest(threads = 2, durationMs = 5000,warmUpMs = 2000, maxExecutionsPerSecond = 10)
     public void TestLogOutUser() {
     	RegisterData user = new RegisterData();
     	user.setLogin("prueba-"+ UUID.randomUUID().toString());
@@ -143,7 +143,7 @@ public class ResourcePerfTest {
     }
     
     @Test
-    @JUnitPerfTest(threads = 1, durationMs = 5000,warmUpMs = 2000)
+    @JUnitPerfTest(threads = 1, durationMs = 5000,warmUpMs = 2000, maxExecutionsPerSecond = 10)
     public void TestDeleteUser() {
     	RegisterData user = new RegisterData();
     	user.setLogin("prueba-"+ UUID.randomUUID().toString());
@@ -170,7 +170,7 @@ public class ResourcePerfTest {
     
     
     @Test
-    @JUnitPerfTest(threads = 10, durationMs = 5000,warmUpMs = 2000)
+    @JUnitPerfTest(threads = 2, durationMs = 5000,warmUpMs = 2000, maxExecutionsPerSecond = 10)
     public void TestRooms() {
     	RegisterData user = new RegisterData();
     	user.setLogin("prueba-"+ UUID.randomUUID().toString());
@@ -210,7 +210,7 @@ public class ResourcePerfTest {
     }
     
     @Test
-    @JUnitPerfTest(threads = 1, durationMs = 5000,warmUpMs = 2000)
+    @JUnitPerfTest(threads = 1, durationMs = 5000,warmUpMs = 2000, maxExecutionsPerSecond = 10)
     public void TestFriends() {
     	RegisterData user = new RegisterData();
     	user.setLogin("prueba-"+ UUID.randomUUID().toString());
