@@ -46,7 +46,11 @@ public class ResourcePerfTest {
     
     private static HttpServer server;
     private WebTarget target;
+    private static int contador1=1;
 
+    public synchronized int sumador () {
+    	 return contador1+=1;
+    }
     @Rule
     public JUnitPerfRule perfTestRule = new JUnitPerfRule(new HtmlReportGenerator("target/junitperf/report.html"));
 
@@ -83,7 +87,7 @@ public class ResourcePerfTest {
     }
     
     @Test
-    @JUnitPerfTest(threads = 2, durationMs = 5000,warmUpMs = 2000, maxExecutionsPerSecond = 10)
+    @JUnitPerfTest(threads = 2, durationMs = 5000,warmUpMs = 2000)
     public void testRegisterUser() {
         RegisterData user = new RegisterData();
         user.setLogin("prueba-"+ UUID.randomUUID().toString());
@@ -99,10 +103,10 @@ public class ResourcePerfTest {
   
     
     @Test
-    @JUnitPerfTest(threads = 2, durationMs = 5000,warmUpMs = 2000, maxExecutionsPerSecond = 10)
+    @JUnitPerfTest(threads = 2, durationMs = 5000,warmUpMs = 2000)
     public void TestLogginUser() {
     	RegisterData user = new RegisterData();
-    	user.setLogin("prueba-"+ UUID.randomUUID().toString());
+    	user.setLogin("prueba2-"+UUID.randomUUID().toString());
         user.setPassword("1234");
 
         target.path("register")
@@ -118,10 +122,10 @@ public class ResourcePerfTest {
     
     
     @Test
-    @JUnitPerfTest(threads = 2, durationMs = 5000,warmUpMs = 2000, maxExecutionsPerSecond = 10)
+    @JUnitPerfTest(threads = 2, durationMs = 5000,warmUpMs = 2000)
     public void TestLogOutUser() {
     	RegisterData user = new RegisterData();
-    	user.setLogin("prueba-"+ UUID.randomUUID().toString());
+    	user.setLogin("prueba3-"+sumador());
         user.setPassword("1234");
 
         target.path("register")
@@ -143,10 +147,10 @@ public class ResourcePerfTest {
     }
     
     @Test
-    @JUnitPerfTest(threads = 1, durationMs = 5000,warmUpMs = 2000, maxExecutionsPerSecond = 10)
+    @JUnitPerfTest(threads = 2, durationMs = 5000,warmUpMs = 2000)
     public void TestDeleteUser() {
     	RegisterData user = new RegisterData();
-    	user.setLogin("prueba-"+ UUID.randomUUID().toString());
+    	user.setLogin("prueba4-"+sumador());
         user.setPassword("1234");
 
         Response response = target.path("register")
@@ -170,10 +174,10 @@ public class ResourcePerfTest {
     
     
     @Test
-    @JUnitPerfTest(threads = 2, durationMs = 5000,warmUpMs = 2000, maxExecutionsPerSecond = 10)
+    @JUnitPerfTest(threads = 2, durationMs = 5000,warmUpMs = 2000)
     public void TestRooms() {
     	RegisterData user = new RegisterData();
-    	user.setLogin("prueba-"+ UUID.randomUUID().toString());
+    	user.setLogin("prueba-"+sumador());
         user.setPassword("1234");
 
         target.path("register")
@@ -187,7 +191,8 @@ public class ResourcePerfTest {
         RoomData room = new RoomData();
         
         room.setToken(response1.readEntity(SessionData.class).getToken());
-        room.setRoomName("Room -> "+ UUID.randomUUID().toString());
+        room.setRoomName("Room"+sumador());
+        //contador2+=1;
         room.setPassword("");
         
         Response response2 = target.path("createRoom")
@@ -210,10 +215,10 @@ public class ResourcePerfTest {
     }
     
     @Test
-    @JUnitPerfTest(threads = 1, durationMs = 5000,warmUpMs = 2000, maxExecutionsPerSecond = 10)
+    @JUnitPerfTest(threads = 2, durationMs = 5000,warmUpMs = 2000)
     public void TestFriends() {
     	RegisterData user = new RegisterData();
-    	user.setLogin("prueba-"+ UUID.randomUUID().toString());
+    	user.setLogin("prueba-"+sumador());
         user.setPassword("1234");
 
         target.path("register")

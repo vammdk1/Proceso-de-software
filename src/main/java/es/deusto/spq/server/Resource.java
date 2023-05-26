@@ -80,7 +80,6 @@ public class Resource {
 	 @POST
 	 @Path("/register")
 	 public Response register(RegisterData registerData) {
-		 logger.info("Probando existencia previa de usuario: '{}'", registerData.getLogin());
 		 User user = User.find(registerData.getLogin());
 		 if (user != null) {
 			 logger.info("Usuario '{}' ya existe", registerData.getLogin());
@@ -164,7 +163,6 @@ public class Resource {
 	 @POST
 	 @Path("/addFriend")
 	 public Response addFriends(FriendData friendData) {
-		 logger.info("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 		 User user = Session.getSession(friendData.getToken()).getUser();
 		 if (user == null) {
 			 logger.info("Error en Usuario ");
@@ -226,6 +224,7 @@ public class Resource {
 		 } else {
 			 User user = session.getUser();
 			 if (user == null) {
+				 logger.info("Error de usuario");
 				 return Response.status(403).entity("Error finding user").build();
 			 }
 			 logger.info("Creando sala: '{}'", roomData.getRoomName());
@@ -252,12 +251,14 @@ public class Resource {
 			 }
 			 Room room = RoomManager.getRoom(roomData.getRoomName());
 			 if (room == null) {
+				 logger.info("Error econtrando la sala: '{}'", roomData.getRoomName());
 				 return Response.status(403).entity("Error finding room").build();
 			 }
 			 if (!room.getOwner().getLogin().equals(user.getLogin())) {
 				 return Response.status(403).entity("Not the owner of the room").build();
 			 }
 			 RoomManager.deleteRoom(room.getName());
+			 logger.info("Borrando sala: '{}'", roomData.getRoomName());
 			 return Response.ok().build();
 		 }
 	 }
